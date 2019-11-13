@@ -1,2 +1,0 @@
-# Frontend of Prometheus
-
