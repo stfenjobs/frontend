@@ -6,6 +6,7 @@ export const encryptByMd5 = (passwd: string): string => {
     return passwd;
 };
 
+// get content from ajax response
 export function getContent<T>(response: IResponse, setError: (code: number) => void) {
     if (!response.success) {
         setError((response.content as IContentFail).error_code);
@@ -13,4 +14,4 @@ export function getContent<T>(response: IResponse, setError: (code: number) => v
 
     const content: T = response.content as T;
     return content;
-}
+};

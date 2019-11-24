@@ -37,7 +37,7 @@ export interface IContentPaperList {
 export interface IContentLogin {
     readonly id: string,
     readonly token: string,
-    readonly identity: number,
+    readonly eid: string,
 };
 
 export type IContentRegister = IContentLogin;
