@@ -1,5 +1,5 @@
 interface StorageItem {
-    expired: Date | null;
+    expired: number | null;
     value: any;
 }
 
@@ -20,7 +20,7 @@ export default class Storage {
         if (expire) {
             const date = new Date();
             date.setSeconds(date.getSeconds() + expire);
-            item.expired = date;
+            item.expired = date.getTime();
         }
 
         window.localStorage.setItem(key, JSON.stringify(item));
@@ -42,7 +42,7 @@ export default class Storage {
         }
 
         const now = new Date();
-        if (now > parsedItem.expired) {
+        if (now.getTime() > parsedItem.expired) {
             window.localStorage.removeItem(key);
             return null;
         }

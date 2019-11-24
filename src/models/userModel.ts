@@ -76,7 +76,7 @@ const useUser = () => {
         };
 
         api.user.register(data).then((response) => {
-            if (response.status != 201) {
+            if (response.status !== 201) {
                 setError(err.err404);
                 return;
             }
