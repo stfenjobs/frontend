@@ -26,7 +26,7 @@ export interface IRequestPatchUserInfo {
     token: string,
     email?: string,
     username?: string,
-    photo?: string,
+    avatar?: string,
 };
 
 export interface IRequestLogin {
@@ -38,7 +38,7 @@ export interface IRequestRegister {
     email: string,
     cipher: string,
     username: string,
-    photo?: string,
+    avatar?: string,
 };
 
 export interface IRequestLogout {

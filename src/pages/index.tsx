@@ -18,8 +18,14 @@ export default () => {
                     <Layout.Content>
                         <Router />
                     </Layout.Content>
-                    <Layout.Footer>
-                        <span>窝窝头一块钱四个嘿嘿</span>
+                    <Layout.Footer style={{
+                        textAlign: 'center',
+                        fontSize: '1rem',
+                        color: '#aaaaaa'
+                    }}>
+                        <span>
+                            Copyright (c) 2019 wwthh😁. All rights reserved.
+                        </span>
                     </Layout.Footer>
                 </Layout>
         </BrowserRouter>

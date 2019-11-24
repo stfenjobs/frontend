@@ -5,3 +5,8 @@ export interface IConfig {
 export interface LocaleDict {
     [key: string]: any,
 };
+
+export interface QueryParam {
+    q: string,
+    type: string,
+};

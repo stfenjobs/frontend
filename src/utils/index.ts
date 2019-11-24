@@ -15,3 +15,7 @@ export function getContent<T>(response: IResponse, setError: (code: number) => v
     const content: T = response.content as T;
     return content;
 };
+
+export const trim = (s: string) => {
+    return s.replace(/(^\s*)|(\s*$)/g, "");
+}

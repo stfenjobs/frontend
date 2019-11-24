@@ -23,6 +23,8 @@ import err from '../utils/error';
 const useUser = () => {
     const [id, setId] = useState('');
     const [token, setToken] = useState('');
+    const [username, setUsername] = useState('');
+    const [avatar, setAvatar] = useState('');
     const [eid, setEid] = useState('');
     const [error, setError] = useState(err.none);
 
@@ -32,6 +34,8 @@ const useUser = () => {
         if (user) {
             setId(user.id);
             setToken(user.token);
+            setUsername(user.username);
+            setAvatar(user.avatar);
             setEid(user.eid);
         }
     }, []);
@@ -60,19 +64,21 @@ const useUser = () => {
 
             setId(content.id);
             setToken(content.token);
+            setUsername(content.username);
+            setAvatar(content.avatar);
             setEid(content.eid);
             Storage.put('user', content);
         }).catch((e) => setError(err.err404));
     };
 
-    const register = (email: string, passwd: string, username: string, photo?: string) => {
+    const register = (email: string, passwd: string, username: string, avatar?: string) => {
         if (token !== '') {
             setError(err.errInvalidOps);
             return;
         }
 
         const data: IRequestRegister = {
-            email, cipher: encryptByMd5(passwd), username, photo
+            email, cipher: encryptByMd5(passwd), username, avatar
         };
 
         api.user.register(data).then((response) => {
@@ -88,6 +94,8 @@ const useUser = () => {
 
             setId(content.id);
             setToken(content.token);
+            setUsername(content.username);
+            setAvatar(content.avatar);
             setEid(content.eid);
             Storage.put('user', content);
         }).catch((e) => setError(err.err404));
@@ -109,13 +117,15 @@ const useUser = () => {
                 return;
             }
 
-            const content = getContent<IContentLogout>(response.data, setError);
+            getContent<IContentLogout>(response.data, setError);
             if (error !== err.none) {
                 return;
             }
 
             setId('');
             setToken('');
+            setUsername('');
+            setAvatar('');
             setEid('');
             Storage.remove('user');
         }).catch((e) => setError(err.err404));
@@ -124,7 +134,7 @@ const useUser = () => {
     const clearError = () => setError(err.none);
 
     return {
-        id, token, eid, error,
+        id, token, username, avatar, eid, error,
         login, register, logout, clearError
     };
 };

@@ -37,6 +37,8 @@ export interface IContentPaperList {
 export interface IContentLogin {
     readonly id: string,
     readonly token: string,
+    readonly username: string,
+    readonly avatar: string,
     readonly eid: string,
 };
 

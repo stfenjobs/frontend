@@ -2,15 +2,12 @@ import React, { useState, useEffect } from 'react';
 import useRouter from 'use-react-router';
 import qs from 'qs';
 
+import { QueryParam } from '../../types';
 
-interface QueryParam {
-    q: string,
-    type: string,
-};
 
 enum QueryType {
-    PAPER = '0',
-    EXPERT = '1',
+    PAPER = 'paper',
+    EXPERT = 'expert',
 };
 
 export default () => {
