@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "all": "0.0.0",
     "antd": "^3.25.1",
     "axios": "^0.19.0",
     "hox": "^1.0.0",
@@ -48,7 +49,7 @@
     ]
   },
   "repository": {
-      "type": "git",
-      "url": "https://github.com/wwthh/frontend"
+    "type": "git",
+    "url": "https://github.com/wwthh/frontend"
   }
 }
