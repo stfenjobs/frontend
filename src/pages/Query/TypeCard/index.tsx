@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tabs, Tag, List, Typography } from 'antd';
+import ExpertResult from '../ExpertResult'
+import PapperResult from '../PapperResult'
 import './TypeCard.css'
 
 const { TabPane } = Tabs;
-
-function callback(key: string) {
-    console.log(key);
-}
 
 const { CheckableTag } = Tag;
 
@@ -59,10 +57,14 @@ const sourceData = [
     </div>
 ]
 
-function TypeCard(){
+export interface TypeCardProps {
+    setTab: (tab: string) => void;
+}
+
+function TypeCard(props: TypeCardProps){
     return (
         <div className='TypeCard'>
-            <Tabs onChange={callback} type="card">
+            <Tabs onChange={e=>props.setTab(e)} type="card">
                 <TabPane tab="专家" key="1">
                     <div>
                         <List

@@ -7,6 +7,7 @@ import { QueryParam } from '../../types';
 import TypeCard from './TypeCard'
 import RecommendCard from './RecommendCard'
 import ExpertResult from './ExpertResult'
+import PapperResult from './PapperResult'
 
 import './Query.css'
 
@@ -21,6 +22,8 @@ export default () => {
     const { history, location } = useRouter();
     const [key, setKey] = useState('');
     const [type, setType] = useState('');
+    const [tab, setTab] = useState('1');
+
 
     useEffect(() => {
         const param: QueryParam = qs.parse(location.search.slice(1));
@@ -34,14 +37,15 @@ export default () => {
     }, [location, history]);
 
 
+
     return (
         <div>
             <div className='query-left'>
                 <div className='query-left-typecard'>
-                    <TypeCard/>
+                    <TypeCard setTab={setTab}/>
                 </div>
                 <div className='query-left-result'>
-                    <ExpertResult/>
+                {tab === '1'? <ExpertResult/> : <PapperResult/>}
                 </div>
             </div>
             <div className='query-right'>
