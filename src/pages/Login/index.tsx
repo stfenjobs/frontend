@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 
+import { message } from 'antd';
 
-export default () => {
+import useUser from '../../models/userModel';
+import LoginForm from '../../components/LoginForm';
+
+import { RouteComponentProps } from 'react-router-dom';
+
+export interface LoginProps extends RouteComponentProps { }
+
+export default withRouter((props: LoginProps) => {
+    const user = useUser();
+    const [visible, setVisible] = useState(false);
+
+    const onOkClick = () => {
+        setVisible(false);
+    };
+
     return (
-        <div>Login</div>
+        <div className='login-root'>
+            <LoginForm />
+        </div>
     );
-};
+});
