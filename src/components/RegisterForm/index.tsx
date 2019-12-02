@@ -1,7 +1,7 @@
 import React, { useState, FormEvent, FocusEvent } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Form, Input, Icon, Button, message } from 'antd';
+import { Form, Input, Icon, Button, message, Radio } from 'antd';
 
 import { RouteComponentProps } from 'react-router-dom';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
@@ -13,17 +13,24 @@ export interface RegisterFormProps extends RouteComponentProps {
     form: WrappedFormUtils;
 };
 
-
 export interface RegisterValue {
     username: string;
-    nickname: string;
     password: string;
     confirm: string;
+    type: boolean;
+    email: string;
+    photo: string;
 }
 
 
 const RegisterForm = (props: RegisterFormProps) => {
     const [confirmDirty, setConfirmDirty] = useState(false);
+    const [type, setType] = useState(false);
+
+    let isProfessor;
+    const onChange = () => {
+
+    }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -33,7 +40,7 @@ const RegisterForm = (props: RegisterFormProps) => {
         props.form.validateFieldsAndScroll((err: any, values: RegisterValue) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-              }
+            }
         });
     };
 
@@ -63,7 +70,7 @@ const RegisterForm = (props: RegisterFormProps) => {
 
     return (
         <Form onSubmit={handleSubmit} className='register-form'>
-            <div  className='logo' >
+            <div className='logo' >
                 <img
                     src=''
                     width='165'
@@ -74,23 +81,12 @@ const RegisterForm = (props: RegisterFormProps) => {
             <Form.Item>
                 {getFieldDecorator('username', {
                     rules: [{
-                        required: true, message: '请输入正确手机号!', whitespace: true,
-                        pattern: new RegExp('^(1[3-9])\\d{9}$')
+                        required: true, message: '请输入正确用户名!', whitespace: true,
                     }],
                 })(
                     <Input
-                        prefix={<Icon type='phone' style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder='手机号'
-                    />
-                )}
-            </Form.Item>
-            <Form.Item>
-                {getFieldDecorator('nickname', {
-                    rules: [{ required: true, message: '请输入昵称!', whitespace: true }],
-                })(
-                    <Input
                         prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder='昵称'
+                        placeholder='用户名'
                     />
                 )}
             </Form.Item>
@@ -126,6 +122,31 @@ const RegisterForm = (props: RegisterFormProps) => {
                         prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
                         type='password'
                         placeholder='确认密码'
+                    />
+                )}
+            </Form.Item>
+            <Form.Item>
+                <Radio.Group onChange={() => setType(type =>!type)} value={isProfessor}>
+                    <Radio value={1}>专家</Radio>
+                    <Radio value={2}>用户</Radio>
+                </Radio.Group>
+            </Form.Item>
+            <Form.Item>
+                {getFieldDecorator('email', {
+                    rules: [
+                        {
+                            type: 'email',
+                            message: 'The input is not valid E-mail!',
+                        },
+                        {
+                            required: true,
+                            message: 'Please input your E-mail!',
+                        },
+                    ],
+                })(
+                    <Input
+                        prefix={<Icon type='mail' style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        placeholder='邮箱'
                     />
                 )}
             </Form.Item>
