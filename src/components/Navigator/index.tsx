@@ -7,6 +7,7 @@ import { Input, Select, Button, message } from 'antd';
 import UserMenu from './UserMenu';
 
 import { QueryParam } from '../../types';
+import './UserMenu.css'
 
 const { Group } = Input;
 const { Option } = Select;
@@ -93,7 +94,7 @@ export default () => {
     );
 
     return (
-        <div>
+        <div className='app-navigator'>
             <div style={{ float: 'left', width: '20%' }}>
                 <span style={{ color: '#cccccc' }}>LOGO</span>
             </div>
