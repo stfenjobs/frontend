@@ -10,3 +10,8 @@ export interface QueryParam {
     q: string,
     type: string,
 };
+
+export interface ExpertDetailParam {
+    q: string,
+    type: string,
+};
