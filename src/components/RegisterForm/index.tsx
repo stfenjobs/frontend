@@ -27,11 +27,6 @@ const RegisterForm = (props: RegisterFormProps) => {
     const [confirmDirty, setConfirmDirty] = useState(false);
     const [type, setType] = useState(false);
 
-    let isProfessor;
-    const onChange = () => {
-
-    }
-
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -79,6 +74,25 @@ const RegisterForm = (props: RegisterFormProps) => {
                 />
             </div>
             <Form.Item>
+                {getFieldDecorator('email', {
+                    rules: [
+                        {
+                            type: 'email',
+                            message: 'The input is not valid E-mail!',
+                        },
+                        {
+                            required: true,
+                            message: 'Please input your E-mail!',
+                        },
+                    ],
+                })(
+                    <Input
+                        prefix={<Icon type='mail' style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        placeholder='邮箱'
+                    />
+                )}
+            </Form.Item>
+            <Form.Item>
                 {getFieldDecorator('username', {
                     rules: [{
                         required: true, message: '请输入正确用户名!', whitespace: true,
@@ -122,31 +136,6 @@ const RegisterForm = (props: RegisterFormProps) => {
                         prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
                         type='password'
                         placeholder='确认密码'
-                    />
-                )}
-            </Form.Item>
-            <Form.Item>
-                <Radio.Group onChange={() => setType(type =>!type)} value={isProfessor}>
-                    <Radio value={1}>专家</Radio>
-                    <Radio value={2}>用户</Radio>
-                </Radio.Group>
-            </Form.Item>
-            <Form.Item>
-                {getFieldDecorator('email', {
-                    rules: [
-                        {
-                            type: 'email',
-                            message: 'The input is not valid E-mail!',
-                        },
-                        {
-                            required: true,
-                            message: 'Please input your E-mail!',
-                        },
-                    ],
-                })(
-                    <Input
-                        prefix={<Icon type='mail' style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder='邮箱'
                     />
                 )}
             </Form.Item>

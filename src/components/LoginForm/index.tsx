@@ -34,7 +34,7 @@ const LoginForm = (props: LoginFormProps) => {
 
     return (
         <Form onSubmit={handleSubmit} className='login-form'>
-            <div  className='logo'>
+            <div className='logo'>
                 <img
                     src=''
                     width='165'
@@ -43,13 +43,22 @@ const LoginForm = (props: LoginFormProps) => {
                 />
             </div>
             <Form.Item>
-                {getFieldDecorator('username', {
-                    rules: [{ required: true, message: '请输入用户名' }],
+                {getFieldDecorator('email', {
+                    rules: [
+                        {
+                            type: 'email',
+                            message: 'The input is not valid E-mail!',
+                        },
+                        {
+                            required: true,
+                            message: 'Please input your E-mail!',
+                        },
+                    ],
                 })(
                     <Input
-                        prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="用户名"
-                    />,
+                        prefix={<Icon type='mail' style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        placeholder='邮箱'
+                    />
                 )}
             </Form.Item>
             <Form.Item>
