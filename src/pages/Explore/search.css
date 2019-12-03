@@ -1,0 +1,45 @@
+
+#search {
+    height: 4rem;
+    border-radius: 1rem;
+    bottom: 0;
+    padding-left: 8%;
+    margin: 20% 30% 20% 30%;
+    width: 40%;
+    z-index: 1;
+    font-size: 2rem;
+    align-content: center;
+}
+
+#content {
+    text-align: justify;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    height: 30%;
+    background-size: cover;
+    padding: 0 0 0 0;
+}
+
+.bg {
+    text-align: center;
+    width: 100%;
+    height: inherit;
+    align-items: center;
+    position: center;
+    backdrop-filter: blur(3px);
+    z-index: -2;
+    vertical-align: center;
+}
+
+.ant-input-suffix {
+    margin-right: 63%;
+    z-index: 100;
+}
+
+.bg svg {
+    height: 2rem;
+    width: 2rem;
+    margin: 0.1rem;
+}
+
