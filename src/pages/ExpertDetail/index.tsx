@@ -6,8 +6,6 @@ import { ExpertDetailParam } from '../../types';
 
 import ExternalLink from './ExternalLink'
 import PersonalAttribute from './PersonalAttribute'
-import PostVolume from './PostVolume'
-import Relativity from './Relativity'
 import PaperResult from './PaperResult'
 import PatentResult from './PatentResult'
 import PapperResult from '../Query/PapperResult'
@@ -41,15 +39,7 @@ export default () => {
                 </div>
             </div>
             <div className='expert-detail-right'>
-                <div className='expert-detail-right-relativity'>
-                    <Relativity/>
-                </div>
-                <div className='expert-detail-right-post-volume'>
-                    <PostVolume/>
-                </div>
-                <div className='expert-detail-right-external-link' >
                     <ExternalLink/>
-                </div>                
             </div>
         </div>
     );

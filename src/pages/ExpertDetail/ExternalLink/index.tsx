@@ -1,13 +1,49 @@
-import React from 'react';
+import React from 'react'
+import { BackTop, Affix, Card, Icon, Avatar } from 'antd'
 import './ExternalLink.css'
 
-const link = 'https://github.com/wwthh/frontend/tree/khunkin'
+const content1 = "此处应有相关推荐的图谱";
 
-export default () => {
+const content2 = "此处应有基于时间的论文发表统计图";
+
+const link = ""
+const content3 = (<a href={link}>GitHub主页</a>);
+
+function ExternalLink(){
+
     return (
         <div>
-            外链
-            <a href={link}>github主页</a>
+        <Affix>
+            <div className='ExternalLink'>
+                <Card
+                    loading={false}
+                    title="相关度"
+                >
+                    <div className='content'>
+                        {content1}
+                    </div>
+                </Card>
+                <Card
+                    loading={false}
+                    title="发文量"
+                >
+                    <div className='content'>
+                        {content2}
+                    </div>
+                </Card>
+                <Card
+                    loading={false}
+                    title="外链"
+                >
+                    <div className='content'>
+                        {content3}
+                    </div>
+                </Card>
+            </div>
+        </Affix>
+        <BackTop />
         </div>
     )
-} 
+}
+
+export default ExternalLink;
