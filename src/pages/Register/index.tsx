@@ -6,6 +6,8 @@ import RegisterForm from '../../components/RegisterForm';
 
 import { RouteComponentProps } from 'react-router-dom';
 
+import './Register.css';
+
 import { message } from 'antd';
 
 
