@@ -10,6 +10,7 @@ const Explore = lazy(() => import('./Explore'));
 const Query = lazy(() => import('./Query'));
 const PaperDetail = lazy(() => import('./PaperDetail'));
 const ExpertDetail = lazy(() => import('./ExpertDetail'));
+const User = lazy(() => import('./User'));
 
 export default () => (
     <Suspense fallback={<Loading />}>
@@ -20,6 +21,7 @@ export default () => (
             <Route exact path='/experts/:expertId' component={ExpertDetail} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
+            <Route exact path='/user' componet={User} />
             <Route component={NotFound} />
         </Switch>
     </Suspense>
