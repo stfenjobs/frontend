@@ -21,7 +21,7 @@ export default () => (
             <Route exact path='/experts/:expertId' component={ExpertDetail} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
-            <Route exact path='/user' componet={User} />
+            <Route exact path='/user' component={User} />
             <Route component={NotFound} />
         </Switch>
     </Suspense>
