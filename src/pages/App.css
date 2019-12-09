@@ -1,5 +1,9 @@
 body {
-    background-color: #f0f2f5;
+    background-color: white;
+}
+
+.ant-layout-content {
+    background-color: white;
 }
 
 .ant-layout-header {

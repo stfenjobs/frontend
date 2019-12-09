@@ -15,6 +15,17 @@ export interface EditableLabelProps {
 };
 
 export default (props: EditableLabelProps) => {
+    const [hover, setHover] = React.useState(false);
+
+    React.useEffect(() => {
+        if (props.isEditable) {
+            setHover(false);
+        }
+    }, [props.isEditable])
+
+    const onHover = () => { setHover(true); }
+    const onUnhover = () => { setHover(false); }
+
     return (
         props.isEditable ? (
             <div style={{ lineHeight: props.fontSize }}>
@@ -22,10 +33,7 @@ export default (props: EditableLabelProps) => {
                     value={props.value}
                     onChange={props.onValueChange}
                     size={props.size ? props.size : 'default'}
-                    style={{
-                        marginLeft: '0.5rem',
-                        width: '10rem',
-                    }}
+                    style={{ width: '10rem' }}
                 />
                 <Icon
                     type='check'
@@ -38,13 +46,22 @@ export default (props: EditableLabelProps) => {
                     onClick={props.onCancel} />
             </div>
         ) : (
-            <div style={{ marginLeft: '0.5rem', fontSize: props.fontSize }}>
+            <div
+                style={{
+                    fontSize: props.fontSize
+                }}
+                onMouseEnter={onHover}
+                onMouseLeave={onUnhover}
+            >
                 {props.value}
-                <Icon
-                    type='edit'
-                    style={{ fontSize: props.fontSize, paddingLeft: '0.5rem' }}
-                    onClick={props.onEdit}
-                />
+                {
+                    hover &&
+                    <Icon
+                        type='edit'
+                        style={{ fontSize: props.fontSize, paddingLeft: '0.5rem' }}
+                        onClick={props.onEdit}
+                    />
+                }
             </div>
         )
     );

@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { Tabs, Icon } from 'antd';
+import PurchaseList from './PurchaseList';
+
 const { TabPane } = Tabs;
 
 
-export interface TabPanelProps {
+// export interface TabPanelProps { };
 
-};
-
-export default (props: TabPanelProps) => {
+export default () => {
     const onTabChange = (key: string) => {
         console.log(key);
     }
@@ -21,7 +21,9 @@ export default (props: TabPanelProps) => {
                 tabPane: false,
             }}
             onChange={onTabChange}
+            type='card'
             style={{
+                paddingTop: '1.5%',
                 paddingRight: "25%"
             }}
         >
@@ -34,7 +36,7 @@ export default (props: TabPanelProps) => {
                 }
                 key='purchase-record'
             >
-                <div>增值服务</div>
+                <PurchaseList />
             </TabPane>
             <TabPane
                 tab={

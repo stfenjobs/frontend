@@ -1,4 +1,5 @@
 import React from 'react';
+import useUserModel from '../../models/userModel';
 
 import { Upload, Icon, message } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';
@@ -10,13 +11,6 @@ interface UploadFile {
     type: string;
     size: number;
 }
-
-export interface UserCardProps {
-    userAvatar: string;
-    userName: string;
-    userEmail: string;
-};
-
 
 const getBase64 = (img: any, callback: (imgUrl: string) => void) => {
     const reader = new FileReader();
@@ -36,15 +30,33 @@ const beforeUpload = (file: UploadFile) => {
     return isJpgOrPng && isLt2M;
 }
 
-export default (props: UserCardProps) => {
-    const [loading, setLoading] = React.useState(false);
-    const [img, setImg] = React.useState(props.userAvatar);
+export default () => {
+    /* wait for api */
+    const { /* token, username, avatar, email, points, updateProfile */ eid } = useUserModel();
 
-    const [name, setName] = React.useState(props.userName);
+    const avatar = 'https://avatars3.githubusercontent.com/u/37368558?s=400&u=2cee58569e7ab9446e77ef3ad76362fb598a019f&v=4';
+    const userName = 'zx555';
+    const userEmail ='czr.cn.525@gmail.com';
+    const userPoints ='3';
+
+    const [loading, setLoading] = React.useState(false);
+    const [img, setImg] = React.useState(avatar);
+
+    const [name, setName] = React.useState(userName);
     const [nameEditable, setNameEditable] = React.useState(false);
 
-    const [email, setEmail] = React.useState(props.userEmail);
+    const [email, setEmail] = React.useState(userEmail);
     const [emailEditable, setEmailEditable] = React.useState(false);
+
+    React.useEffect(() => {
+        // check if login?
+        /*
+        if (token === '') {
+            message.info('请先登录');
+            history.push('/login');
+        }
+        */
+    }, []);
 
     const handleChange = (info: UploadChangeParam) => {
         if (info.file.status === 'uploading') {
@@ -71,7 +83,7 @@ export default (props: UserCardProps) => {
     }
 
     const onNameCancel = () => {
-        setName(props.userName);
+        setName(userName);
         setNameEditable(false);
     }
 
@@ -84,11 +96,12 @@ export default (props: UserCardProps) => {
     }
 
     const onEmailConfirm = () => {
+        // api
         setEmailEditable(false);
     }
 
     const onEmailCancel = () => {
-        setEmail(props.userEmail);
+        setEmail(userEmail);
         setEmailEditable(false);
     }
 
@@ -96,8 +109,8 @@ export default (props: UserCardProps) => {
         <div
             style={{
                 position: 'fixed',
-                top: '11%',
-                right: '14%',
+                top: '6rem',
+                right: '14rem',
             }}
         >
             <Upload
@@ -120,14 +133,13 @@ export default (props: UserCardProps) => {
                 onConfirm={onNameConfirm}
                 onCancel={onNameCancel}
             />
-            <div style={{ paddingTop: '2rem' }}>
+            <div style={{ paddingTop: '1.5rem' }}>
                 <Icon
                     type='mail'
                     style={{
-                        paddingLeft: '0.5rem',
-                        paddingRight: emailEditable ? 0 : '0.5rem',
+                        paddingRight: '0.5rem',
                         float: 'left',
-                        paddingTop: emailEditable ? '0.65rem' : '0.45rem'
+                        paddingTop: emailEditable ? '0.6rem' : '0.4rem'
                     }}
                 />
                 <EditableLabel
@@ -140,6 +152,31 @@ export default (props: UserCardProps) => {
                     onCancel={onEmailCancel}
                 />
             </div>
+            <div style={{ paddingTop: '0.4rem' }}>
+                <Icon
+                    type='pay-circle'
+                    style={{
+                        padding: '0.28rem 0.5rem 0 0',
+                        float: 'left',
+                    }}
+                />
+                <span style={{ fontSize: '1rem' }}>
+                    可用 <span style={{ color: 'rgba(200, 0, 0, 0.6)' }}>{userPoints}</span> 积分
+                </span>
+            </div>
+            {
+                eid !== '' &&
+                <div style={{ paddingTop: '0.4rem' }}>
+                    <Icon
+                        type="schedule"
+                        style={{
+                            padding: '0.32rem 0.5rem 0 0.5rem',
+                            float: 'left'
+                        }}
+                    />
+                    <span style={{ fontSize: '1rem' }}>已通过<b>专家认证</b></span>
+                </div>
+            }
         </div>
     )
 }

@@ -4,3 +4,7 @@
     width: 15rem;
     height: 15rem;
 }
+
+.ant-upload.ant-upload-select-picture-card > .ant-upload {
+    padding: 0
+}
