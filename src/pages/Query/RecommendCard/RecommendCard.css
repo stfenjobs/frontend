@@ -1,0 +1,15 @@
+.content{
+    width: 100%;
+    word-wrap: break-word;
+    margin: auto;
+    margin-top: 5%;
+}
+
+.ant-card-head{
+    height: 40px;
+    min-height: 40px;
+}
+
+.ant-card-head-title{
+    padding-top: 8px;
+}

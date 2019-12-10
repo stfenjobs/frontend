@@ -1,0 +1,17 @@
+.expert-detail-left{
+    float: left;
+    width: 75%;
+    min-width: 870px;
+}
+
+.expert-detail-right{
+    float: right;
+    width: 23%;
+    margin-right: 1%;
+    margin-top: 9px;
+    min-width: 265px;
+}
+
+.ant-layout-content{
+    min-width: 1200px;
+}

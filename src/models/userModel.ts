@@ -24,6 +24,8 @@ const useUser = () => {
     const [id, setId] = useState('');
     const [token, setToken] = useState('');
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [points, setPoints] = useState('');
     const [avatar, setAvatar] = useState('');
     const [eid, setEid] = useState('');
     const [error, setError] = useState(err.none);
@@ -35,6 +37,8 @@ const useUser = () => {
             setId(user.id);
             setToken(user.token);
             setUsername(user.username);
+            setEmail(user.email);
+            setPoints(user.points);
             setAvatar(user.avatar);
             setEid(user.eid);
         }
@@ -65,6 +69,8 @@ const useUser = () => {
             setId(content.id);
             setToken(content.token);
             setUsername(content.username);
+            setEmail(content.email);
+            setPoints(content.points);
             setAvatar(content.avatar);
             setEid(content.eid);
             Storage.put('user', content);
@@ -87,17 +93,12 @@ const useUser = () => {
                 return;
             }
 
-            const content = getContent<IContentRegister>(response.data, setError);
+            getContent<IContentRegister>(response.data, setError);
             if (error !== err.none) {
                 return;
             }
 
-            setId(content.id);
-            setToken(content.token);
-            setUsername(content.username);
-            setAvatar(content.avatar);
-            setEid(content.eid);
-            Storage.put('user', content);
+            login(email, passwd);
         }).catch((e) => setError(err.err404));
     };
 
@@ -125,16 +126,20 @@ const useUser = () => {
             setId('');
             setToken('');
             setUsername('');
+            setEmail('');
+            setPoints('');
             setAvatar('');
             setEid('');
             Storage.remove('user');
         }).catch((e) => setError(err.err404));
     };
 
+    // TODO: update method
+
     const clearError = () => setError(err.none);
 
     return {
-        id, token, username, avatar, eid, error,
+        id, token, username, email, points, avatar, eid, error,
         login, register, logout, clearError
     };
 };

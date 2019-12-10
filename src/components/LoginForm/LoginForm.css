@@ -1,0 +1,43 @@
+.login-form {
+    background: white;
+    max-width: 300px;
+    padding: 10px 30px 30px 30px;
+    margin: 12.2% auto;
+    box-shadow: 1px 1px 5px #bbbbbb;
+    border-radius: 1ch;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.login-form-button {
+    width: 100%;
+}
+
+.register-button {
+    float: right;
+}
+.logo{
+    padding: 20px 5px 40px 0px;
+    margin: 0 auto;
+    text-align: center
+}
+
+#verify-text{
+    width: 45%;
+    float: left;
+}
+
+#verify-form{
+    width: 100%;
+}
+
+#verify-vcode{
+    padding-left: 50%;
+    padding-top: 4px;
+}
+
+#register-form-bottom{
+    clear: both;
+}

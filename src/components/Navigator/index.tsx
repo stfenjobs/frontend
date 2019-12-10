@@ -7,6 +7,7 @@ import { Input, Select, Button, message } from 'antd';
 import UserMenu from './UserMenu';
 
 import { QueryParam } from '../../types';
+import './Navigator.css';
 
 const { Group } = Input;
 const { Option } = Select;
@@ -58,10 +59,11 @@ export default () => {
             style={{
                 textAlign: 'center',
                 width: '60%',
-                float: 'left'
+                float: 'left',
             }}
         >
             <Group
+                className="search-bar-group"
                 compact
                 style={{
                     marginTop: '16px'
@@ -70,7 +72,9 @@ export default () => {
                 <Select
                     value={qType}
                     onChange={(value: string) => onSelect(value)}
-                    style={{ width: 90 }}
+                    style={{
+                        width: 90,
+                    }}
                 >
                     <Option value='paper'>论文</Option>
                     <Option value='expert'>专家</Option>
@@ -80,20 +84,24 @@ export default () => {
                     value={qValue}
                     onChange={(e) => onInput(e.target.value)}
                     onPressEnter={() => onSearch(qValue)}
-                    style={{ width: 300, textAlign: 'left' }}
+                    style={{
+                        width: 300,
+                        textAlign: 'left',
+                        borderColor: 'black black black red'
+                    }}
                 />
                 <Button
                     type='primary'
                     icon='search'
                     onClick={() => onSearch(qValue)}
-                    style={{ width: 40 }}
+                    style={{ width: 40, color: "red", background: "black", border: "solid black" }}
                 />
             </Group>
         </div>
     );
 
     return (
-        <div>
+        <div className='app-navigator'>
             <div style={{ float: 'left', width: '20%' }}>
                 <span style={{ color: '#cccccc' }}>LOGO</span>
             </div>
