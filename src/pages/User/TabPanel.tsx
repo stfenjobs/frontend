@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Tabs, Icon } from 'antd';
 import PurchaseList from './PurchaseList';
+import PwChanger from './PwChanger';
 
 const { TabPane } = Tabs;
 
@@ -47,7 +48,7 @@ export default () => {
                 }
                 key='password'
             >
-                <div>修改密码</div>
+                <PwChanger />
             </TabPane>
             <TabPane
                 tab={
