@@ -53,5 +53,9 @@
     "type": "git",
     "url": "https://github.com/wwthh/frontend"
   },
-  "proxy": "http://192.144.253.99:8080"
+  "proxy": {
+      "api": {
+          "target": "http://192.144.253.99:8080"
+      }
+  }
 }

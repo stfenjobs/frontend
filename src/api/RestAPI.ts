@@ -5,7 +5,7 @@ import { host, port, version } from './config';
 import { IRequestRetreive, IRequestList } from '../types/request';
 
 
-const entry = 'http://' + host + ':' + port + '/' + version + '/';
+const entry = '/' + version + '/';
 
 export class BaseAPI {
     protected entry: string = entry;
