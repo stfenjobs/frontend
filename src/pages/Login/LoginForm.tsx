@@ -1,5 +1,6 @@
 import React, { FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+import useUserModel from '../../models/userModel';
 
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
@@ -16,13 +17,17 @@ export interface LoginValue {
 };
 
 const LoginForm = (props: LoginFormProps) => {
+    const { login } = useUserModel();
     const { getFieldDecorator } = props.form;
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // api
-        console.log("login")
+        props.form.validateFieldsAndScroll((err: any, values: LoginValue) => {
+            if (!err) {
+                login(values.email, values.password);
+            }
+        });
     }
 
     return (

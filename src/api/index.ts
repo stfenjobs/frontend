@@ -13,8 +13,10 @@ import {
 
 
 class ExpertAPI extends RestAPI {
-    public update = (id: string, data: IRequestPatchExpertInfo) => {
-        return Axios.patch(this.catDetail(id), data);
+    public update = (id: string, data: IRequestPatchExpertInfo, token: string) => {
+        return Axios.patch(this.catDetail(id), data, {
+            headers: { 'token': token }
+        });
     };
 
     // 科技专家上传成果
@@ -24,8 +26,10 @@ class ExpertAPI extends RestAPI {
 }
 
 class UserAPI extends BaseAPI {
-    public update = (id: string, data: IRequestPatchUserInfo) =>
-        Axios.patch(this.entry + id + '/', data);
+    public update = (id: string, data: IRequestPatchUserInfo, token: string) =>
+        Axios.patch(this.entry + id + '/', data, {
+            headers: { 'token': token }
+        });
 
     public certify = () => {
         // TODO
@@ -35,8 +39,10 @@ class UserAPI extends BaseAPI {
         Axios.get(this.entry + 'login/' + BaseAPI.parseParam(param));
     public register = (data: IRequestRegister) =>
         Axios.post(this.entry + 'register/', data);
-    public logout = (param: IRequestLogout) =>
-        Axios.get(this.entry + 'logout/' + BaseAPI.parseParam(param));
+    public logout = (param: IRequestLogout, token: string) =>
+        Axios.get(this.entry + 'logout/' + BaseAPI.parseParam(param), {
+            headers: { 'token': token }
+        });
 
     public purchase = new SecondaryAPI('users', 'purchases');
 }

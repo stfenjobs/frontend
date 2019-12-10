@@ -1,5 +1,6 @@
 import React, { useState, FormEvent, FocusEvent } from 'react';
 import { Link } from 'react-router-dom';
+import useUserModel from '../../models/userModel';
 
 import { Form, Input, Icon, Button } from 'antd';
 
@@ -19,18 +20,18 @@ export interface RegisterValue {
 }
 
 const RegisterForm = (props: RegisterFormProps) => {
+    const { register } = useUserModel();
+
     const [confirmDirty, setConfirmDirty] = useState(false);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        /*
         props.form.validateFieldsAndScroll((err: any, values: RegisterValue) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                register(values.email, values.password, values.username);
             }
         });
-        */
     };
 
     const { getFieldDecorator } = props.form;

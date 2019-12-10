@@ -1,9 +1,10 @@
+import { sha256 } from 'js-sha256';
 import { IResponse, IContentFail } from "../types/response";
 
 
-export const encryptByMd5 = (passwd: string): string => {
+export const encryptBySha256 = (passwd: string): string => {
     // TODO
-    return passwd;
+    return sha256(passwd);
 };
 
 // get content from ajax response
