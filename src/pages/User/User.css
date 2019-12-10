@@ -24,3 +24,19 @@
     padding: 4rem 15rem 6rem 15rem;
     margin: 7% 10%;
 }
+
+.certification-form {
+    max-width: 100%;
+    padding: 1.5rem 12rem 1.5rem 12rem;
+    margin: 7% 10%;
+}
+
+.certification-button {
+    width: 100%;
+}
+
+.certification-button-wrapper {
+    margin-top: 3rem;
+    padding: 0 20%;
+    text-align: center;
+}
