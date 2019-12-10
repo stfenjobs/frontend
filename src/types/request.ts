@@ -9,7 +9,7 @@ export interface IRequestList {
     size: number,
     domain: string,
     key: string,
-    sort: number,
+    sort: string,
     direction: boolean,
     free?: boolean,
 };
