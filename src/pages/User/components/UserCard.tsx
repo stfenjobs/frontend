@@ -1,5 +1,5 @@
 import React from 'react';
-import useUserModel from '../../models/userModel';
+import useUserModel from '../../../models/userModel';
 
 import { Upload, Icon, message } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';

@@ -10,3 +10,7 @@ body {
     background: white;
     border-bottom: 0.1rem solid #001529;
 }
+
+.ant-layout-footer {
+    background: white;
+}

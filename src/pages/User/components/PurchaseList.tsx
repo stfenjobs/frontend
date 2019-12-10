@@ -1,6 +1,6 @@
 import React from 'react';
 import useRouter from 'use-react-router';
-import useService from './services';
+import useService from '../services';
 
 import { Empty, Button, List, Skeleton } from 'antd';
 
@@ -26,7 +26,7 @@ export default () => {
                         </span>
                     }
                     style={{
-                        padding: '25% 0'
+                        padding: '16.25rem 0'
                     }}
                 >
                     <Button type='primary' onClick={() => history.push('/')}>

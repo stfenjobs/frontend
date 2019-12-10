@@ -1,12 +1,10 @@
 import React, { useState, FormEvent, FocusEvent } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Form, Input, Icon, Button, message, Radio } from 'antd';
+import { Form, Input, Icon, Button } from 'antd';
 
 import { RouteComponentProps } from 'react-router-dom';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-
-import './RegisterForm.css';
 
 
 export interface RegisterFormProps extends RouteComponentProps {
@@ -14,29 +12,25 @@ export interface RegisterFormProps extends RouteComponentProps {
 };
 
 export interface RegisterValue {
-    username: string;
-    password: string;
-    confirm: string;
-    type: boolean;
     email: string;
-    photo: string;
+    password: string;
+    username: string;
+    confirm: string;
 }
-
 
 const RegisterForm = (props: RegisterFormProps) => {
     const [confirmDirty, setConfirmDirty] = useState(false);
-    const [type, setType] = useState(false);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const form = props.form;
-
+        /*
         props.form.validateFieldsAndScroll((err: any, values: RegisterValue) => {
             if (!err) {
                 console.log('Received values of form: ', values);
             }
         });
+        */
     };
 
     const { getFieldDecorator } = props.form;
@@ -140,7 +134,11 @@ const RegisterForm = (props: RegisterFormProps) => {
                 )}
             </Form.Item>
             <Form.Item>
-                <Button className='register-button' type='primary' htmlType='submit'>
+                <Button
+                    type='primary'
+                    htmlType='submit'
+                    style={{ width: '100%' }}
+                >
                     注册
                 </Button>
                 <span className='register-button'>

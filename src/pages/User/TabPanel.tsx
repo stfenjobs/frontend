@@ -1,13 +1,12 @@
 import React from 'react';
 
 import { Tabs, Icon } from 'antd';
-import PurchaseList from './PurchaseList';
-import PwChanger from './PwChanger';
+import PurchaseList from './components/PurchaseList';
+import PwChanger from './components/PwChanger';
+import Certification from './components/Certification';
 
 const { TabPane } = Tabs;
 
-
-// export interface TabPanelProps { };
 
 export default () => {
     const onTabChange = (key: string) => {
@@ -59,7 +58,7 @@ export default () => {
                 }
                 key='expert'
             >
-                <div>专家认证</div>
+                <Certification />
             </TabPane>
         </Tabs>
     );

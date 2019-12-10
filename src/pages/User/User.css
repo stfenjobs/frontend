@@ -9,34 +9,18 @@
     padding: 0
 }
 
-.change-password-form {
-    max-width: 96%;
-    padding: 20px 30px 20px 30px;
-    margin: 7% 10%;
-    border-radius: 1ch;
-}
-
 .change-password-button {
     width: 100%;
 }
 
 .change-password-button-wrapper {
-    margin-top: 60px;
+    margin-top: 3rem;
+    padding: 0 20%;
     text-align: center;
 }
 
-#change-password-verify-text{
-    width: 60%;
-    float: left;
-}
-
-#change-password-verify-form{
-    width: 100%;
-}
-
 .user-data-form {
-    max-width: 96%;
-    padding: 20px 30px 20px 30px;
+    max-width: 100%;
+    padding: 4rem 15rem 6rem 15rem;
     margin: 7% 10%;
-    border-radius: 1ch;
 }
