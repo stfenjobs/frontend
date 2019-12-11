@@ -1,4 +1,5 @@
 import React from 'react';
+import useRouter from 'use-react-router';
 import useUserModel from '../../../models/userModel';
 
 import { Upload, Icon, message } from 'antd';
@@ -6,6 +7,13 @@ import { UploadChangeParam } from 'antd/lib/upload';
 
 import EditableLabel from './EditableLabel';
 
+
+enum errCode {
+    UNAVAILABLE = 0,
+    REPEATED_EMAIL = 1,
+    SERVICE_REFUSED = 2,
+    TOKEN_EXPIRED = 3,
+};
 
 interface UploadFile {
     type: string;
@@ -31,79 +39,71 @@ const beforeUpload = (file: UploadFile) => {
 }
 
 export default () => {
-    /* wait for api */
-    const { /* token, username, avatar, email, points, updateProfile */ eid } = useUserModel();
+    const { history } = useRouter();
+    const { token, id, username, avatar, email, points, eid,
+        loading, error, updateProfile, clearError } = useUserModel();
 
-    const avatar = 'https://avatars3.githubusercontent.com/u/37368558?s=400&u=2cee58569e7ab9446e77ef3ad76362fb598a019f&v=4';
-    const userName = 'zx555';
-    const userEmail ='czr.cn.525@gmail.com';
-    const userPoints ='3';
-
-    const [loading, setLoading] = React.useState(false);
+    const [uploadLoading, setUploadLoading] = React.useState(false);
     const [img, setImg] = React.useState(avatar);
 
-    const [name, setName] = React.useState(userName);
+    const [tmpName, setTmpName] = React.useState(username);
     const [nameEditable, setNameEditable] = React.useState(false);
 
-    const [email, setEmail] = React.useState(userEmail);
+    const [tmpEmail, setTmpEmail] = React.useState(email);
     const [emailEditable, setEmailEditable] = React.useState(false);
 
     React.useEffect(() => {
         // check if login?
-        /*
         if (token === '') {
             message.info('请先登录');
             history.push('/login');
         }
-        */
     }, []);
 
-    const handleChange = (info: UploadChangeParam) => {
+    React.useEffect(() => {
+        setNameEditable(false);
+        setTmpName(username);
+    }, [username]);
+
+    React.useEffect(() => {
+        setEmailEditable(false);
+        setTmpEmail(email);
+    }, [email]);
+
+    React.useEffect(() => {
+        switch (error) {
+            case errCode.UNAVAILABLE: {
+                message.error('服务不可用，请稍后再试');
+                break;
+            }
+            case errCode.REPEATED_EMAIL: {
+                message.error('该邮箱已被注册');
+                break;
+            }
+            case errCode.SERVICE_REFUSED: {
+                message.error('非法操作');
+                break;
+            }
+            case errCode.TOKEN_EXPIRED: {
+                message.info('登录过期，请重新登录');
+                clearError();
+                history.push('/login');
+                return;
+            }
+        }
+        clearError();
+    }, [error]);
+
+    const handleUploadChange = (info: UploadChangeParam) => {
         if (info.file.status === 'uploading') {
-            setLoading(true);
+            setUploadLoading(true);
         } else if (info.file.status === 'done') {
             getBase64(info.file.originFileObj, imgUrl => {
-                setLoading(false);
+                setUploadLoading(false);
                 setImg(imgUrl);
             });
         }
-    }
-
-    const onNameEdit = () => {
-        setNameEditable(true);
-    }
-
-    const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
-    }
-
-    const onNameConfirm = () => {
-        // api request
-        setNameEditable(false);
-    }
-
-    const onNameCancel = () => {
-        setName(userName);
-        setNameEditable(false);
-    }
-
-    const onEmailEdit = () => {
-        setEmailEditable(true);
-    }
-
-    const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    }
-
-    const onEmailConfirm = () => {
-        // api
-        setEmailEditable(false);
-    }
-
-    const onEmailCancel = () => {
-        setEmail(userEmail);
-        setEmailEditable(false);
-    }
+    };
 
     return (
         <div
@@ -117,21 +117,22 @@ export default () => {
                 listType='picture-card'
                 beforeUpload={beforeUpload}
                 showUploadList={false}
-                onChange={handleChange}
-                disabled={loading}
+                onChange={handleUploadChange}
+                disabled={uploadLoading}
                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
             >
                 <img src={img} alt="avatar" style={{width: '100%'}} />
             </Upload>
             <EditableLabel
                 isEditable={nameEditable}
-                value={name}
+                value={tmpName}
                 fontSize={"2rem"}
                 size='large'
-                onEdit={onNameEdit}
-                onValueChange={onNameChange}
-                onConfirm={onNameConfirm}
-                onCancel={onNameCancel}
+                loading={loading}
+                onEdit={() => setNameEditable(true)}
+                onValueChange={(e) => setTmpName(e.target.value)}
+                onConfirm={() => { console.log('namechange'); updateProfile(token, id, { username: tmpName })}}
+                onCancel={() => { setTmpName(username); setNameEditable(false); }}
             />
             <div style={{ paddingTop: '1.5rem' }}>
                 <Icon
@@ -144,12 +145,13 @@ export default () => {
                 />
                 <EditableLabel
                     isEditable={emailEditable}
-                    value={email}
+                    value={tmpEmail}
                     fontSize={"1rem"}
-                    onEdit={onEmailEdit}
-                    onValueChange={onEmailChange}
-                    onConfirm={onEmailConfirm}
-                    onCancel={onEmailCancel}
+                    loading={loading}
+                    onEdit={() => setEmailEditable(true)}
+                    onValueChange={(e) => setTmpEmail(e.target.value)}
+                    onConfirm={() => updateProfile(token, id, { email: tmpEmail })}
+                    onCancel={() => { setTmpEmail(email); setEmailEditable(false); }}
                 />
             </div>
             <div style={{ paddingTop: '0.4rem' }}>
@@ -161,7 +163,7 @@ export default () => {
                     }}
                 />
                 <span style={{ fontSize: '1rem' }}>
-                    可用 <span style={{ color: 'rgba(200, 0, 0, 0.6)' }}>{userPoints}</span> 积分
+                    可用 <span style={{ color: 'rgba(200, 0, 0, 0.6)' }}>{points}</span> 积分
                 </span>
             </div>
             {

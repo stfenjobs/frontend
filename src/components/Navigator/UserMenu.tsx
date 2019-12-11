@@ -67,7 +67,7 @@ export default () => {
                 <Link to={`/user`}>用户中心</Link>
             </Item>
             {
-                eid !== '' &&
+                (eid !== '' && eid !== '-1') &&
                 <Item>
                     <Link to={`/experts/${eid}`}>专家主页</Link>
                 </Item>

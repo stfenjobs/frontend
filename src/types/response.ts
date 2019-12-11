@@ -39,13 +39,20 @@ export interface IContentLogin {
     readonly token: string,
     readonly username: string,
     readonly email: string,
-    readonly points: string,
+    readonly point: string,
     readonly avatar: string,
     readonly eid: string,
 };
 
 export type IContentRegister = IContentEmpty;
 
-export type IContentLogout = IContentEmpty;
+export interface IContentUpdateUserProfile {
+    readonly password: string,
+    readonly photo: string,
+    readonly id: string,
+    readonly userName: string,
+    readonly email: string,
+    readonly point: string
+}
 
 // TODO

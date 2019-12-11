@@ -8,12 +8,11 @@ import {
     IRequestPatchUserInfo,
     IRequestLogin,
     IRequestRegister,
-    IRequestLogout,
 } from '../types/request';
 
 
 class ExpertAPI extends RestAPI {
-    public update = (id: string, data: IRequestPatchExpertInfo, token: string) => {
+    public update = (token: string, id: string, data: IRequestPatchExpertInfo) => {
         return Axios.patch(this.catDetail(id), data, {
             headers: { 'token': token }
         });
@@ -26,7 +25,7 @@ class ExpertAPI extends RestAPI {
 }
 
 class UserAPI extends BaseAPI {
-    public update = (id: string, data: IRequestPatchUserInfo, token: string) =>
+    public update = (token: string, id: string, data: IRequestPatchUserInfo) =>
         Axios.patch(this.entry + id + '/', data, {
             headers: { 'token': token }
         });
@@ -39,10 +38,6 @@ class UserAPI extends BaseAPI {
         Axios.get(this.entry + 'login/' + BaseAPI.parseParam(param));
     public register = (data: IRequestRegister) =>
         Axios.post(this.entry + 'register/', data);
-    public logout = (param: IRequestLogout, token: string) =>
-        Axios.get(this.entry + 'logout/' + BaseAPI.parseParam(param), {
-            headers: { 'token': token }
-        });
 
     public purchase = new SecondaryAPI('users', 'purchases');
 }

@@ -8,6 +8,7 @@ export interface EditableLabelProps {
     value: string,
     fontSize: string,
     size?: 'large',
+    loading: boolean,
     onEdit: () => void,
     onValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     onConfirm: () => void,
@@ -34,16 +35,27 @@ export default (props: EditableLabelProps) => {
                     onChange={props.onValueChange}
                     size={props.size ? props.size : 'default'}
                     style={{ width: '10rem' }}
+                    disabled={props.loading}
                 />
-                <Icon
-                    type='check'
-                    style={{ paddingLeft: '0.5rem' }}
-                    onClick={props.onConfirm}
-                />
-                <Icon
-                    type='close'
-                    style={{ paddingLeft: '0.5rem' }}
-                    onClick={props.onCancel} />
+                {
+                    props.loading ?
+                    <Icon
+                        type='loading'
+                        style={{ paddingLeft: '0.5rem' }}
+                    /> :
+                    <div>
+                        <Icon
+                            type='check'
+                            style={{ paddingLeft: '0.5rem' }}
+                                onClick={props.onConfirm}
+                        />
+                        <Icon
+                            type='close'
+                            style={{ paddingLeft: '0.5rem' }}
+                            onClick={props.onCancel}
+                        />
+                    </div>
+                }
             </div>
         ) : (
             <div

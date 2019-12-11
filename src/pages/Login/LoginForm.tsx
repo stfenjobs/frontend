@@ -17,11 +17,12 @@ export interface LoginValue {
 };
 
 const LoginForm = (props: LoginFormProps) => {
-    const { login } = useUserModel();
+    const { login, loading } = useUserModel();
     const { getFieldDecorator } = props.form;
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
 
         props.form.validateFieldsAndScroll((err: any, values: LoginValue) => {
             if (!err) {
@@ -85,6 +86,7 @@ const LoginForm = (props: LoginFormProps) => {
                         type="primary"
                         htmlType="submit"
                         style={{ width: '100%' }}
+                        loading={loading}
                     >
                         登录
                     </Button>

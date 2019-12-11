@@ -20,7 +20,7 @@ export interface RegisterValue {
 }
 
 const RegisterForm = (props: RegisterFormProps) => {
-    const { register } = useUserModel();
+    const { register, loading } = useUserModel();
 
     const [confirmDirty, setConfirmDirty] = useState(false);
 
@@ -139,6 +139,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                     type='primary'
                     htmlType='submit'
                     style={{ width: '100%' }}
+                    loading={loading}
                 >
                     注册
                 </Button>

@@ -1,16 +1,29 @@
 import React from 'react';
 import useRouter from 'use-react-router';
 import useUserModel from '../../../models/userModel';
+import useService from '../services';
 
-import { Result, Button } from 'antd';
+import { Result, Button, message } from 'antd';
 import CertificationForm from './CertificationForm';
 
 
 export default () => {
     const { history } = useRouter();
-    const { eid } = useUserModel();
+    const { token, eid } = useUserModel();
+    const { editable, onEdit } = useService();
+
+    React.useEffect(() => {
+        console.log('eid:', eid);
+        if (token === '') {
+            message.error("请先登录");
+            history.push('/login');
+        }
+    }, [token]);
 
     const renderResult = () => {
+        if (editable)
+            return <CertificationForm />;
+
         switch (eid) {
             case '-1':
                 return (
@@ -36,7 +49,11 @@ export default () => {
                             >
                                 前往专家主页
                             </Button>,
-                            <Button>修改认证信息</Button>
+                            <Button
+                                onClick={() => onEdit()}
+                            >
+                                修改认证信息
+                            </Button>
                         ]}
                         style={{
                             padding: '15.85rem 0'

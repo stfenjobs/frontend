@@ -1,5 +1,6 @@
 import { sha256 } from 'js-sha256';
 import { IResponse, IContentFail } from "../types/response";
+import err from '../utils/error';
 
 
 export const encryptBySha256 = (passwd: string): string => {
@@ -8,13 +9,14 @@ export const encryptBySha256 = (passwd: string): string => {
 };
 
 // get content from ajax response
-export function getContent<T>(response: IResponse, setError: (code: number) => void) {
+export function getContent<T>(response: IResponse) {
+    let responseErr = err.none;
     if (!response.success) {
-        setError((response.content as IContentFail).error_code);
+        responseErr = (response.content as IContentFail).error_code;
     }
 
     const content: T = response.content as T;
-    return content;
+    return { content, responseErr };
 };
 
 export const trim = (s: string) => {

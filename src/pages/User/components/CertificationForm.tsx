@@ -1,15 +1,10 @@
-import React, { useState, FormEvent, FocusEvent } from 'react';
+import React, { FormEvent } from 'react';
 
 import { Form, Input, Icon, Button, Tag, AutoComplete } from 'antd';
-
-// import useUser from '../../models/userModel';
-
 import { RouteComponentProps } from 'react-router-dom';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-import { render } from 'react-dom';
 import { SelectValue } from 'antd/lib/select';
 
-const { CheckableTag } = Tag;
 const { Option, OptGroup } = AutoComplete;
 
 
@@ -24,30 +19,6 @@ export interface CertificationFormValue {
     field: BigInteger;
     position: string;
 }
-
-/*
-export interface MyTagProps {
-    children: string;
-}
-
-const MyTag = (props: MyTagProps) => {
-    const [checked, setChecked] = useState(false);
-
-    const handleChange = (checked: boolean) => {
-        setChecked(checked);
-    };
-
-    return (
-        <CheckableTag {...props} checked={checked} onChange={handleChange} />
-    );
-}*/
-
-/*
-const callback = (key:BigInteger) => {
-    const res = find(key); // 查表
-    tags.push(res);
-}
-*/
 
 const dataSource = [
     {
@@ -142,8 +113,7 @@ const CertificationForm = (props: CertificationFormProps) => {
     };
 
     const handleAutoCompleteChange = (value: SelectValue) => {
-        let inTag = false;
-        let inMyTag = false;
+        let inTag = false, inMyTag = false;
         let i = 0;
         for (i = 0; i < tags.length; i++) {
             console.log(tags[i], value as string)
@@ -165,8 +135,6 @@ const CertificationForm = (props: CertificationFormProps) => {
 
     const handleClose = (removedTag: string) => {
         const tempTags = tags.filter(tag => tag !== removedTag);
-        console.log(removedTag);
-        console.log(tempTags);
         setTags(tempTags);
     }
 
