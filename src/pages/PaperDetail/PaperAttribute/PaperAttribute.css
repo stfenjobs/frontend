@@ -1,0 +1,17 @@
+.paper-attribute {
+    margin-left: 1%;
+    margin-top: 1%;
+    padding: 2%;
+    min-height: 200px;
+    background-color: white;
+    
+}
+
+.paper-attribute-avatar {
+    float: left;
+}
+
+.paper-attribute-description {
+    max-width: 900px;
+    float: right;
+}
