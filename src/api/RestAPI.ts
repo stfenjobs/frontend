@@ -5,7 +5,7 @@ import { host, port, version } from './config';
 import { IRequestRetreive, IRequestList } from '../types/request';
 
 
-const entry = 'http://' + host + ':' + port + '/' + version + '/';
+const entry = '/' + version + '/';
 
 export class BaseAPI {
     protected entry: string = entry;
@@ -25,9 +25,14 @@ export default class RestAPI extends BaseAPI {
     protected catList = (param?: IRequestList) =>
         this.entry + (param ? BaseAPI.parseParam(param) : '');
 
-    public list = (param?: IRequestList) => Axios.get(this.catList(param));
-    public retreive = (id: string, param?: IRequestRetreive) =>
-        Axios.get(this.catDetail(id, param));
+    public list = (token: string, param?: IRequestList) =>
+        Axios.get(this.catList(param), {
+            headers: { 'token': token }
+        });
+    public retreive = (token: string, id: string, param?: IRequestRetreive) =>
+        Axios.get(this.catDetail(id, param), {
+            headers: { 'token': token }
+        });
 
     // no demand for creating and delete resource.
 };
@@ -46,7 +51,12 @@ export class SecondaryAPI extends BaseAPI {
     protected catList = (id1: string, param?: IRequestList) =>
         this.entry + id1 + '/' + this.secondary + '/' + (param ? BaseAPI.parseParam(param) : '');
 
-    public list = (id1: string, param?: IRequestList) => Axios.get(this.catList(id1, param));
-    public retreive = (id1: string, id2: string, param?: IRequestRetreive) =>
-        Axios.get(this.catDetail(id1, id2, param));
+    public list = (token:string, id1: string, param?: IRequestList) =>
+        Axios.get(this.catList(id1, param), {
+            headers: { 'token': token }
+        });
+    public retreive = (token: string, id1: string, id2: string, param?: IRequestRetreive) =>
+        Axios.get(this.catDetail(id1, id2, param), {
+            headers: { 'token': token }
+        });
 };

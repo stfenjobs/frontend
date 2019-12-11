@@ -85,7 +85,7 @@ export default () => {
                     onChange={(e) => onInput(e.target.value)}
                     onPressEnter={() => onSearch(qValue)}
                     style={{
-                        width: 300,
+                        width: '18rem',
                         textAlign: 'left',
                         borderColor: 'black black black red'
                     }}

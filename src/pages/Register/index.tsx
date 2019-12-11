@@ -1,27 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
+import React from 'react';
+import useRouter from 'use-react-router';
+import useUserModel from '../../models/userModel';
 
-import useUser from '../../models/userModel';
-import RegisterForm from '../../components/RegisterForm';
-
-import { RouteComponentProps } from 'react-router-dom';
+import { message } from 'antd';
+import RegisterForm from './RegisterForm';
 
 import './Register.css';
 
-import { message } from 'antd';
+enum errCode {
+    UNAVAILABLE = 0,
+    REPEATED_EMAIL = 1,
+};
 
+export default () => {
+    const { error, clearError, token } = useUserModel();
+    const { history } = useRouter();
 
-export default withRouter((props: RouteComponentProps) => {
-    const user = useUser();
-    const [visible, setVisible] = useState(false);
+    React.useEffect(() => {
+        if (token !== '') {
+            message.success('注册成功！');
+            history.push('/');
+        }
+    }, [token]);
 
-    const onOkClick = () => {
-        setVisible(false);
-    };
+    React.useEffect(() => {
+        switch (error) {
+            case errCode.UNAVAILABLE: {
+                message.error('服务不可用，请稍后再试');
+                break;
+            }
+            case errCode.REPEATED_EMAIL: {
+                message.error('该邮箱已被注册');
+                break;
+            }
+        }
+        clearError();
+    }, [error])
 
     return (
         <div className='register-root'>
             <RegisterForm />
         </div>
     );
-});
+};

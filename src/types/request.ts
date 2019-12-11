@@ -9,7 +9,7 @@ export interface IRequestList {
     size: number,
     domain: string,
     key: string,
-    sort: number,
+    sort: string,
     direction: boolean,
     free?: boolean,
 };
@@ -23,10 +23,9 @@ export interface IRequestPatchExpertInfo {
 };
 
 export interface IRequestPatchUserInfo {
-    token: string,
     email?: string,
-    username?: string,
-    avatar?: string,
+    userName?: string,
+    photo?: string,
 };
 
 export interface IRequestLogin {
@@ -36,11 +35,6 @@ export interface IRequestLogin {
 
 export interface IRequestRegister {
     email: string,
-    cipher: string,
-    username: string,
-    avatar?: string,
-};
-
-export interface IRequestLogout {
-    token: string,
+    password: string,
+    userName: string,
 };

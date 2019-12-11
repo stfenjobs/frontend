@@ -1,9 +1,8 @@
-import React, { useState, useEffect, FormEvent, FocusEvent } from 'react';
-import useRouter from 'use-react-router';
+import React, { useState, FormEvent, FocusEvent } from 'react';
 
-import { Form, Input, Icon, Button, message, Card } from 'antd';
+import { Form, Input, Icon, Button } from 'antd';
 
-import useUser from '../../models/userModel';
+// import useUser from '../../models/userModel';
 
 import { RouteComponentProps } from 'react-router-dom';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
@@ -20,26 +19,13 @@ export interface PwChangerValue {
 }
 
 const PwChanger = (props: PwChangerProps) => {
-    const user = useUser();
     const [confirmDirty, setConfirmDirty] = useState(false);
-
-
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const form = props.form;
-        const code: string = form.getFieldValue('verifycode');
-
-        props.form.validateFieldsAndScroll((err: any, values: PwChangerValue) => {
-            if (!err) {
-                const param = {
-                    username: user.id,
-                    old_password: values.oldPassword,
-                    new_password: values.password,
-                };
-            }
-        });
+        // api
+        console.log("change password")
     };
 
     const { getFieldDecorator } = props.form;

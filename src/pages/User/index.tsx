@@ -3,7 +3,7 @@ import React from 'react';
 import useService from './services';
 
 import TabPanel from './TabPanel';
-import UserCard from './UserCard';
+import UserCard from './components/UserCard';
 
 import './User.css';
 
