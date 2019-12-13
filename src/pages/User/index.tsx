@@ -1,15 +1,26 @@
 import React from 'react';
-// import useUserModel from '../../models/userModel';
+import useUserModel from '../../models/userModel';
 import useService from './services';
+import useRouter from 'use-react-router';
 
+import { message } from 'antd';
 import TabPanel from './TabPanel';
 import UserCard from './components/UserCard';
 
 import './User.css';
 
 export default () => {
-    // const { avatar, username, eid } = useUserModel();
+    const { token } = useUserModel();
+    const { history } = useRouter();
     useService();
+
+    React.useEffect(() => {
+        // check if login?
+        if (token === '') {
+            message.info('请先登录');
+            history.push('/login');
+        }
+    }, []);
 
     return (
         <div

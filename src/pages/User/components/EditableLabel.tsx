@@ -43,7 +43,7 @@ export default (props: EditableLabelProps) => {
                         type='loading'
                         style={{ paddingLeft: '0.5rem' }}
                     /> :
-                    <div>
+                    <span>
                         <Icon
                             type='check'
                             style={{ paddingLeft: '0.5rem' }}
@@ -54,7 +54,7 @@ export default (props: EditableLabelProps) => {
                             style={{ paddingLeft: '0.5rem' }}
                             onClick={props.onCancel}
                         />
-                    </div>
+                    </span>
                 }
             </div>
         ) : (

@@ -53,14 +53,6 @@ export default () => {
     const [emailEditable, setEmailEditable] = React.useState(false);
 
     React.useEffect(() => {
-        // check if login?
-        if (token === '') {
-            message.info('请先登录');
-            history.push('/login');
-        }
-    }, []);
-
-    React.useEffect(() => {
         setNameEditable(false);
         setTmpName(username);
     }, [username]);
@@ -131,7 +123,11 @@ export default () => {
                 loading={loading}
                 onEdit={() => setNameEditable(true)}
                 onValueChange={(e) => setTmpName(e.target.value)}
-                onConfirm={() => { console.log('namechange'); updateProfile(token, id, { username: tmpName })}}
+                onConfirm={
+                    () => tmpName !== username ?
+                    updateProfile(token, id, { username: tmpName }) :
+                    setNameEditable(false)
+                }
                 onCancel={() => { setTmpName(username); setNameEditable(false); }}
             />
             <div style={{ paddingTop: '1.5rem' }}>
@@ -150,7 +146,11 @@ export default () => {
                     loading={loading}
                     onEdit={() => setEmailEditable(true)}
                     onValueChange={(e) => setTmpEmail(e.target.value)}
-                    onConfirm={() => updateProfile(token, id, { email: tmpEmail })}
+                    onConfirm={
+                        () => tmpEmail !== email ?
+                        updateProfile(token, id, { email: tmpEmail }) :
+                        setEmailEditable(false)
+                    }
                     onCancel={() => { setTmpEmail(email); setEmailEditable(false); }}
                 />
             </div>
