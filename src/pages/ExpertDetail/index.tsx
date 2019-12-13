@@ -26,7 +26,7 @@ export default () => {
     const [tab, setTab] = useState('1');
 
     return (
-        <div>
+        <div className='expert-detail'>
             <div className='expert-detail-left'>
                 <div className='expert-detail-left-attri'>
                     <PersonalAttribute/>
