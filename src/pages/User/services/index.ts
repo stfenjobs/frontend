@@ -22,6 +22,10 @@ export default (/* params: ServiceParam */) => {
         setEditable(true);
     }
 
+    const onUnEdit = () => {
+        setEditable(false);
+    }
+
     const certify =() => {
 
     }
@@ -30,6 +34,6 @@ export default (/* params: ServiceParam */) => {
         getRecords();
     }, []);
 
-    return { records, editable, onEdit, loading,
+    return { records, editable, onEdit, onUnEdit, loading,
         getRecords, certify };
 }

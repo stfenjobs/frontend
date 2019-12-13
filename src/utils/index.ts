@@ -22,3 +22,7 @@ export function getContent<T>(response: IResponse) {
 export const trim = (s: string) => {
     return s.replace(/(^\s*)|(\s*$)/g, "");
 }
+
+export const clone = (obj: any) => {
+    return JSON.parse(JSON.stringify(obj));
+}
