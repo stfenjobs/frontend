@@ -8,7 +8,7 @@ const { Item } = Menu;
 
 export default () => {
     const {
-        id, token, username, avatar, eid, logout
+        token, username, avatar, eid, logout
     } = useUserModel();
 
     // TODO: useEffect to catch token change
@@ -64,10 +64,10 @@ export default () => {
                 注销
             </Item>
             <Item>
-                <Link to={`/users/${id}`}>用户中心</Link>
+                <Link to={`/user`}>用户中心</Link>
             </Item>
             {
-                eid !== '' &&
+                (eid !== '' && eid !== '-1') &&
                 <Item>
                     <Link to={`/experts/${eid}`}>专家主页</Link>
                 </Item>

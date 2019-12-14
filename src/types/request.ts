@@ -1,4 +1,5 @@
 // see https://shimo.im/docs/3VdJgXthWpjT6VQQ
+import { IField } from './index';
 
 export interface IRequestRetreive {
     token: string,
@@ -9,7 +10,7 @@ export interface IRequestList {
     size: number,
     domain: string,
     key: string,
-    sort: number,
+    sort: string,
     direction: boolean,
     free?: boolean,
 };
@@ -23,10 +24,21 @@ export interface IRequestPatchExpertInfo {
 };
 
 export interface IRequestPatchUserInfo {
-    token: string,
     email?: string,
-    username?: string,
-    avatar?: string,
+    userName?: string,
+    photo?: string,
+};
+
+export interface IRequestPatchPw {
+    oldPassword: string,
+    newPassword: string,
+};
+
+
+export interface IRequestCertify {
+    org: string,
+    name: string,
+    tags: Array<IField>,
 };
 
 export interface IRequestLogin {
@@ -36,11 +48,6 @@ export interface IRequestLogin {
 
 export interface IRequestRegister {
     email: string,
-    cipher: string,
-    username: string,
-    avatar?: string,
-};
-
-export interface IRequestLogout {
-    token: string,
+    password: string,
+    userName: string,
 };

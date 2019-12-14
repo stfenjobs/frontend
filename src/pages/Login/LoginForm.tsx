@@ -1,10 +1,8 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+import useUserModel from '../../models/userModel';
 
-import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
-
-import './LoginForm.css';
-
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 
@@ -14,21 +12,22 @@ export interface LoginFormProps extends RouteComponentProps {
 }
 
 export interface LoginValue {
-    username: string;
+    email: string;
     password: string;
 };
 
 const LoginForm = (props: LoginFormProps) => {
+    const { login, loading } = useUserModel();
     const { getFieldDecorator } = props.form;
-    
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const form = props.form;
-        props.form.validateFields((err: any, values: LoginValue) => {
+
+        props.form.validateFieldsAndScroll((err: any, values: LoginValue) => {
             if (!err) {
-                console.log('Received values of form: ', values);
-              }
+                login(values.email, values.password);
+            }
         });
     }
 
@@ -72,7 +71,7 @@ const LoginForm = (props: LoginFormProps) => {
                     />,
                 )}
             </Form.Item>
-            <div id="register-form-bottom">
+            <div style={{ clear: "both" }}>
                 <Form.Item>
                     {getFieldDecorator('remember', {
                         valuePropName: 'checked',
@@ -80,13 +79,18 @@ const LoginForm = (props: LoginFormProps) => {
                     })(
                         <Checkbox>记住密码</Checkbox>)
                     }
-                    <Link className="login-form-forgot" to='/forget'>
+                    <Link style={{ float: "right" }} to='/forget'>
                         忘记密码
                     </Link>
-                    <Button type="primary" htmlType="submit" className="login-form-button">
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        style={{ width: '100%' }}
+                        loading={loading}
+                    >
                         登录
                     </Button>
-                    <span className='register-button'>
+                    <span style={{ float: "right" }}>
                         没有账号？
                         <Link to='/register'>注册</Link>
                     </span>

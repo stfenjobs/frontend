@@ -1,0 +1,7 @@
+.app-navigator{
+    min-width: 1200px;
+}
+
+.ant-select-selection.ant-select-selection--single {
+    border-color: black red black black;
+}

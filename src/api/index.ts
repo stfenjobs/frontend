@@ -8,13 +8,16 @@ import {
     IRequestPatchUserInfo,
     IRequestLogin,
     IRequestRegister,
-    IRequestLogout,
+    IRequestPatchPw,
+    IRequestCertify,
 } from '../types/request';
 
 
 class ExpertAPI extends RestAPI {
-    public update = (id: string, data: IRequestPatchExpertInfo) => {
-        return Axios.patch(this.catDetail(id), data);
+    public update = (token: string, id: string, data: IRequestPatchExpertInfo) => {
+        return Axios.patch(this.catDetail(id), data, {
+            headers: { 'token': token }
+        });
     };
 
     // 科技专家上传成果
@@ -24,19 +27,25 @@ class ExpertAPI extends RestAPI {
 }
 
 class UserAPI extends BaseAPI {
-    public update = (id: string, data: IRequestPatchUserInfo) =>
-        Axios.patch(this.entry + id + '/', data);
+    public update = (token: string, id: string, data: IRequestPatchUserInfo) =>
+        Axios.patch(this.entry + id + '/', data, {
+            headers: { 'token': token }
+        });
 
-    public certify = () => {
-        // TODO
-    }
+    public changePw = (token: string, id: string, data: IRequestPatchPw) =>
+        Axios.patch(this.entry + id + '/password', data, {
+            headers: { 'token': token }
+        });
+
+    public certify = (token: string, id: string, data: IRequestCertify) =>
+        Axios.post(this.entry + id + '/authentication', data, {
+            headers: { 'token': token }
+        });
 
     public login = (param: IRequestLogin) =>
         Axios.get(this.entry + 'login/' + BaseAPI.parseParam(param));
     public register = (data: IRequestRegister) =>
         Axios.post(this.entry + 'register/', data);
-    public logout = (param: IRequestLogout) =>
-        Axios.get(this.entry + 'logout/' + BaseAPI.parseParam(param));
 
     public purchase = new SecondaryAPI('users', 'purchases');
 }
