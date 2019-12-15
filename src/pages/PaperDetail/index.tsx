@@ -8,7 +8,7 @@ export default () => {
 
     return (
         <div style={{ padding: "0 12%" }}>
-            <div style={{float: 'left', paddingTop: '3%', width: '65%' }}>
+            <div style={{float: 'left', paddingTop: '3%', width: '70%' }}>
                 <Detail />
             </div>
             <Cards style={{ float: 'right', paddingTop: '3rem' }}/>

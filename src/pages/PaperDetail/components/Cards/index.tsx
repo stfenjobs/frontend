@@ -7,7 +7,7 @@ export default (props: { style: any }) => {
     const { paper, loading } = useService();
 
     return (
-        <Affix offsetTop={10} style={{...props.style, width: '30%'}}>
+        <Affix offsetTop={10} style={{...props.style, width: '27%'}}>
             <div>
                 <Card title='论文' loading={loading}>
                     <div style={{ paddingLeft: '0.5rem' }}>
