@@ -1,6 +1,6 @@
 // see https://shimo.im/docs/3VdJgXthWpjT6VQQ
 import { IPaper } from './index';
-
+import { IExpert } from ".";
 
 interface IContent {
     readonly [propsName: string]: any,
@@ -28,6 +28,12 @@ interface IPaperListItem {
     readonly volume: string,
     readonly issue: string,
 };
+
+
+export interface IExpertPaperList {
+    readonly total: number,
+    readonly experts: Array<IExpert>,
+}
 
 export interface IContentPaperList {
     readonly total: number,
