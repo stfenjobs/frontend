@@ -1,8 +1,8 @@
 import Axios from 'axios';
 import qs from 'qs';
 
-import { host, port, version } from './config';
-import { IRequestRetreive, IRequestList } from '../types/request';
+import { version } from './config';
+import { IRequestList } from '../types/request';
 
 
 const entry = '/' + version + '/';
@@ -20,8 +20,8 @@ export class BaseAPI {
 
 // i.e. http://ip:port/v1/paper/23/
 export default class RestAPI extends BaseAPI {
-    protected catDetail = (id: string, param?: IRequestRetreive) =>
-        this.entry + id + '/' + (param ? BaseAPI.parseParam(param) : '');
+    protected catDetail = (id: string) =>
+        this.entry + id + '/';
     protected catList = (param?: IRequestList) =>
         this.entry + (param ? BaseAPI.parseParam(param) : '');
 
@@ -29,8 +29,8 @@ export default class RestAPI extends BaseAPI {
         Axios.get(this.catList(param), {
             headers: { 'token': token }
         });
-    public retreive = (token: string, id: string, param?: IRequestRetreive) =>
-        Axios.get(this.catDetail(id, param), {
+    public retreive = (token: string, id: string) =>
+        Axios.get(this.catDetail(id), {
             headers: { 'token': token }
         });
 
@@ -46,8 +46,8 @@ export class SecondaryAPI extends BaseAPI {
         this.secondary = secondary;
     }
 
-    protected catDetail = (id1: string, id2: string, param?: IRequestRetreive) =>
-        this.entry + id1 + '/' + this.secondary + '/' + id2 + '/' + (param ? BaseAPI.parseParam(param) : '');
+    protected catDetail = (id1: string, id2: string) =>
+        this.entry + id1 + '/' + this.secondary + '/' + id2 + '/';
     protected catList = (id1: string, param?: IRequestList) =>
         this.entry + id1 + '/' + this.secondary + '/' + (param ? BaseAPI.parseParam(param) : '');
 
@@ -55,8 +55,8 @@ export class SecondaryAPI extends BaseAPI {
         Axios.get(this.catList(id1, param), {
             headers: { 'token': token }
         });
-    public retreive = (token: string, id1: string, id2: string, param?: IRequestRetreive) =>
-        Axios.get(this.catDetail(id1, id2, param), {
+    public retreive = (token: string, id1: string, id2: string) =>
+        Axios.get(this.catDetail(id1, id2), {
             headers: { 'token': token }
         });
 };

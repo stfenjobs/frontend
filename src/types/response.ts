@@ -1,4 +1,6 @@
 // see https://shimo.im/docs/3VdJgXthWpjT6VQQ
+import { IPaper } from './index';
+
 
 interface IContent {
     readonly [propsName: string]: any,
@@ -15,10 +17,7 @@ export interface IContentFail {
 
 interface IContentEmpty { };
 
-export interface IContentPaperDetail {
-    // TODO
-    readonly isPurchased: boolean,
-};
+export type IContentPaperDetail = IPaper;
 
 interface IPaperListItem {
     readonly title: string,

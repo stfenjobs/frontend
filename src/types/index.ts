@@ -30,7 +30,7 @@ export class IPaper {
     volume: string = '';
     issue: string = '';
     pdf: string | null = null;
-    url: Array<string> = [];
+    urls: Array<string> = [];
     summary: string = '';
     price: string = '';
 };

@@ -1,11 +1,46 @@
 import React from 'react';
 import useService from '../../services';
+import useUserModel from '../../../../models/userModel';
+import useRouter from 'use-react-router';
 
 import { Link } from 'react-router-dom';
-import { Button, Tag, Tabs, Skeleton } from 'antd';
+import { Button, Tag, Tabs, Skeleton, message } from 'antd';
 
-export default () => {
-    const { paper, loading } = useService();
+
+enum errType {
+    UNAVALIABLE = 0,
+    ID_NOT_EXIST = 1,
+};
+
+export interface DetailProps {
+    id: string;
+};
+
+export default (props: DetailProps) => {
+    const { paper, loading, getPaper, error, clearErr } = useService();
+    const { history } = useRouter();
+    const { token } = useUserModel();
+
+    React.useEffect(() => {
+        getPaper(token, props.id);
+    }, []);
+
+    React.useEffect(() => {
+        switch (error) {
+            case errType.UNAVALIABLE: {
+                message.error('服务不可用，请稍后再试');
+                clearErr();
+                history.push('/');
+                return;
+            }
+            case errType.ID_NOT_EXIST: {
+                message.error('不存在的页面');
+                clearErr();
+                history.push('/papers/not-found');
+                return;
+            }
+        }
+    }, [error])
 
     return (
         <div>
@@ -25,6 +60,7 @@ export default () => {
                     >
                         <Button
                             type='primary'
+                            onClick={() => window.open(paper.pdf ? paper.pdf : paper.urls[0])}
                         >
                             预览
                         </Button>
