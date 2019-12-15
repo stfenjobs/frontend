@@ -2,8 +2,6 @@ import React, { useState, FormEvent, FocusEvent } from 'react';
 
 import { Form, Input, Icon, Button } from 'antd';
 
-// import useUser from '../../models/userModel';
-
 import { RouteComponentProps } from 'react-router-dom';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 
@@ -53,7 +51,14 @@ const PwChanger = (props: PwChangerProps) => {
     };
 
     const renderForm = () => (
-        <Form onSubmit={handleSubmit} className='user-data-form'>
+        <Form
+            onSubmit={handleSubmit}
+            style={{
+                maxWidth: '100%',
+                padding: '4rem 15rem 6rem 15rem',
+                margin: '7% 10%'
+            }}
+        >
             <Form.Item
                 label="旧密码"
                 hasFeedback
@@ -114,8 +119,18 @@ const PwChanger = (props: PwChangerProps) => {
                     />
                 )}
             </Form.Item>
-            <Form.Item className="change-password-button-wrapper">
-                <Button className="change-password-button" type="primary" htmlType="submit">
+            <Form.Item
+                style={{
+                    marginTop: '3rem',
+                    padding: '0 20%',
+                    textAlign: 'center'
+                }}
+            >
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ width: '100%' }}
+                >
                     修改
                 </Button>
             </Form.Item>

@@ -1,8 +1,5 @@
 // see https://shimo.im/docs/3VdJgXthWpjT6VQQ
-
-export interface IRequestRetreive {
-    token: string,
-};
+import { IField } from './index';
 
 export interface IRequestList {
     page: number,
@@ -26,6 +23,18 @@ export interface IRequestPatchUserInfo {
     email?: string,
     userName?: string,
     photo?: string,
+};
+
+export interface IRequestPatchPw {
+    oldPassword: string,
+    newPassword: string,
+};
+
+
+export interface IRequestCertify {
+    org: string,
+    name: string,
+    tags: Array<IField>,
 };
 
 export interface IRequestLogin {
