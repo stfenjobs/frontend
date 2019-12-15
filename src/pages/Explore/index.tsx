@@ -8,7 +8,7 @@ import qs from "qs";
 import Recommend from "./Recommend";
 
 
-const bgImg = require('../../img/625dec77cb49482c9b6f838764f10c21.jpeg')
+const bgImg = require('../../img/test.jpeg')
 const {Search} = Input;
 const {Header, Footer, Content} = Layout;
 

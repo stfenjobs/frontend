@@ -1,0 +1,42 @@
+.ant-tabs-bar{
+    margin: 1% 0 0 1%;
+}
+
+.TypeCard{
+    width: 100%;
+}
+
+.ant-list-bordered{
+    border-radius: 0px;
+    margin-left: 1%;
+}
+
+.ant-list-items{
+    background-color: white;
+}
+
+.condition-left{
+    font-size: 10px;
+    margin-right: 2%;
+    margin-top: 1px;
+    float: left;
+    width: 7%;
+}
+
+.condition-right{
+    font-size: 10px;
+    float: left;
+}
+
+.condition{
+    width: 100%;
+}
+
+.ant-list-bordered{
+    border-top: 0px;
+}
+
+.ant-tabs-tab-active ant-tabs-tab{
+    border-color: #d9d9d9;
+    
+}
