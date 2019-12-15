@@ -1,37 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import useRouter from 'use-react-router';
+import React from 'react';
 
-import ExternalLink from './ExternalLink'
-import TypeCard from './TypeCard'
-import PaperAttribute from './PaperAttribute'
-import Abstarct from './Abstract'
-import Relation from './Relation'
-import Quote from './Quote';
+import Detail from './components/Detail';
+import Cards from './components/Cards';
 
 export default () => {
-    const {history, location} = useRouter();
-    const [key, setKey] = useState('');
-    const [type, setType] = useState('');
-    const [tab, setTab] = useState('1');
+
 
     return (
-        <div>
-            <div className='paper-detail-left'>
-                <div className='paper-detail-left-attri'>
-                    <PaperAttribute/>
-                </div>
-                <div className='query-left-typecard'>
-                    <TypeCard setTab={setTab}/>
-                </div>
-                <div className='paper-detail-left-achieve'>
-                    {tab === '0' ? <Abstarct /> : tab=== '1'? <Relation/>:<Quote/>
-                    
-                    }
-                </div>
+        <div style={{ padding: "0 12%" }}>
+            <div style={{float: 'left', paddingTop: '3%', width: '65%' }}>
+                <Detail />
             </div>
-            <div className='paper-detail-right'>
-                    <ExternalLink/>
-            </div>
+            <Cards style={{ float: 'right', paddingTop: '3rem' }}/>
         </div>
-    );
+    )
 };

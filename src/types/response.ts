@@ -21,12 +21,13 @@ export interface IContentPaperDetail {
 };
 
 interface IPaperListItem {
-    readonly id: string,
-    readonly author: Array<string>,
-    readonly ref: number,
-    readonly date: string, // YYYY-MM-dd
-    readonly abstract: string,
-    readonly price: string,
+    readonly title: string,
+    readonly authors: Array<{name: string, org: string, id: string}>,
+    readonly year: string,
+    readonly page_start: string,
+    readonly page_end: string,
+    readonly volume: string,
+    readonly issue: string,
 };
 
 export interface IContentPaperList {

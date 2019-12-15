@@ -18,7 +18,7 @@ export default () => {
                 <Layout.Content>
                     <Router />
                 </Layout.Content>
-                <Layout.Footer style={{
+                {/* <Layout.Footer style={{
                     textAlign: 'center',
                     fontSize: '1rem',
                     color: '#aaaaaa'
@@ -26,7 +26,7 @@ export default () => {
                     <span>
                         Copyright (c) 2019 wwthh😁. All rights reserved.
                     </span>
-                </Layout.Footer>
+                </Layout.Footer> */}
             </Layout>
         </BrowserRouter>
     );
