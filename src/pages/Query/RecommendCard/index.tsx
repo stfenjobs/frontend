@@ -9,7 +9,7 @@ function RecommendCard(){
 
     return (
         <div>
-        <Affix>
+        <Affix offsetTop={10}>
             <div className='RecommendCard'>
                 <Card
                     actions={[
