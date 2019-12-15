@@ -55,4 +55,7 @@ export interface IContentUpdateUserProfile {
     readonly point: string
 }
 
+export type IContentUpdatePw = IContentEmpty;
+
+export type IContentCertify = IContentEmpty;
 // TODO

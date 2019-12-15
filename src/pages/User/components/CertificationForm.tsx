@@ -13,11 +13,8 @@ export interface CertificationFormProps extends RouteComponentProps {
 };
 
 export interface CertificationFormValue {
-    department: string;
-    profile: string;
-    phone: string;
-    field: BigInteger;
-    position: string;
+    name: string;
+    organization: string;
 }
 
 const dataSource = [
@@ -50,45 +47,9 @@ const dataSource = [
     },
 ];
 
-function renderTitle(title: string) {
-    return (
-        <span>
-            {title}
-            <a
-                style={{ float: 'right' }}
-                href="https://www.google.com/search?q=antd"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                more
-        </a>
-        </span>
-    );
-}
-
-const myTags = ['操作系统', '石墨烯', '强化学习', '神经网络']
-
-const options = dataSource
-    .map(group => (
-        <OptGroup key={group.title} label={renderTitle(group.title)}>
-            {group.children.map(opt => (
-                <Option key={opt.title} value={opt.title}>
-                    {opt.title}
-                    <span className="certain-search-item-count"></span>
-                </Option>
-            ))}
-        </OptGroup>
-    ))
-    .concat([
-        <Option disabled key="all" className="show-all">
-            <a href="https://www.google.com/search?q=antd" target="_blank" rel="noopener noreferrer">
-                View all results
-        </a>
-        </Option>,
-    ]);
-
 const CertificationForm = (props: CertificationFormProps) => {
     const [tags, setTags] = React.useState(Array<string>());
+    const validTags = ['操作系统', '石墨烯', '强化学习', '神经网络'];
 
     React.useEffect(() => {
         console.log(tags);
@@ -122,8 +83,8 @@ const CertificationForm = (props: CertificationFormProps) => {
                 break;
             }
         }
-        for (i = 0; i < myTags.length; i++) {
-            if (myTags[i] === (value as string)) {
+        for (i = 0; i < validTags.length; i++) {
+            if (validTags[i] === (value as string)) {
                 inMyTag = true;
                 break;
             }
@@ -143,13 +104,13 @@ const CertificationForm = (props: CertificationFormProps) => {
     const renderForm = () => (
         <Form {...formItemLayout} onSubmit={handleSubmit} className='certification-form'>
             <Form.Item
-                label="院系"
+                label="真实姓名"
                 hasFeedback
             >
-                {getFieldDecorator('department', {
+                {getFieldDecorator('name', {
                     rules: [{
                         required: true,
-                        message: '请输入院系!',
+                        message: '请输入真实姓名！',
                     },
                     ],
                 })(
@@ -157,13 +118,13 @@ const CertificationForm = (props: CertificationFormProps) => {
                 )}
             </Form.Item>
             <Form.Item
-                label="资料"
+                label="所在单位"
                 hasFeedback
             >
-                {getFieldDecorator('profile', {
+                {getFieldDecorator('organization', {
                     rules: [{
                         required: true,
-                        message: '请输入资料!',
+                        message: '请输入所在单位！',
                     },
                     ],
                 })(
@@ -171,35 +132,7 @@ const CertificationForm = (props: CertificationFormProps) => {
                 )}
             </Form.Item>
             <Form.Item
-                label="电话"
-                hasFeedback
-            >
-                {getFieldDecorator('phone', {
-                    rules: [{
-                        required: true,
-                        message: '请输入电话!',
-                    },
-                    ],
-                })(
-                    <Input />
-                )}
-            </Form.Item>
-            <Form.Item
-                label="位置"
-                hasFeedback
-            >
-                {getFieldDecorator('position', {
-                    rules: [{
-                        required: true,
-                        message: '请输入位置!',
-                    },
-                    ],
-                })(
-                    <Input />
-                )}
-            </Form.Item>
-            <Form.Item
-                label="领域"
+                label="领域信息"
             >
                 <div>
                     <AutoComplete
@@ -209,7 +142,17 @@ const CertificationForm = (props: CertificationFormProps) => {
                         dropdownStyle={{ width: 300 }}
                         size="large"
                         style={{ width: '100%' }}
-                        dataSource={options}
+                        dataSource={
+                            dataSource.map(group => (
+                                <OptGroup key={group.title} label={group.title}>
+                                    {group.children.map(opt => (
+                                        <Option key={opt.title} value={opt.title}>
+                                            {opt.title}
+                                        </Option>
+                                    ))}
+                                </OptGroup>
+                            ))
+                        }
                         placeholder="input here"
                         optionLabelProp="value"
                         onChange={handleAutoCompleteChange}

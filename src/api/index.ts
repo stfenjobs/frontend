@@ -8,6 +8,8 @@ import {
     IRequestPatchUserInfo,
     IRequestLogin,
     IRequestRegister,
+    IRequestPatchPw,
+    IRequestCertify,
 } from '../types/request';
 
 
@@ -30,9 +32,15 @@ class UserAPI extends BaseAPI {
             headers: { 'token': token }
         });
 
-    public certify = () => {
-        // TODO
-    }
+    public changePw = (token: string, id: string, data: IRequestPatchPw) =>
+        Axios.patch(this.entry + id + '/password', data, {
+            headers: { 'token': token }
+        });
+
+    public certify = (token: string, id: string, data: IRequestCertify) =>
+        Axios.post(this.entry + id + '/authentication', data, {
+            headers: { 'token': token }
+        });
 
     public login = (param: IRequestLogin) =>
         Axios.get(this.entry + 'login/' + BaseAPI.parseParam(param));

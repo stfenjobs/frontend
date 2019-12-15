@@ -9,14 +9,19 @@ import Storage from '../utils/Storage';
 import {
     IRequestLogin,
     IRequestRegister,
-    IRequestPatchUserInfo
+    IRequestPatchUserInfo,
+    IRequestPatchPw,
+    IRequestCertify
 } from '../types/request';
 import {
     IContentLogin,
     IContentRegister,
     IContentUpdateUserProfile,
+    IContentUpdatePw,
+    IContentCertify,
 } from '../types/response';
 import err from '../utils/error';
+import { IField } from '../types';
 
 
 // FIXME: where to handle error?
@@ -60,6 +65,7 @@ const useUser = () => {
 
         setLoading(true);
         api.user.login(param).then((response) => {
+            console.log(response);
             if (response.status !== 200) {
                 setError(err.err404);
                 return;
@@ -139,7 +145,6 @@ const useUser = () => {
 
         setLoading(true);
         api.user.update(token, id, data).then((response) => {
-            console.log(response);
             if (response.status !== 200) {
                 setError(err.err404);
                 return;
@@ -171,13 +176,67 @@ const useUser = () => {
         }).catch(() => { setError(err.err404); setLoading(false); });
     };
 
-    // TODO: update method
+    const changePw = (token: string, id: string, oldPw: string, newPw: string) => {
+        if (token === '') {
+            setError(err.errInvalidOps);
+            return;
+        }
+
+        const data: IRequestPatchPw = {
+            oldPassword: oldPw, newPassword: newPw
+        };
+
+        setLoading(true);
+        api.user.changePw(token, id, data).then((response) => {
+            console.log(response);
+            if (response.status !== 200) {
+                setError(err.err404);
+                return;
+            }
+
+            const { responseErr } = getContent<IContentUpdatePw>(response.data);
+            if (responseErr !== err.none) {
+                setError(responseErr);
+            }
+
+            setLoading(false);
+        }).catch(() => { setError(err.err404); setLoading(false); });
+    };
+
+    const certify = (token: string, id: string, name: string, org: string, fields: Array<IField>) => {
+        if (token === '' || eid === '-1') {
+            setError(err.errInvalidOps);
+            return;
+        }
+
+        const data: IRequestCertify = {
+            name, org, tags: fields
+        };
+
+        setLoading(true);
+        api.user.certify(token, id, data).then((response) => {
+            console.log(response);
+            if (response.status !== 200) {
+                setError(err.err404);
+                return;
+            }
+
+            const { responseErr } = getContent<IContentCertify>(response.data);
+            if (responseErr === err.none) {
+                setEid('-1');
+            } else {
+                setError(responseErr);
+            }
+
+            setLoading(false);
+        }).catch(() => { setError(err.err404); setLoading(false); });
+    };
 
     const clearError = () => setError(err.none);
 
     return {
         id, token, username, email, points, avatar, eid, loading, error,
-        login, register, logout, updateProfile, clearError
+        login, register, logout, updateProfile, changePw, certify, clearError
     };
 };
 

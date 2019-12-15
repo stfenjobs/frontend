@@ -15,3 +15,8 @@ export interface ExpertDetailParam {
     q: string,
     type: string,
 };
+
+export interface IField {
+    n: string,
+    w: number,
+}

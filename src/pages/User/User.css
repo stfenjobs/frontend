@@ -9,22 +9,6 @@
     padding: 0
 }
 
-.change-password-button {
-    width: 100%;
-}
-
-.change-password-button-wrapper {
-    margin-top: 3rem;
-    padding: 0 20%;
-    text-align: center;
-}
-
-.user-data-form {
-    max-width: 100%;
-    padding: 4rem 15rem 6rem 15rem;
-    margin: 7% 10%;
-}
-
 .certification-form {
     max-width: 100%;
     padding: 1.5rem 12rem 1.5rem 12rem;
