@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Input, Layout, message} from 'antd';
+import {Input, Layout, message, Select} from 'antd';
 import useUserModel from '../../models/userModel';
 import './search.css'
 import useRouter from 'use-react-router';
@@ -8,14 +8,16 @@ import qs from "qs";
 import Recommend from "./Recommend";
 
 
-const bgImg = require('../../img/test.jpeg')
+const bgImg = require('../../img/test.jpeg');
 const {Search} = Input;
-const {Header, Footer, Content} = Layout;
-
+const {Footer, Content} = Layout;
+const {Option} = Select;
+const InputGroup = Input.Group;
 
 export default () => {
     const {id, token} = useUserModel();
-    const {history, location} = useRouter();
+    const {history} = useRouter();
+    const [qType, setQType] = useState('expert');
 
     const onSearch = (key: string) => {
         if (trim(key) === '') {
@@ -24,7 +26,7 @@ export default () => {
             return;
         }
 
-        const url = '/search?' + qs.stringify({q: key, type: 'expert'});
+        const url = '/search?' + qs.stringify({q: key, type: qType});
         history.push(url);
     };
 
@@ -41,15 +43,24 @@ export default () => {
                 <Layout>
                     <Content style={contentStyle} id={"content"}>
                         <div className='bg'>
-                            <Search
-                                placeholder="search"
-                                allowClear
-                                onSearch={value => onSearch(value)}
-                                maxLength={1080}
-                                minLength={400}
-                                height={'20%'}
-                                id={"search"}
-                            />
+                            <InputGroup className={"group"}>
+                                <Select className={"sel"}
+                                        dropdownClassName={"drop"}
+                                        size={"large"}
+                                        value={qType}
+                                        onChange={(value: string) => setQType(value)}
+                                >
+                                    <Option value="expert">专家</Option>
+                                    <Option value="paper">资源</Option>
+                                </Select>
+                                <Search
+                                    placeholder="search"
+                                    allowClear
+                                    onSearch={value => onSearch(value)}
+                                    size={"large"}
+                                    id={'search'}
+                                />
+                            </InputGroup>
                         </div>
                     </Content>
                     <Footer style={{paddingLeft: 0, paddingRight: 0}}>
