@@ -17,7 +17,7 @@ export interface DetailProps {
 };
 
 export default (props: DetailProps) => {
-    const { paper, loading, getPaper, error, clearErr } = useService();
+    const { paper, serviceLoading, getPaper, error, clearErr } = useService();
     const { history } = useRouter();
     const { token } = useUserModel();
 
@@ -44,7 +44,7 @@ export default (props: DetailProps) => {
 
     return (
         <div>
-            <Skeleton active loading={loading}>
+            <Skeleton active loading={serviceLoading}>
                 <div>
                     <span style={{ fontSize: '1.5rem' }}>
                         {paper.title}
@@ -85,12 +85,12 @@ export default (props: DetailProps) => {
             </Skeleton>
             <Tabs style={{ paddingTop: '1rem' }}>
                 <Tabs.TabPane tab="摘要" key='abstract'>
-                    <Skeleton active loading={loading}>
+                    <Skeleton active loading={serviceLoading}>
                         {paper.summary}
                     </Skeleton>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab='引用' key='ref'>
-                    <Skeleton active loading={loading}>
+                    <Skeleton active loading={serviceLoading}>
                         <div style={{ textAlign: 'center' }}>
                             暂无数据
                         </div>

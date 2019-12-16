@@ -1,18 +1,31 @@
 import React from 'react';
 import useRouter from 'use-react-router';
+import useUserModel from '../../models/userModel';
 
+import { message } from 'antd';
 import Detail from './components/Detail';
 import Cards from './components/Cards';
 
 export default () => {
-    const { location } = useRouter();
+    const { location, history } = useRouter();
+    const { token } = useUserModel();
+
+    React.useEffect(() => {
+        if (token === '') {
+            message.error('请先登录');
+            history.push('/login');
+        }
+    }, [token])
 
     return (
         <div style={{ padding: "0 12%" }}>
             <div style={{float: 'left', paddingTop: '3%', width: '70%' }}>
                 <Detail id={location.pathname.split('/').pop() as string}/>
             </div>
-            <Cards style={{ float: 'right', paddingTop: '3rem' }}/>
+            <Cards
+                id={location.pathname.split('/').pop() as string}
+                style={{ float: 'right', paddingTop: '3rem' }}
+            />
         </div>
     )
 };

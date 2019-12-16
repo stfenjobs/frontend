@@ -70,6 +70,7 @@ export default () => {
     React.useEffect(() => {
         updateProfile(token, id, {avatar: img})
     }, [img]);
+
     React.useEffect(() => {
         switch (error) {
             case errCode.UNAVAILABLE: {
@@ -114,12 +115,9 @@ export default () => {
                 right: '14rem',
             }}
         >
-            <div onMouseEnter={() => {
-                if (!hover) setHover(true)
-            }}
-                 onMouseLeave={() => {
-                     if (hover) setHover(false)
-                 }}
+            <div
+                onMouseEnter={() => !hover && setHover(true) }
+                onMouseLeave={() => hover && setHover(false) }
             >
                 <Upload className={"uploader"}
                         listType='picture-card'
@@ -129,14 +127,14 @@ export default () => {
                         onChange={handleUploadChange}
                         disabled={uploadLoading}
                         action="https://up-z1.qiniup.com"
-            >
+                >
                     <img
                         src={img}
                         alt="avatar"
                         style={{width: '100%'}}
                     />
                     {hover ? <Icon type="upload" className={"icon"}/> : null}
-            </Upload>
+                </Upload>
             </div>
             <EditableLabel
                 isEditable={nameEditable}

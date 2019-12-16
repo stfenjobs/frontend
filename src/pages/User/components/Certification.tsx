@@ -3,14 +3,46 @@ import useRouter from 'use-react-router';
 import useUserModel from '../../../models/userModel';
 import useService from '../services';
 
-import { Result, Button } from 'antd';
+import { Result, Button, message } from 'antd';
 import CertificationForm from './CertificationForm';
 
 
+enum errType {
+    SERVICE_UNAVAILABLE = 200,
+    INCOMPLELTE = 201,
+    SERVICE_REFUSED = 202,
+    TOKEN_EXPIRED = 203,
+};
+
 export default () => {
     const { history } = useRouter();
-    const { eid } = useUserModel();
+    const { eid, error, clearError, logout, token } = useUserModel();
     const { editable, onEdit } = useService();
+
+    React.useEffect(() => {
+        switch (error) {
+            case errType.SERVICE_UNAVAILABLE: {
+                message.error('服务不可用');
+                break;
+            }
+            case errType.SERVICE_REFUSED: {
+                message.error('登录状态异常')
+                logout(token);
+                break;
+            }
+            case errType.INCOMPLELTE: {
+                message.error('填写的信息不完整');
+                break;
+            }
+            case errType.TOKEN_EXPIRED: {
+                message.error('登录过期');
+                logout(token);
+                break;
+            }
+        }
+
+        clearError();
+    }, [error]);
 
     const renderResult = () => {
         if (editable)
