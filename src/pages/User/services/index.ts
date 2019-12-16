@@ -1,10 +1,7 @@
 import React from 'react';
+import { createModel } from 'hox';
 
-export interface ServiceParam {
-
-};
-
-export default (/* params: ServiceParam */) => {
+export default createModel(() => {
     const [records, setRecords] = React.useState(new Array<any>(10).fill(1));
 
     const [editable, setEditable] = React.useState(false);
@@ -22,14 +19,14 @@ export default (/* params: ServiceParam */) => {
         setEditable(true);
     }
 
+    const onUnEdit = () => {
+        setEditable(false);
+    }
+
     const certify =() => {
 
     }
 
-    React.useEffect(() => {
-        getRecords();
-    }, []);
-
-    return { records, editable, onEdit, loading,
+    return { records, editable, onEdit, onUnEdit, loading,
         getRecords, certify };
-}
+});

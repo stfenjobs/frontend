@@ -1,10 +1,6 @@
 // see https://shimo.im/docs/3VdJgXthWpjT6VQQ
 import { IField } from './index';
 
-export interface IRequestRetreive {
-    token: string,
-};
-
 export interface IRequestList {
     page: number,
     size: number,

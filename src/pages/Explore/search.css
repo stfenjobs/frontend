@@ -1,14 +1,9 @@
+:root {
+    --transize: 1.5;
+}
 
 #search {
-    height: 4rem;
-    border-radius: 1rem;
-    bottom: 0;
-    padding-left: 8%;
-    margin: 20% 30% 20% 30%;
-    width: 40%;
-    z-index: 1;
-    font-size: 2rem;
-    align-content: center;
+    display: inline-flex;
 }
 
 #content {
@@ -27,19 +22,36 @@
     height: inherit;
     align-items: center;
     position: center;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(2px);
     z-index: -2;
     vertical-align: center;
 }
 
-.ant-input-suffix {
-    margin-right: 63%;
-    z-index: 100;
+.group {
+    margin-top: 20%;
+    margin-bottom: 20%;
+    display: inline-flex;
+    width: 52%;
+    max-width: 50rem;
+    min-height: 3rem;
+    align-content: center;
 }
 
-.bg svg {
-    height: 2rem;
-    width: 2rem;
-    margin: 0.1rem;
+.group span {
+    zoom: var(--transize);
 }
 
+.sel {
+    zoom: var(--transize);
+    width: 12rem;
+
+}
+
+.sel div {
+    min-height: 3rem;
+    font-size-adjust: inherit;
+}
+
+.drop {
+    zoom: var(--transize);
+}

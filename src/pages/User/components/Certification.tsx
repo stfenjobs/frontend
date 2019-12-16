@@ -3,22 +3,14 @@ import useRouter from 'use-react-router';
 import useUserModel from '../../../models/userModel';
 import useService from '../services';
 
-import { Result, Button, message } from 'antd';
+import { Result, Button } from 'antd';
 import CertificationForm from './CertificationForm';
 
 
 export default () => {
     const { history } = useRouter();
-    const { token, eid } = useUserModel();
+    const { eid } = useUserModel();
     const { editable, onEdit } = useService();
-
-    React.useEffect(() => {
-        console.log('eid:', eid);
-        if (token === '') {
-            message.error("请先登录");
-            history.push('/login');
-        }
-    }, [token]);
 
     const renderResult = () => {
         if (editable)

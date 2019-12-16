@@ -1,9 +1,9 @@
 import React from 'react';
 import useRouter from 'use-react-router';
 import useUserModel from '../../../models/userModel';
-
-import { Upload, Icon, message } from 'antd';
-import { UploadChangeParam } from 'antd/lib/upload';
+import api from "../../../api"
+import {Upload, Icon, message} from 'antd';
+import {UploadChangeParam} from 'antd/lib/upload';
 
 import EditableLabel from './EditableLabel';
 
@@ -13,35 +13,38 @@ enum errCode {
     REPEATED_EMAIL = 1,
     SERVICE_REFUSED = 2,
     TOKEN_EXPIRED = 3,
-};
+}
 
 interface UploadFile {
     type: string;
     size: number;
 }
 
+
 const getBase64 = (img: any, callback: (imgUrl: string) => void) => {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result as string));
     reader.readAsDataURL(img);
-}
+};
 
 const beforeUpload = (file: UploadFile) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {
-      message.error('只能上传JPG格式或PNG格式');
+        message.error('只能上传JPG格式或PNG格式');
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
-      message.error('图片大小要小于2MB');
+        message.error('图片大小要小于2MB');
     }
     return isJpgOrPng && isLt2M;
-}
+};
 
 export default () => {
-    const { history } = useRouter();
-    const { token, id, username, avatar, email, points, eid,
-        loading, error, updateProfile, clearError } = useUserModel();
+    const {history} = useRouter();
+    const {
+        token, id, username, avatar, email, points, eid,
+        loading, error, updateProfile, clearError
+    } = useUserModel();
 
     const [uploadLoading, setUploadLoading] = React.useState(false);
     const [img, setImg] = React.useState(avatar);
@@ -51,6 +54,8 @@ export default () => {
 
     const [tmpEmail, setTmpEmail] = React.useState(email);
     const [emailEditable, setEmailEditable] = React.useState(false);
+
+    const [hover, setHover] = React.useState(false);
 
     React.useEffect(() => {
         setNameEditable(false);
@@ -62,6 +67,9 @@ export default () => {
         setTmpEmail(email);
     }, [email]);
 
+    React.useEffect(() => {
+        updateProfile(token, id, {avatar: img})
+    }, [img]);
     React.useEffect(() => {
         switch (error) {
             case errCode.UNAVAILABLE: {
@@ -90,6 +98,7 @@ export default () => {
         if (info.file.status === 'uploading') {
             setUploadLoading(true);
         } else if (info.file.status === 'done') {
+            console.log(info);
             getBase64(info.file.originFileObj, imgUrl => {
                 setUploadLoading(false);
                 setImg(imgUrl);
@@ -105,16 +114,30 @@ export default () => {
                 right: '14rem',
             }}
         >
-            <Upload
-                listType='picture-card'
-                beforeUpload={beforeUpload}
-                showUploadList={false}
-                onChange={handleUploadChange}
-                disabled={uploadLoading}
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            <div onMouseEnter={() => {
+                if (!hover) setHover(true)
+            }}
+                 onMouseLeave={() => {
+                     if (hover) setHover(false)
+                 }}
             >
-                <img src={img} alt="avatar" style={{width: '100%'}} />
+                <Upload className={"uploader"}
+                        listType='picture-card'
+                        data={() => api.uploader.getToken()}
+                        beforeUpload={beforeUpload}
+                        showUploadList={false}
+                        onChange={handleUploadChange}
+                        disabled={uploadLoading}
+                        action="https://up-z1.qiniup.com"
+            >
+                    <img
+                        src={img}
+                        alt="avatar"
+                        style={{width: '100%'}}
+                    />
+                    {hover ? <Icon type="upload" className={"icon"}/> : null}
             </Upload>
+            </div>
             <EditableLabel
                 isEditable={nameEditable}
                 value={tmpName}
@@ -125,12 +148,15 @@ export default () => {
                 onValueChange={(e) => setTmpName(e.target.value)}
                 onConfirm={
                     () => tmpName !== username ?
-                    updateProfile(token, id, { username: tmpName }) :
-                    setNameEditable(false)
+                        updateProfile(token, id, {username: tmpName}) :
+                        setNameEditable(false)
                 }
-                onCancel={() => { setTmpName(username); setNameEditable(false); }}
+                onCancel={() => {
+                    setTmpName(username);
+                    setNameEditable(false);
+                }}
             />
-            <div style={{ paddingTop: '1.5rem' }}>
+            <div style={{paddingTop: '1.5rem'}}>
                 <Icon
                     type='mail'
                     style={{
@@ -148,13 +174,16 @@ export default () => {
                     onValueChange={(e) => setTmpEmail(e.target.value)}
                     onConfirm={
                         () => tmpEmail !== email ?
-                        updateProfile(token, id, { email: tmpEmail }) :
-                        setEmailEditable(false)
+                            updateProfile(token, id, {email: tmpEmail}) :
+                            setEmailEditable(false)
                     }
-                    onCancel={() => { setTmpEmail(email); setEmailEditable(false); }}
+                    onCancel={() => {
+                        setTmpEmail(email);
+                        setEmailEditable(false);
+                    }}
                 />
             </div>
-            <div style={{ paddingTop: '0.4rem' }}>
+            <div style={{paddingTop: '0.4rem'}}>
                 <Icon
                     type='pay-circle'
                     style={{
@@ -162,13 +191,13 @@ export default () => {
                         float: 'left',
                     }}
                 />
-                <span style={{ fontSize: '1rem' }}>
-                    可用 <span style={{ color: 'rgba(200, 0, 0, 0.6)' }}>{points}</span> 积分
+                <span style={{fontSize: '1rem'}}>
+                    可用 <span style={{color: 'rgba(200, 0, 0, 0.6)'}}>{points}</span> 积分
                 </span>
             </div>
             {
                 eid !== '' &&
-                <div style={{ paddingTop: '0.4rem' }}>
+                <div style={{paddingTop: '0.4rem'}}>
                     <Icon
                         type="schedule"
                         style={{
@@ -176,7 +205,7 @@ export default () => {
                             float: 'left'
                         }}
                     />
-                    <span style={{ fontSize: '1rem' }}>已通过<b>专家认证</b></span>
+                    <span style={{fontSize: '1rem'}}>已通过<b>专家认证</b></span>
                 </div>
             }
         </div>

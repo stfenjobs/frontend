@@ -1,4 +1,6 @@
 // see https://shimo.im/docs/3VdJgXthWpjT6VQQ
+import { IPaper } from './index';
+import { IExpert } from ".";
 
 interface IContent {
     readonly [propsName: string]: any,
@@ -15,19 +17,23 @@ export interface IContentFail {
 
 interface IContentEmpty { };
 
-export interface IContentPaperDetail {
-    // TODO
-    readonly isPurchased: boolean,
-};
+export type IContentPaperDetail = IPaper;
 
 interface IPaperListItem {
-    readonly id: string,
-    readonly author: Array<string>,
-    readonly ref: number,
-    readonly date: string, // YYYY-MM-dd
-    readonly abstract: string,
-    readonly price: string,
+    readonly title: string,
+    readonly authors: Array<{name: string, org: string, id: string}>,
+    readonly year: string,
+    readonly page_start: string,
+    readonly page_end: string,
+    readonly volume: string,
+    readonly issue: string,
 };
+
+
+export interface IExpertPaperList {
+    readonly total: number,
+    readonly experts: Array<IExpert>,
+}
 
 export interface IContentPaperList {
     readonly total: number,

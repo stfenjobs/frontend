@@ -6,21 +6,28 @@
 }
 
 .ant-upload.ant-upload-select-picture-card > .ant-upload {
-    padding: 0
+    padding: 0;
 }
 
-.certification-form {
-    max-width: 100%;
-    padding: 1.5rem 12rem 1.5rem 12rem;
-    margin: 7% 10%;
-}
-
-.certification-button {
-    width: 100%;
-}
-
-.certification-button-wrapper {
-    margin-top: 3rem;
-    padding: 0 20%;
+.uploader {
+    height: 15rem;
+    overflow: hidden;
     text-align: center;
+}
+
+.uploader svg {
+    width: 50%;
+    height: 50%;
+    color: whitesmoke;
+    margin: 25%;
+}
+
+.icon {
+    width: 15rem;
+    height: 15rem;
+    z-index: 10;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    backdrop-filter: blur(1px) opacity(66%);
 }
