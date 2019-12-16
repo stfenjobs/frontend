@@ -1,46 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import useRouter from 'use-react-router';
-import qs from 'qs';
-
-import { ExpertDetailParam } from '../../types';
+import React from 'react';
+import { Row, Col, Card} from 'antd';
 
 import ExternalLink from './ExternalLink'
 import PersonalAttribute from './PersonalAttribute'
 import PaperResult from './PaperResult'
-import PatentResult from './PatentResult'
-import PapperResult from '../Query/PapperResult'
-import TypeCard from './TypeCard'
-
-import './ExpertDetail.css'
-
-enum AchieveType {
-    PAPER = 'paper',
-    PATENT = 'patent',
-    PROJECT = 'project',
-}
 
 export default () => {
-    const {history, location} = useRouter();
-    const [key, setKey] = useState('');
-    const [type, setType] = useState('');
-    const [tab, setTab] = useState('1');
-
     return (
-        <div className='expert-detail'>
-            <div className='expert-detail-left'>
-                <div className='expert-detail-left-attri'>
-                    <PersonalAttribute/>
-                </div>
-                <div className='query-left-typecard'>
-                    <TypeCard setTab={setTab}/>
-                </div>
-                <div className='expert-detail-left-achieve'>
-                    {tab === '1' ? <PapperResult /> : <PatentResult />}
-                </div>
-            </div>
-            <div className='expert-detail-right'>
-                    <ExternalLink/>
-            </div>
+        <div className='expert-detail' style={{margin: "0 18%"}}>
+            <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 20]}>
+                <Col style={{width: "70%", }} span={15}>
+                    <div className='expert-detail-left-attri'>
+                        <PersonalAttribute />
+                    </div>
+                    <Card 
+                        title={
+                            <div>
+                                <span style={{ fontSize: "1.5rem" }}> 
+                                    论文 
+                                </span>
+                                <span style={{
+                                    paddingLeft: "1%",
+                                    fontSize: "0.8rem",
+                                    color: "grey"
+                                }}> 
+                                    合計<span> 128 </span>件の論文
+                                </span>
+                            </div>
+                        }
+                        className='query-left-typecard'
+                        bordered={false}
+                        headStyle={{
+                            paddingLeft: "1%",
+                        }}
+                        bodyStyle={{
+                            padding: "1%",
+                        }}
+                    >
+                        <PaperResult />
+                    </Card>
+                </Col>
+                <Col style={{
+                    width: "27%",
+                    marginRight: "1%",
+                    marginTop:"3rem"
+                }} 
+                    span={2}
+                >
+                    <ExternalLink />
+                </Col>
+            </Row>
         </div>
     );
 };
