@@ -40,28 +40,29 @@ export interface IField {
     w: number,
 };
 
-class Tag{
+class Tag {
     t: string;
     w: number;
 
-    public constructor(){
+    public constructor() {
         this.t = "";
         this.w = 1;
     }
 }
 
 export class IExpert {
-    pubs: Array<{r: number, i: string}>;
+    pubs: Array<{ r: number, i: string }>;
     n_pubs: number;
     h_index: number;
     org: string;
     name: string;
     id: string;
     n_citation: number;
-    tags: Array<{t: string, w: number}>;
+    tags: Array<{ t: string, w: number }>;
     orgs: string[];
+    isCertification: boolean;
 
-    public constructor(){
+    public constructor() {
         this.pubs = [];
         this.n_pubs = 0;
         this.h_index = 0;
@@ -69,7 +70,8 @@ export class IExpert {
         this.name = "";
         this.id = "";
         this.n_citation = 0;
-        this.tags = [];
+        this.tags = [{ t: "", w: 0 }];
         this.orgs = [];
+        this.isCertification = false;
     }
 }

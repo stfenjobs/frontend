@@ -1,9 +1,9 @@
 import React from 'react'
-import { BackTop, Affix, Card, Icon, Avatar } from 'antd'
+import { BackTop, Affix, Card } from 'antd'
 
-const content_relativity = "此处应有相关推荐的图谱";
+const content_relativity = "ここに関連する推奨マップがあるはずです";
 
-const content_post_num = "此处应有基于时间的论文发表统计图";
+const content_post_num = "時間ベースの紙の出版統計があるはずです";
 
 function ExternalLink(){
     const renderCard = (title: string, content: string, loading: boolean) => (
