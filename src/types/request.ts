@@ -30,7 +30,6 @@ export interface IRequestPatchPw {
     newPassword: string,
 };
 
-
 export interface IRequestCertify {
     org: string,
     name: string,
@@ -47,3 +46,7 @@ export interface IRequestRegister {
     password: string,
     userName: string,
 };
+
+export type IRequestAddFavorite = Array<{ title: string, id: string }>;
+
+export type IRequestRemoveFavorite = Array<string>;

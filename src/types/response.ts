@@ -1,6 +1,5 @@
 // see https://shimo.im/docs/3VdJgXthWpjT6VQQ
-import { IPaper } from './index';
-import { IExpert } from ".";
+import { IPaper, IExpert, IFavorite } from './index';
 
 interface IContent {
     readonly [propsName: string]: any,
@@ -50,6 +49,7 @@ export interface IContentLogin {
     readonly point: string,
     readonly avatar: string,
     readonly eid: string,
+    readonly favourite: Array<IFavorite>,
 };
 
 export type IContentRegister = IContentEmpty;
@@ -66,4 +66,8 @@ export interface IContentUpdateUserProfile {
 export type IContentUpdatePw = IContentEmpty;
 
 export type IContentCertify = IContentEmpty;
+
+export type IContentAddFavorite = IContentEmpty;
+
+export type IContentRemoveFavorite = IContentEmpty;
 // TODO

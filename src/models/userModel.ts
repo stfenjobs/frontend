@@ -11,7 +11,9 @@ import {
     IRequestRegister,
     IRequestPatchUserInfo,
     IRequestPatchPw,
-    IRequestCertify
+    IRequestCertify,
+    IRequestAddFavorite,
+    IRequestRemoveFavorite
 } from '../types/request';
 import {
     IContentLogin,
@@ -19,9 +21,11 @@ import {
     IContentUpdateUserProfile,
     IContentUpdatePw,
     IContentCertify,
+    IContentAddFavorite,
+    IContentRemoveFavorite,
 } from '../types/response';
 import err from '../utils/error';
-import { IField } from '../types';
+import { IField, IFavorite } from '../types';
 
 
 // FIXME: where to handle error?
@@ -34,6 +38,7 @@ const useUser = () => {
     const [points, setPoints] = useState('');
     const [avatar, setAvatar] = useState('');
     const [eid, setEid] = useState('');
+    const [favorite, setFavorite] = useState(Array<IFavorite>(1).fill(new IFavorite('', '')));
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(err.none);
@@ -49,6 +54,7 @@ const useUser = () => {
             setPoints(user.point);
             setAvatar(user.avatar);
             setEid(user.eid);
+            setFavorite(user.favourite);
         }
     }, []);
 
@@ -80,6 +86,7 @@ const useUser = () => {
                 setPoints(content.point);
                 setAvatar(content.avatar);
                 setEid(content.eid);
+                setFavorite(content.favourite);
                 Storage.put('user', content);
             } else {
                 setError(responseErr);
@@ -130,6 +137,7 @@ const useUser = () => {
         setPoints('');
         setAvatar('');
         setEid('');
+        setFavorite([]);
         Storage.remove('user');
     };
 
@@ -183,10 +191,11 @@ const useUser = () => {
         }
 
         const data: IRequestPatchPw = {
-            oldPassword: oldPw, newPassword: newPw
+            oldPassword: encryptBySha256(oldPw), newPassword: encryptBySha256(newPw)
         };
 
         setLoading(true);
+        console.log(data.oldPassword);
         api.user.changePw(token, id, data).then((response) => {
             console.log(response);
             if (response.status !== 200) {
@@ -196,7 +205,7 @@ const useUser = () => {
 
             const { responseErr } = getContent<IContentUpdatePw>(response.data);
             if (responseErr !== err.none) {
-                setError(responseErr);
+                setError(responseErr + 100);
             }
 
             setLoading(false);
@@ -213,6 +222,8 @@ const useUser = () => {
             name, org, tags: fields
         };
 
+        console.log(data);
+
         setLoading(true);
         api.user.certify(token, id, data).then((response) => {
             console.log(response);
@@ -225,6 +236,58 @@ const useUser = () => {
             if (responseErr === err.none) {
                 setEid('-1');
             } else {
+                setError(responseErr + 200);
+            }
+
+            setLoading(false);
+        }).catch(() => { setError(err.err404); setLoading(false); });
+    };
+
+    const addFavorite = (token: string, id: string, pId: string, pTitle: string) => {
+        if (token === '') {
+            setError(err.errInvalidOps);
+            return;
+        }
+
+        const data: IRequestAddFavorite = [{ id: pId, title: pTitle }];
+
+        setLoading(true);
+        api.user.addFavorite(token, id, data).then((response) => {
+            if (response.status !== 200) {
+                setError(err.err404);
+                return;
+            }
+
+            const { responseErr } = getContent<IContentAddFavorite>(response.data);
+            if (responseErr === err.none) {
+                setFavorite([...favorite, new IFavorite(pId, pTitle)])
+            } else {
+                setError(responseErr);
+            }
+
+            setLoading(false);
+        }).catch(() => { setError(err.err404); setLoading(false); });
+    };
+
+    const removeFavorite = (token: string, id: string, pId: string) => {
+        if (token === '') {
+            setError(err.errInvalidOps);
+            return;
+        }
+
+        const data: IRequestRemoveFavorite = [pId];
+
+        setLoading(true);
+        api.user.removeFavorite(token, id, data).then((response) => {
+            if (response.status !== 200) {
+                setError(err.err404);
+                return;
+            }
+
+            const { responseErr } = getContent<IContentRemoveFavorite>(response.data);
+            if (responseErr === err.none) {
+                setFavorite(favorite.filter((value: IFavorite) => value.id !== pId));
+            } else {
                 setError(responseErr);
             }
 
@@ -235,8 +298,9 @@ const useUser = () => {
     const clearError = () => setError(err.none);
 
     return {
-        id, token, username, email, points, avatar, eid, loading, error,
-        login, register, logout, updateProfile, changePw, certify, clearError
+        id, token, username, email, points, avatar, eid, favorite,
+        login, register, logout, updateProfile, changePw, certify,
+        addFavorite, removeFavorite, loading, error, clearError
     };
 };
 

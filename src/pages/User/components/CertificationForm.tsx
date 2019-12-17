@@ -1,12 +1,13 @@
 import React, { FormEvent } from 'react';
 import { clone } from '../../../utils';
 import useService from '../services';
-// import useUserModel from '../../../models/userModel';
+import useUserModel from '../../../models/userModel';
 
 import { Form, Input, Icon, Button, Tag, AutoComplete } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { SelectValue } from 'antd/lib/select';
+import { IField } from '../../../types';
 
 const { Option, OptGroup } = AutoComplete;
 
@@ -28,6 +29,7 @@ interface IDataSource {
 const CertificationForm = (props: CertificationFormProps) => {
     const [tags, setTags] = React.useState(Array<string>());
     const { onUnEdit } = useService();
+    const { loading, certify, token, id } = useUserModel();
 
     const dataSource: Array<IDataSource> = [
         {
@@ -81,7 +83,7 @@ const CertificationForm = (props: CertificationFormProps) => {
         // api
         props.form.validateFieldsAndScroll((err: any, values: CertificationFormValue) => {
             if (!err) {
-                console.log("certification")
+                certify(token, id, values.name, values.organization, tags.map((item: string) => new IField(item)));
             }
         });
     };
@@ -210,6 +212,7 @@ const CertificationForm = (props: CertificationFormProps) => {
                     type="primary"
                     htmlType="submit"
                     style={{ width: '40%', marginLeft: '10%' }}
+                    loading={loading}
                 >
                     认证
                 </Button>

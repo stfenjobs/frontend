@@ -1,147 +1,46 @@
-import React, { useState, FormEvent, FocusEvent } from 'react';
+import React from 'react';
+import useUserModel from '../../../models/userModel';
 
-import { Form, Input, Icon, Button } from 'antd';
-
-import { RouteComponentProps } from 'react-router-dom';
-import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { message } from 'antd';
+import Form from './PwChangerForm';
 
 
-export interface PwChangerProps extends RouteComponentProps {
-    form: WrappedFormUtils;
-};
-
-export interface PwChangerValue {
-    oldPassword: string;
-    password: string;
-    confirm: string;
+enum errType {
+    SERVICE_UNAVAILABLE = 100,
+    WRONG_PASSWD = 101,
+    SERVICE_REFUSED = 102,
+    TOKEN_EXPIRED = 103,
 }
 
-const PwChanger = (props: PwChangerProps) => {
-    const [confirmDirty, setConfirmDirty] = useState(false);
+export default () => {
+    const { error, clearError, logout, token } = useUserModel();
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        // api
-        console.log("change password")
-    };
-
-    const { getFieldDecorator } = props.form;
-
-    const validateToNextPassword = (rule: any, value: any, callback: () => void) => {
-        const form = props.form;
-        if (value && confirmDirty) {
-            form.validateFields(['confirm'], { force: true });
+    React.useEffect(() => {
+        switch (error) {
+            case errType.SERVICE_UNAVAILABLE: {
+                message.error('服务不可用');
+                break;
+            }
+            case errType.SERVICE_REFUSED: {
+                message.error('登录状态异常')
+                logout(token);
+                break;
+            }
+            case errType.WRONG_PASSWD: {
+                message.error('原密码错误');
+                break;
+            }
+            case errType.TOKEN_EXPIRED: {
+                message.error('登录过期');
+                logout(token);
+                break;
+            }
         }
-        callback();
-    };
 
-    const compareToFirstPassword = (rule: any, value: any, callback: { (arg0: string): void; (): void; }) => {
-        const form = props.form;
-        if (value && value !== form.getFieldValue('password')) {
-            callback('两次输入的密码不一致!');
-        } else {
-            callback();
-        }
-    };
-
-    const handleConfirmBlur = (e: FocusEvent<HTMLInputElement>) => {
-        const value = e.target;
-        setConfirmDirty(confirmDirty || !!value);
-    };
-
-    const renderForm = () => (
-        <Form
-            onSubmit={handleSubmit}
-            style={{
-                maxWidth: '100%',
-                padding: '4rem 15rem 6rem 15rem',
-                margin: '7% 10%'
-            }}
-        >
-            <Form.Item
-                label="旧密码"
-                hasFeedback
-            >
-                {getFieldDecorator('oldPassword', {
-                    rules: [{
-                        required: true,
-                        message: '请输入旧密码!',
-                    }, {
-                        validator: validateToNextPassword,
-                    },
-                    ],
-                })(
-                    <Input.Password
-                        prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        type='password'
-                        placeholder='旧密码'
-                    />
-                )}
-            </Form.Item>
-            <Form.Item
-                label="新密码"
-                hasFeedback
-            >
-                {getFieldDecorator('password', {
-                    rules: [{
-                        required: true,
-                        message: '请输入新密码!',
-                    }, {
-                        validator: validateToNextPassword,
-                    },
-                    ],
-                })(
-                    <Input.Password
-                        prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        type='password'
-                        placeholder='新密码'
-                    />
-                )}
-            </Form.Item>
-            <Form.Item
-                label="确认新密码"
-                hasFeedback
-            >
-                {getFieldDecorator('confirm', {
-                    rules: [{
-                        required: true,
-                        message: '请确认新密码!',
-                    }, {
-                        validator: compareToFirstPassword,
-                    }],
-                })(
-                    <Input.Password
-                        onBlur={handleConfirmBlur}
-                        prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        type='password'
-                        placeholder='确认新密码'
-                    />
-                )}
-            </Form.Item>
-            <Form.Item
-                style={{
-                    marginTop: '3rem',
-                    padding: '0 20%',
-                    textAlign: 'center'
-                }}
-            >
-                <Button
-                    type="primary"
-                    htmlType="submit"
-                    style={{ width: '100%' }}
-                >
-                    修改
-                </Button>
-            </Form.Item>
-        </Form>
-    );
+        clearError();
+    }, [error]);
 
     return (
-        <div>
-            {renderForm()}
-        </div>
-    )
-}
-
-export default Form.create({ name: 'change-password' })(PwChanger);
+        <Form />
+    );
+};

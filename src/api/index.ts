@@ -10,8 +10,10 @@ import {
     IRequestRegister,
     IRequestPatchPw,
     IRequestCertify,
+    IRequestAddFavorite,
+    IRequestRemoveFavorite,
 } from '../types/request';
-import {bucket, mac} from "./config";
+import { bucket, mac } from "./config";
 
 class UpLoader {
 
@@ -77,6 +79,16 @@ class UserAPI extends BaseAPI {
         Axios.get(this.entry + 'login/' + BaseAPI.parseParam(param));
     public register = (data: IRequestRegister) =>
         Axios.post(this.entry + 'register/', data);
+
+    public addFavorite = (token: string, id: string, data: IRequestAddFavorite) =>
+        Axios.post(this.entry + id + '/favourite', data, {
+            headers: { 'token': token }
+        });
+    public removeFavorite = (token: string, id: string, data: IRequestRemoveFavorite) =>
+        Axios.delete(this.entry + id + '/favourite', {
+            data,
+            headers: { 'token': token }
+        });
 
     public purchase = new SecondaryAPI('users', 'purchases');
 }

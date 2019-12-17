@@ -35,9 +35,25 @@ export class IPaper {
     price: string = '';
 };
 
-export interface IField {
-    n: string,
-    w: number,
+export class IFavorite {
+    id: string = '';
+    title: string = '';
+    addTime: number = 0;
+
+    public constructor(id: string, title: string) {
+        this.id = id;
+        this.title = title;
+    }
+};
+
+export class IField {
+    n: string = '';
+    w: number = 0;
+
+    public constructor(n: string) {
+        this.n = n;
+        this.w = 10;
+    }
 };
 
 class Tag {

@@ -9,7 +9,7 @@ import { IContentPaperDetail } from '../../../types/response';
 
 export default createModel(() => {
     const [paper, setPaper] = React.useState(new IPaper());
-    const [loading, setLoading] = React.useState(false);
+    const [serviceLoading, setLoading] = React.useState(false);
     const [error, setError] = React.useState(err.none);
 
     const getPaper = (token: string, id: string) => {
@@ -39,5 +39,5 @@ export default createModel(() => {
 
     const clearErr = () => setError(err.none);
 
-    return { paper, loading, error, getPaper, clearErr };
+    return { paper, serviceLoading, error, getPaper, clearErr };
 });
