@@ -279,20 +279,28 @@ const useUser = () => {
 
         setLoading(true);
         api.user.removeFavorite(token, id, data).then((response) => {
+
             if (response.status !== 200) {
                 setError(err.err404);
                 return;
             }
+            console.log("removeFavorite:", response.data);
+            const {success} = response.data;
 
-            const { responseErr } = getContent<IContentRemoveFavorite>(response.data);
-            if (responseErr === err.none) {
+            if (success) {
+
                 setFavorite(favorite.filter((value: IFavorite) => value.id !== pId));
+                clearError();
             } else {
-                setError(responseErr);
+                setError(err.errInvalidOps);
             }
 
             setLoading(false);
-        }).catch(() => { setError(err.err404); setLoading(false); });
+        }).catch(() => {
+            console.log("a error in removeFavorite");
+            setError(err.err404);
+            setLoading(false);
+        });
     };
 
     const clearError = () => setError(err.none);
@@ -300,7 +308,7 @@ const useUser = () => {
     return {
         id, token, username, email, points, avatar, eid, favorite,
         login, register, logout, updateProfile, changePw, certify,
-        addFavorite, removeFavorite, loading, error, clearError
+        addFavorite, removeFavorite, loading, error, clearError, setFavorite
     };
 };
 

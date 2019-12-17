@@ -67,5 +67,5 @@ export type IContentCertify = IContentEmpty;
 
 export type IContentAddFavorite = IContentEmpty;
 
-export type IContentRemoveFavorite = IContentEmpty;
+export type IContentRemoveFavorite = IResponse;
 // TODO
