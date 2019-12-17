@@ -5,31 +5,24 @@ import useRouter from 'use-react-router';
 import { IPaperListItem } from '../../../types/response'
 import { Link } from 'react-router-dom';
 import { Card, Row, Col, Avatar, Tag, Icon, List, message, Skeleton } from 'antd';
-import ExpertResult from '../../Query/PapperResult';
 
 
 
-const name = 'Young さま'
-const field = ['工業デザイン', '写真撮影'];
-const fieldTag = field.map((item) =>
-    <Tag><a href='http://www.instagram.com'>{item}</a></Tag>
-)
-const organization = 'Guangzhou Academy of Fine Arts';
-const isCertificated = true;
 const certificationColor = 'green';
 const nonCertificationColor = 'red';
-const mail = 'khunkin@gmail.com';
 const avatar = 'https://scontent-hkg3-2.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/67195095_481191759124959_5957380830821418586_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com&_nc_cat=103&oh=505d6393c21b0f33e616e12065c71f1a&oe=5E74CC67';
 const avatarSize = 135;
 
-const data = [1024, 2048];
-const filed = ['计算机视觉', '深度学习', '人工智能'];
-const filedTag = filed.map((item) =>
-    <Tag><a href='www.baidu.com'>{item}</a></Tag>,
-)
-
 function checkTag(author: { name: string, org: string, id: string }) {
     return true;
+}
+
+function simplifiyTag(tags: Array<{ t: string, w: number }>) {
+    if (tags) {
+        return tags.slice(0, tags.length >= 4 ? 4 : tags.length).map((tag: { t: string, w: number }) => (
+            <Tag>{tag.t}</Tag>
+        ))
+    }
 }
 
 enum errType {
@@ -103,10 +96,7 @@ export default (props: DetailProps) => {
                             <div> <Icon type='bank' style={{ marginRight: "0.5rem" }} /> {expert.orgs} </div>
                             {/* <div> <Icon type='mail' style={{marginRight:"0.5rem"}} /> {expert.mail} </div> */}
                             <div> <Icon type='tag' style={{ marginRight: "0.5rem" }} />
-
-                                {expert.tags.map((item) => (
-                                        <Tag>{item.t}</Tag>
-                                ))}
+                                { simplifiyTag(expert.tags) }
                             </div>
 
                         </div>
@@ -163,7 +153,7 @@ export default (props: DetailProps) => {
                             total: pubsTotal,
                         }}
                         dataSource={ publications.map((paper: IPaperListItem) => ({
-                            href: '/papers/1',
+                            href: '/papers/'+paper.id,
                             title: paper.title,
                             description:
                                 <div style={{ width: "30%", overflow: "hidden" }}>
@@ -181,9 +171,10 @@ export default (props: DetailProps) => {
                                     </div>
                                 </div>,
                             content:
-                                paper.authors.filter(checkTag).slice(0, paper.authors.length >= 5 ? 5 : paper.authors.length).map((author: { name: string, org: string, id: string }) => (
-                                    <span>
-                                        {author.id ? <Link to='/experts/1'>{author.name}</Link> : <span>{author.name}</span>}
+                            //.filter(checkTag).slice(0, paper.authors.length >= 5 ? 5 : paper.authors.length)
+                                paper.authors.filter(checkTag).slice(0, paper.authors.length >= 10 ? 10 : paper.authors.length).map((author: { name: string, org: string, id: string }) => (
+                                    <span style={{paddingLeft:"1%", paddingRight:"1%", borderRight:"solid", borderColor:"rgb(230, 230, 230)"}}>
+                                        {author.id ? <a href={'/experts/'+author.id}>{author.name}</a> : <span>{author.name}</span>}
                                     </span>
                                 ))
                             }))

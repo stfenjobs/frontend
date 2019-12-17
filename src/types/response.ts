@@ -28,6 +28,7 @@ export class IPaperListItem {
     readonly page_end: string = '';
     readonly volume: string = '';
     readonly issue: string = '';
+    readonly id: string = '';
 };
 
 
