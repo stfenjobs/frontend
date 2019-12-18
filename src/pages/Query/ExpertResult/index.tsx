@@ -20,7 +20,7 @@ function ExpertResult(){
     useEffect(() => {
         const param: QueryParam = qs.parse(location.search.slice(1));
         setKey(param.q);
-    }, []);
+    }, [location]);
 
     return(
         <div className='result'>
@@ -35,16 +35,17 @@ function ExpertResult(){
                             size: 10,
                             domain: "name",
                             key: key,
-                            sort: '1',
+                            sort: 'name',
                             direction: true,
                             free: true,
                         });
                     },
                     pageSize: 10,
-                    total: expertsTotal,
+                    total: expertsTotal > 5000 ? 5000:expertsTotal,
                 }}
-                dataSource={experts.map((item: IExpert) => ({
-                    href: '/experts/1',
+                dataSource={experts[0] === undefined ? []:
+                    experts.map((item: IExpert) => ({
+                    href: 'experts/'+item.id,
                     title: item.name,
                     avatar: 'https://avatarcdn.aminer.cn/upload/avatar/265/1157/1241/53f4d81cdabfaef64977b5bf.jpg!160',
                     description:
@@ -54,12 +55,12 @@ function ExpertResult(){
                             <span className='split'></span>
                             <span className='use-num'>被引数：</span>
                             <span className='num'>{item.n_citation}</span>
-                            <div><Icon type="bank" />{item.org === "" ? "Independent":item.org}</div>
+                            <div><Icon type="bank" />{item.org === null ? "Independent":item.org}</div>
                         </div>,
                     content:
                         item.tags !== null &&
                             item.tags.filter(checkTag).slice(0,item.tags.length >= 5 ? 5:item.tags.length).map((tag: { t: string, w: number }) => (
-                                <Tag><a href={'/search?q=&'+tag.t+'type=paper'}>{tag.t}</a></Tag>
+                                <Tag><a href={'/search?q='+tag.t+'&type=paper'}>{tag.t}</a></Tag>
                             )) 
                 }))}
                 renderItem={(item:any) => (

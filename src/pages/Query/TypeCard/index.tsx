@@ -8,25 +8,51 @@ import qs from 'qs';
 import { QueryParam } from '../../../types';
 import {IExpert} from '../../../types';
 import useRouter from 'use-react-router'
+import { IPaperListItem } from '../../../types/response';
 
 const { TabPane } = Tabs;
 
 const { CheckableTag } = Tag;
 
-class MyTag extends React.Component {
-  state = { checked: false };
+function MyTag(props:{field:string, type:string}){
+    const { getExperts, getPapers } = useService();
 
-  handleChange = (checked: any) => {
-    this.setState({ checked: checked });
-  };
 
-  render() {
+
+    const [checked, setChecked] = useState(false)
+
+    const handleChange = (checked: any) => {
+        setChecked(checked);
+        if(props.type === "expert"){
+            getExperts({
+                page: 1,
+                size: 10,
+                domain: "tags",
+                key: props.field,
+                sort: 'name',
+                direction: true,
+                free: true,
+            });
+        }else if(props.type === "paper"){
+            getExperts({
+                page: 1,
+                size: 10,
+                domain: "keywords",
+                key: props.field,
+                sort: 'n_citation',
+                direction: true,
+                free: true,
+            });
+        }
+    };
+
     return (
         <div className="checkable-tag">
-            <CheckableTag {...this.props} checked={this.state.checked} onChange={this.handleChange} />
+            <CheckableTag {...props} checked={checked} onChange={handleChange}>
+                {props.field}
+            </CheckableTag>
         </div>
     );
-  }
 }
 
 class HTag extends React.Component{
@@ -53,7 +79,7 @@ class HTag extends React.Component{
   }
 }
 function checkTag(tag: { t: string, w: number }){
-    return tag.t.length <= 15
+    return tag.t.length <= 25
 }
 
 
@@ -64,30 +90,19 @@ export interface TypeCardProps {
 
 function TypeCard(props: TypeCardProps){
 
-    const {experts, loading} = useService();
+    const {experts, loading, papers, getExperts, expertsTotal} = useService();
     const { location } = useRouter();
 
     const expertData = [
         <div className='condition'>
-            <div className='condition-left'>认证:</div>
-            <div className='condition-right'>
-                <MyTag>认证</MyTag>
-                <MyTag>未认证</MyTag>
-            </div>
-        </div>,
-        <div className='condition'>
-            <div className='condition-left'>单位:</div>
-            <div className='condition-right'>
-                <MyTag>高校</MyTag>
-                <MyTag>科研所</MyTag>
-            </div>
-        </div>,
-        <div className='condition'>
             <div className='condition-left'>领域:</div>
             <div className='condition-right'>
-            {experts.map((item: IExpert) => (
-                item.tags !== null && item.tags.length > 0 && item.tags[0].t.length <= 25 &&
-                    <MyTag>{item.tags[0].t}</MyTag>
+            { experts[0] === undefined ? []:
+            experts.map((item: IExpert) => (
+                item.tags !== null &&
+                            item.tags.filter(checkTag).slice(0,item.tags.length >= 5 ? 5:item.tags.length).map((tag: { t: string, w: number }) => (
+                                <MyTag field={tag.t} type='expert'/>
+                            )) 
             ))}
             </div>
         </div>,
@@ -103,10 +118,10 @@ function TypeCard(props: TypeCardProps){
         <div className='condition'>
             <div className='condition-left'>领域:</div>
             <div className='condition-right'>
-            {experts.map((item: IExpert) => (
-                item.tags !== null &&
-                item.tags.filter(checkTag).slice(0,item.tags.length >= 5 ? 5:item.tags.length).map((tag: { t: string, w: number }) => (
-                    <MyTag>{tag.t}</MyTag>
+            {papers.map((item: IPaperListItem) => (
+                item.keywords !== null &&
+                item.keywords.slice(0,item.keywords.length >= 5 ? 5:item.keywords.length).map((keyword) => (
+                    <MyTag field={keyword} type='paper'/>
                 )) 
             ))}
             </div>

@@ -18,14 +18,18 @@ interface IContentEmpty { };
 
 export type IContentPaperDetail = IPaper;
 
-interface IPaperListItem {
-    readonly title: string,
-    readonly authors: Array<{name: string, org: string, id: string}>,
-    readonly year: string,
-    readonly page_start: string,
-    readonly page_end: string,
-    readonly volume: string,
-    readonly issue: string,
+export class IPaperListItem {
+    title: string = "";
+    authors: Array<{name: "", org: "", id: ""}> = [];
+    year:string =  "";
+    page_start:string =  "";
+    page_end:string =  "";
+    volume:string = "";
+    issue:string =  "";
+    abstract:string = "";
+    id:string="";
+    keywords: Array<string>=[];
+    doc_type:string|null = null;
 };
 
 

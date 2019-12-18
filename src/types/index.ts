@@ -33,6 +33,7 @@ export class IPaper {
     urls: Array<string> = [];
     summary: string = '';
     price: string = '';
+    abstract: string = '';
 };
 
 export class IFavorite {

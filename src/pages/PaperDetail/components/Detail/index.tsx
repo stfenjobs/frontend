@@ -87,18 +87,18 @@ export default (props: DetailProps) => {
                 </div>
             </Skeleton>
             <Tabs style={{ paddingTop: '1rem' }}>
-                <Tabs.TabPane tab="摘要" key='abstract'>
+                <Tabs.TabPane tab="摘要" key='abstract' style={{ paddingTop: '1rem' }}>
                     <Skeleton active loading={serviceLoading}>
                         {
-                            paper.summary === null || paper.summary === '' ?
+                            paper.abstract === null || paper.abstract === '' ?
                             <div style={{ textAlign: 'center' }}>
                                 暂无数据
                             </div> :
-                            <div>{paper.summary}</div>
+                            <div>{paper.abstract}</div>
                         }
                     </Skeleton>
                 </Tabs.TabPane>
-                <Tabs.TabPane tab='引用' key='ref'>
+                <Tabs.TabPane tab='引用' key='ref' style={{ paddingTop: '1rem' }}>
                     <Skeleton active loading={serviceLoading}>
                         <div style={{ textAlign: 'center' }}>
                             暂无数据
