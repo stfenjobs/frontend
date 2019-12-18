@@ -71,7 +71,7 @@ class UserAPI extends BaseAPI {
         });
 
     public certify = (token: string, id: string, data: IRequestCertify) =>
-        Axios.post(this.entry + id + '/authentication', data, {
+        Axios.post(this.entry + id + '/certification', data, {
             headers: {'token': token}
         });
 

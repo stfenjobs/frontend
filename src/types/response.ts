@@ -68,4 +68,6 @@ export type IContentCertify = IContentEmpty;
 export type IContentAddFavorite = IContentEmpty;
 
 export type IContentRemoveFavorite = IResponse;
+
+export type IContentFavoriteList = Array<IFavorite>;
 // TODO

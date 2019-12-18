@@ -78,8 +78,6 @@ const CertificationForm = (props: CertificationFormProps) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(tags);
-
         // api
         props.form.validateFieldsAndScroll((err: any, values: CertificationFormValue) => {
             if (!err) {

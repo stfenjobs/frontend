@@ -52,19 +52,22 @@ export default (props: DetailProps) => {
                     <span style={{ color: 'rgba(0, 0, 0, 0.6)', paddingLeft: '0.5rem' }}>
                         {paper.year}
                     </span>
-                    <span
-                        style={{
-                            float: 'right',
-                            paddingTop: '0.5rem'
-                        }}
-                    >
-                        <Button
-                            type='primary'
-                            onClick={() => window.open(paper.pdf ? paper.pdf : paper.urls[0])}
+                    {
+                        paper.pdf && paper.urls &&
+                        <span
+                            style={{
+                                float: 'right',
+                                paddingTop: '0.5rem'
+                            }}
                         >
-                            预览
-                        </Button>
-                    </span>
+                            <Button
+                                type='primary'
+                                onClick={() => window.open(paper.pdf ? paper.pdf : paper.urls[0])}
+                            >
+                                预览
+                            </Button>
+                        </span>
+                    }
                 </div>
                 <div style={{ paddingTop: '1rem' }}>
                     {paper.authors.map((value: { name: string, org: string, id: string | null }, index: number) => (
@@ -86,7 +89,13 @@ export default (props: DetailProps) => {
             <Tabs style={{ paddingTop: '1rem' }}>
                 <Tabs.TabPane tab="摘要" key='abstract'>
                     <Skeleton active loading={serviceLoading}>
-                        {paper.summary}
+                        {
+                            paper.summary === null || paper.summary === '' ?
+                            <div style={{ textAlign: 'center' }}>
+                                暂无数据
+                            </div> :
+                            <div>{paper.summary}</div>
+                        }
                     </Skeleton>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab='引用' key='ref'>

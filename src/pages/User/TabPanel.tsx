@@ -5,15 +5,12 @@ import PurchaseList from './components/PurchaseList';
 import PwChanger from './components/PwChanger';
 import Certification from './components/Certification';
 import StarList from "./starList";
-import useService from "./services";
 import useUserModel from "../../models/userModel";
 const { TabPane } = Tabs;
 
 export default () => {
-    const {token, id} = useUserModel();
-    const {getFavorite} = useService();
+    const {token, id, getFavorite} = useUserModel();
     const onTabChange = (key: string) => {
-        console.log(key);
         if (key == "starList")
             getFavorite(token, id);
     };
