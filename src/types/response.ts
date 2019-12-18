@@ -20,7 +20,7 @@ export type IContentPaperDetail = IPaper;
 
 export class IPaperListItem {
     title: string = "";
-    authors: Array<{name: "", org: "", id: ""}> = [];
+    authors: Array<{name: string, org: string, id: string}> = [];
     year:string =  "";
     page_start:string =  "";
     page_end:string =  "";
@@ -32,6 +32,7 @@ export class IPaperListItem {
     doc_type:string|null = null;
 };
 
+export type IContentExpertDetail = IExpert;
 
 export interface IExpertPaperList {
     readonly total: number,

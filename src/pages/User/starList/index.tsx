@@ -44,7 +44,7 @@ export default () => {
     ];
 
     const onRowClick = (record: any, index: any, event: any) => {
-        if (event.target.tagName == 'TD') history.push("/paper/" + index.id)
+        if (event.target.tagName == 'TD') history.push("/papers/" + favorite[index].id)
     }
 
     return (

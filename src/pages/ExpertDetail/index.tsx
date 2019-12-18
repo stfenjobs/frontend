@@ -1,46 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import useRouter from 'use-react-router';
-import qs from 'qs';
-
-import { ExpertDetailParam } from '../../types';
-
 import ExternalLink from './ExternalLink'
-import PersonalAttribute from './PersonalAttribute'
-import PaperResult from './PaperResult'
-import PatentResult from './PatentResult'
-import PapperResult from '../Query/PapperResult'
-import TypeCard from './TypeCard'
-
-import './ExpertDetail.css'
-
-enum AchieveType {
-    PAPER = 'paper',
-    PATENT = 'patent',
-    PROJECT = 'project',
-}
+import Detail from './Detail'
+import { Row, Col } from 'antd';
 
 export default () => {
-    const {history, location} = useRouter();
-    const [key, setKey] = useState('');
-    const [type, setType] = useState('');
-    const [tab, setTab] = useState('1');
+    const { location } = useRouter();
 
     return (
-        <div>
-            <div className='expert-detail-left'>
-                <div className='expert-detail-left-attri'>
-                    <PersonalAttribute/>
-                </div>
-                <div className='query-left-typecard'>
-                    <TypeCard setTab={setTab}/>
-                </div>
-                <div className='expert-detail-left-achieve'>
-                    {tab === '1' ? <PapperResult /> : <PatentResult />}
-                </div>
-            </div>
-            <div className='expert-detail-right'>
-                    <ExternalLink/>
-            </div>
+        <div className='expert-detail' style={{ margin: "0 18%" }}>
+            <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 20]}>
+                <Col style={{ width: "70%", }} span={15}>
+                    <Detail id={location.pathname.split('/').pop() as string} />
+                </Col>
+                <Col style={{
+                    width: "27%",
+                    marginRight: "1%",
+                    marginTop: "3rem"
+                }}
+                    span={2}
+                >
+                    <ExternalLink />
+                </Col>
+            </Row>
         </div>
     );
 };
