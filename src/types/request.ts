@@ -31,9 +31,10 @@ export interface IRequestPatchPw {
 };
 
 export interface IRequestCertify {
-    org: string,
-    name: string,
-    tags: Array<IField>,
+    eid: string,
+    org?: string,
+    name?: string,
+    tags?: Array<IField>,
 };
 
 export interface IRequestLogin {

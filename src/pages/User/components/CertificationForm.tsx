@@ -81,7 +81,7 @@ const CertificationForm = (props: CertificationFormProps) => {
         // api
         props.form.validateFieldsAndScroll((err: any, values: CertificationFormValue) => {
             if (!err) {
-                certify(token, id, values.name, values.organization, tags.map((item: string) => new IField(item)));
+                certify(token, id, '');
             }
         });
     };

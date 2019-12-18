@@ -214,19 +214,20 @@ const useUser = () => {
         }).catch(() => { setError(err.err404); setLoading(false); });
     };
 
-    const certify = (token: string, id: string, name: string, org: string, fields: Array<IField>) => {
+    const certify = (token: string, id: string, eid: string) => {
         if (token === '' || eid === '-1') {
             setError(err.errInvalidOps);
             return;
         }
 
         const data: IRequestCertify = {
-            name, org, tags: fields
+            eid
         };
 
         setLoading(true);
 
         api.user.certify(token, id, data).then((response) => {
+            console.log(response.data);
             if (response.status !== 200) {
                 setError(err.err404);
                 return;
@@ -234,8 +235,9 @@ const useUser = () => {
 
             const { responseErr } = getContent<IContentCertify>(response.data);
             if (responseErr === err.none) {
-                setEid('-1');
-                Storage.put('user', { ...Storage.get('user'), eid: '-1' })
+                setEid(eid);
+                Storage.put('user', { ...Storage.get('user'), eid: eid })
+                setError(1145)
             } else {
                 setError(responseErr + 200);
             }

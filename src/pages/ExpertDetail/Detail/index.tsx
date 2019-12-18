@@ -3,8 +3,7 @@ import useService from '../services';
 import useUserModel from '../../../models/userModel';
 import useRouter from 'use-react-router';
 import { IPaperListItem } from '../../../types/response'
-import { Link } from 'react-router-dom';
-import { Card, Row, Col, Avatar, Tag, Icon, List, message, Skeleton } from 'antd';
+import { Card, Row, Col, Avatar, Tag, Icon, List, message, Skeleton, Divider, Button } from 'antd';
 
 
 
@@ -28,6 +27,11 @@ function simplifiyTag(tags: Array<{ t: string, w: number }>) {
 enum errType {
     UNAVALIABLE = 0,
     ID_NOT_EXIST = 1,
+    CERTIFY_UNAVALIABLE = 200,
+    SERVICE_REFUESED = 202,
+    TOKEN_EXPIRED = 203,
+    REPEATED_CERTIFIED = 204,
+    SUCCESS = 1145,
 };
 
 export interface DetailProps {
@@ -37,14 +41,16 @@ export interface DetailProps {
 export default (props: DetailProps) => {
     const { expert, getExpert, loading, error, clearErr, publications, pubsTotal, getExpertsPublication } = useService();
     const { history } = useRouter();
-    const { token } = useUserModel();
+    const { token, eid, certify, id, logout } = useUserModel();
 
     React.useEffect(() => {
         getExpert(token, props.id);
+        console.log('eid', eid);
     }, []);
 
     React.useEffect(() => {
         switch (error) {
+            case errType.CERTIFY_UNAVALIABLE:
             case errType.UNAVALIABLE: {
                 message.error('服务不可用，请稍后再试');
                 clearErr();
@@ -57,53 +63,86 @@ export default (props: DetailProps) => {
                 history.push('/papers/not-found');
                 return;
             }
+            case errType.SERVICE_REFUESED: {
+                message.error('非法登录状态');
+                clearErr();
+                logout(token);
+                return;
+            }
+            case errType.TOKEN_EXPIRED: {
+                message.error('登录过期');
+                clearErr();
+                logout(token);
+                return;
+            }
+            case errType.REPEATED_CERTIFIED: {
+                message.error('该专家已经认证，请刷新重试');
+                clearErr();
+                return;
+            }
+            case errType.SUCCESS: {
+                message.success('认证成功');
+                clearErr();
+                return;
+            }
         }
     }, [error]);
 
+    React.useEffect(() => {
+        if (token === '') {
+            message.info('请先登录');
+            history.push('/login');
+        }
+    }, [token]);
 
     return (
         <div>
-            <div
-                style={{
-                    marginLeft: '1%',
-                    marginTop: '1%',
-                    padding: '2%',
-                    backgroundColor: 'white'
-                }}
-                className="personalAttribute"
-            >
-                <Row gutter={20}>
-                    <Col span={5} style={{ minWidth: "200px" }}>
-                        <Avatar size={avatarSize} src={avatar} style={{ marginTop: "1.1rem" }} />
-                    </Col>
-                    <Col >
-                        <div
-                            style={{
-                                marginTop: '1rem',
-                                lineHeight: '30px',
-                            }}
-                        >
-                            <div style={{ marginBottom: '1rem' }} >
-                                <span style={{ fontSize: '2em' }} >
-                                    {expert.name} &ensp; 
-                                </span>
-                                <span style={{ paddingBottom: "1rem" }}>
-                                    <Tag color={expert.isCertification ? certificationColor : nonCertificationColor}>
-                                        {expert.isCertification ? '已认证' : '未认证'}
-                                    </Tag>
-                                </span>
+            <Skeleton loading={loading}>
+                <div
+                    style={{
+                        marginLeft: '1%',
+                        marginTop: '1%',
+                        padding: '2%',
+                        backgroundColor: 'white'
+                    }}
+                    className="personalAttribute"
+                >
+                    <Row gutter={20}>
+                        <Col span={5} style={{ minWidth: "200px" }}>
+                            <Avatar size={avatarSize} src={avatar} style={{ marginTop: "1.1rem" }} />
+                        </Col>
+                        <Col >
+                            <div
+                                style={{
+                                    marginTop: '1rem',
+                                    lineHeight: '30px',
+                                }}
+                            >
+                                <div style={{ marginBottom: '1rem' }} >
+                                    <span style={{ fontSize: '2em' }} >
+                                        {expert.name} &ensp;
+                                    </span>
+                                    <span style={{float: 'right'}}>
+                                        <Tag color={(props.id === eid || expert.isCertification) ? certificationColor : nonCertificationColor}>
+                                            {eid === props.id ? '已认证' : (expert.isCertification ? '已认证' : '未认证')}
+                                        </Tag>
+                                    </span>
+                                    {
+                                        eid === '' && !expert.isCertification &&
+                                        <span style={{float:'right', paddingRight: '1rem'}}>
+                                            <Button onClick={() => certify(token, id, props.id)}>我要认证</Button>
+                                        </span>
+                                    }
+                                </div>
+                                <div> <Icon type='bank' style={{ marginRight: "0.5rem" }} /> {expert.orgs} </div>
+                                <div> <Icon type='tag' style={{ marginRight: "0.5rem" }} />
+                                    { simplifiyTag(expert.tags) }
+                                </div>
                             </div>
-                            <div> <Icon type='bank' style={{ marginRight: "0.5rem" }} /> {expert.orgs} </div>
-                            {/* <div> <Icon type='mail' style={{marginRight:"0.5rem"}} /> {expert.mail} </div> */}
-                            <div> <Icon type='tag' style={{ marginRight: "0.5rem" }} />
-                                { simplifiyTag(expert.tags) }
-                            </div>
-
-                        </div>
-                    </Col>
-                </Row>
-            </div>
-
+                        </Col>
+                    </Row>
+                </div>
+            </Skeleton>
             <Card
                 title={
                     <div>
@@ -172,9 +211,10 @@ export default (props: DetailProps) => {
                                 </div>,
                             content:
                             //.filter(checkTag).slice(0, paper.authors.length >= 5 ? 5 : paper.authors.length)
-                                paper.authors.filter(checkTag).slice(0, paper.authors.length >= 10 ? 10 : paper.authors.length).map((author: { name: string, org: string, id: string }) => (
-                                    <span style={{paddingLeft:"1%", paddingRight:"1%", borderRight:"solid", borderColor:"rgb(230, 230, 230)"}}>
+                                paper.authors.filter(checkTag).slice(0, paper.authors.length >= 10 ? 10 : paper.authors.length).map((author: { name: string, org: string, id: string }, index: number) => (
+                                    <span>
                                         {author.id ? <a href={'/experts/'+author.id}>{author.name}</a> : <span>{author.name}</span>}
+                                        {index !== (paper.authors.length >= 10 ? 10 : paper.authors.length) - 1 && <Divider type='vertical'/>}
                                     </span>
                                 ))
                             }))
