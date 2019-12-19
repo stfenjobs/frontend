@@ -10,9 +10,9 @@ const data = [
         icon: "user"
     },
     {
-        name: "领域",
+        name: "论文",
         countIndex: 1,
-        icon: "dot-chart"
+        icon: "file-text"
     },
     {
         name: "知识概念",
@@ -32,7 +32,7 @@ export default () => {
     const [countAr, setCountAr] = useState([0, 0, 0]);
     const [countrun, setCountRun] = useState(0);
 
-    const maxCount = [2230000, 1233430, 2130320];
+    const maxCount = [1804921, 4082877, 5233170];
 
     const addCount = async (num: number, ms: number) => {
         for (let j = 0; j < countAr.length; j += 1) {
