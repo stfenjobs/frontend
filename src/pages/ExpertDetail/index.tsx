@@ -16,7 +16,7 @@ export default () => {
                 <Col style={{
                     width: "27%",
                     marginRight: "1%",
-                    marginTop: "3rem"
+                    marginTop: "2%"
                 }}
                     span={2}
                 >

@@ -43,8 +43,8 @@ export default () => {
         <span>
             {
                 avatar === ''
-                ? <Avatar icon='user' size='small' />
-                : <Avatar src={avatar} size='small' />
+                    ? <Avatar icon='user' size="default"/>
+                    : <Avatar src={avatar} size="default"/>
             }
             <span
                 style={{

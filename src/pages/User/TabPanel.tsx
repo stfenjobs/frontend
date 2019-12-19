@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { Tabs, Icon } from 'antd';
+import {Tabs, Icon, Card} from 'antd';
 import PurchaseList from './components/PurchaseList';
 import PwChanger from './components/PwChanger';
 // import Certification from './components/Certification';
 import StarList from "./starList";
 import useUserModel from "../../models/userModel";
-const { TabPane } = Tabs;
+
+const {TabPane} = Tabs;
 
 export default () => {
     const {token, id, getFavorite} = useUserModel();
@@ -16,42 +17,42 @@ export default () => {
     };
 
     return (
-        <Tabs
-            defaultActiveKey='purchase-record'
-            animated={{
-                inkBar: true,
-                tabPane: false,
-            }}
-            onChange={onTabChange}
-            type='card'
-            style={{
-                paddingTop: '1.5%',
-                paddingRight: "25%"
-            }}
-        >
-            <TabPane
-                tab={
-                    <span>
-                        <Icon type="shopping" />
+        <Card style={{width: "72%", marginTop: "0.8rem", paddingLeft: "3rem", paddingRight: '3rem'}}>
+            <Tabs
+                defaultActiveKey='purchase-record'
+                animated={{
+                    inkBar: true,
+                    tabPane: false,
+                }}
+                onChange={onTabChange}
+                type='card'
+                style={{
+                    paddingTop: '1.5%',
+                }}
+            >
+                <TabPane
+                    tab={
+                        <span>
+                        <Icon type="shopping"/>
                         增值服务
                     </span>
-                }
-                key='purchase-record'
-            >
-                <PurchaseList />
-            </TabPane>
-            <TabPane
-                tab={
-                    <span>
-                        <Icon type="security-scan" />
+                    }
+                    key='purchase-record'
+                >
+                    <PurchaseList/>
+                </TabPane>
+                <TabPane
+                    tab={
+                        <span>
+                        <Icon type="security-scan"/>
                         修改密码
                     </span>
-                }
-                key='password'
-            >
-                <PwChanger />
-            </TabPane>
-            {/* <TabPane
+                    }
+                    key='password'
+                >
+                    <PwChanger/>
+                </TabPane>
+                {/* <TabPane
                 tab={
                     <span>
                         <Icon type="schedule" />
@@ -62,17 +63,18 @@ export default () => {
             >
                 <Certification />
             </TabPane> */}
-            <TabPane
-                tab={
-                    <span>
+                <TabPane
+                    tab={
+                        <span>
                         <Icon type="schedule"/>
                         收藏列表
                     </span>
-                }
-                key='starList'
-            >
-                <StarList/>
-            </TabPane>
-        </Tabs>
+                    }
+                    key='starList'
+                >
+                    <StarList/>
+                </TabPane>
+            </Tabs>
+        </Card>
     );
 }

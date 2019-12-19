@@ -2,3 +2,18 @@
     min-width: 1200px;
 }
 
+.toExplore {
+    float: left;
+    width: inherit;
+    cursor: pointer;
+    color: var(--color-brown);
+}
+
+
+.toExplore:hover {
+    color: var(--color-red);
+}
+
+.selector-no-border > .ant-select-selection.ant-select-selection--single {
+    border-color: var(--color-white);
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import useUserModel from '../../models/userModel';
 import useRouter from 'use-react-router';
-
+import img from "../../img/bg1.jpg"
 import { message } from 'antd';
 import LoginForm from './LoginForm';
 
@@ -45,6 +45,7 @@ export default () => {
 
     return (
         <div className='login-root'>
+            <img className='login-root' style={{position: "absolute"}} src={require("../../img/bg1.jpg")} alt={"bg"}/>
             <LoginForm />
         </div>
     );

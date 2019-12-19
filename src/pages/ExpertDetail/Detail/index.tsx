@@ -39,7 +39,7 @@ export interface DetailProps {
 };
 
 export default (props: DetailProps) => {
-    const { expert, getExpert, loading, error, clearErr, publications, pubsTotal, getExpertsPublication } = useService();
+    const {expert, getExpert, loading, error, clearErr, publications, pubsTotal, getExpertsPublication,} = useService();
     const { history } = useRouter();
     const { token, eid, certify, id, logout } = useUserModel();
 
@@ -100,16 +100,23 @@ export default (props: DetailProps) => {
             <Skeleton loading={loading}>
                 <div
                     style={{
-                        marginLeft: '1%',
-                        marginTop: '1%',
+                        marginTop: '3%',
                         padding: '2%',
+                        paddingLeft: "4%",
+                        paddingBottom: "4%",
                         backgroundColor: 'white'
                     }}
                     className="personalAttribute"
                 >
                     <Row gutter={20}>
                         <Col span={5} style={{ minWidth: "200px" }}>
-                            <Avatar size={avatarSize} src={avatar} style={{ marginTop: "1.1rem" }} />
+                            <Avatar size={avatarSize} style={{
+                                fontSize: "xx-large",
+                                fontWeight: "bolder",
+                                color: '#f56a00',
+                                backgroundColor: '#fde3cf',
+                                marginTop: "1.1rem"
+                            }}> {expert.name.charAt(0)}</Avatar>
                         </Col>
                         <Col >
                             <div
@@ -144,9 +151,10 @@ export default (props: DetailProps) => {
                 </div>
             </Skeleton>
             <Card
+                style={{marginTop: "4%"}}
                 title={
                     <div>
-                        <span style={{ fontSize: "1.5rem" }}>
+                        <span style={{fontSize: "1.5rem",}}>
                             论文
                         </span>
                         <span style={{
@@ -154,7 +162,7 @@ export default (props: DetailProps) => {
                             fontSize: "0.8rem",
                             color: "grey"
                         }}>
-                            合計<span> {pubsTotal} </span>件の論文
+                            总论文量：<span> {pubsTotal} </span>篇
                         </span>
                     </div>
                 }

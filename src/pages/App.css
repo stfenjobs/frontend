@@ -16,7 +16,6 @@ body {
 
 .ant-layout-header {
     background: var(--color-white);
-    /*border-bottom: 0.1rem solid #001529;*/
 }
 
 /*.ant-layout-footer {*/
@@ -24,5 +23,5 @@ body {
 /*}*/
 
 .ant-layout {
-    background: var(--color-white);
+    background: none;
 }

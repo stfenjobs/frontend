@@ -46,11 +46,8 @@ export default (props: DetailProps) => {
         <div>
             <Skeleton active loading={serviceLoading}>
                 <div>
-                    <span style={{ fontSize: '1.5rem' }}>
+                    <span style={{fontSize: '2rem', fontWeight: "bold"}}>
                         {paper.title}
-                    </span>
-                    <span style={{ color: 'rgba(0, 0, 0, 0.6)', paddingLeft: '0.5rem' }}>
-                        {paper.year}
                     </span>
                     {
                         paper.pdf && paper.urls &&
@@ -69,7 +66,12 @@ export default (props: DetailProps) => {
                         </span>
                     }
                 </div>
-                <div style={{ paddingTop: '1rem' }}>
+                <div style={{paddingTop: '0.5rem', fontSize: "medium"}}>
+                    Year : {paper.year}
+                    <br/> {paper.venue.raw} {paper.volume ? ` 第 ${paper.volume.replace(",", '')} 期 ` : ''}{paper.issue ? `第 ${paper.issue} 卷` : ''}
+                </div>
+                <div style={{paddingTop: '0.5rem', marginBottom: "0.5rem", fontSize: "large", fontWeight: "bold"}}>
+                    Authors：
                     {paper.authors.map((value: { name: string, org: string, id: string | null }, index: number) => (
                         <span>
                             {value.id ? <Link to='/experts/1'>{value.name}</Link>: <span>{value.name}</span>}
@@ -77,12 +79,10 @@ export default (props: DetailProps) => {
                         </span>
                     ))}
                 </div>
-                <div>
-                    {`${paper.venue.raw}, 第 ${paper.volume} 卷, 第 ${paper.issue} 卷`}
-                </div>
-                <div style={{paddingTop:'0.5rem'}}>
+
+                <div style={{paddingTop: '1rem'}}>
                     {paper.keywords.map((value: string) => (
-                        <span><Tag color='blue'>{value}</Tag></span>
+                        <span><Tag style={{marginTop: '0.6rem'}} color='blue'>{value}</Tag></span>
                     ))}
                 </div>
             </Skeleton>
@@ -94,7 +94,12 @@ export default (props: DetailProps) => {
                             <div style={{ textAlign: 'center' }}>
                                 暂无数据
                             </div> :
-                            <div>{paper.abstract}</div>
+                                <div style={{
+                                    fontSize: "large",
+                                    textAlign: "justify",
+                                    whiteSpace: "normal",
+                                    textIndent: "2em"
+                                }}>{paper.abstract}</div>
                         }
                     </Skeleton>
                 </Tabs.TabPane>

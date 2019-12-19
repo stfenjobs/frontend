@@ -8,9 +8,11 @@
     margin-bottom: 1%;
 }
 
-.ant-pagination{
-    margin-left: 25%;
+.pagLeft {
+    text-align: left;
+    margin-left: 0;
 }
+
 
 .decription{
     width: 70%;

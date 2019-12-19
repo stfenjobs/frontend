@@ -26,7 +26,7 @@ export default () => {
         <div
             style={{
                 marginTop: "0.7rem",
-                padding: "0 12%",
+                padding: "0 6%",
             }}
         >
             <TabPanel />
