@@ -166,6 +166,7 @@ export default (props: DetailProps) => {
                 bodyStyle={{
                     padding: "1%",
                 }}
+                loading={loading}
             >
                 <div style={{ margin: "1% 0 1% 1%" }}>
                     <List
@@ -179,8 +180,8 @@ export default (props: DetailProps) => {
                                     {
                                         page: page,
                                         size: 10,
-                                        domain: "author",
-                                        key: expert.name,
+                                        domain: "eid",
+                                        key: expert.id,
                                         sort: "n_citation",
                                         direction: true,
                                         free: true,
@@ -195,18 +196,18 @@ export default (props: DetailProps) => {
                             href: '/papers/'+paper.id,
                             title: paper.title,
                             description:
-                                <div style={{ width: "30%", overflow: "hidden" }}>
+                                <div style={{ width: "60%", overflow: "hidden" }}>
                                     <div>
                                         <span style={{ width: "30%", overflow: "hidden" }}>
-                                            发表年份
+                                            Published in
                                         </span>
 
                                         <span style={{ color: "#3c80bc", fontWeight: 500 }}>
-                                            {paper.year}
+                                            &ensp;{paper.year}&ensp;
                                         </span>
                                     </div>
                                     <div>
-                                        {`P ${paper.page_start} - ${paper.page_end}, 第 ${paper.volume} 卷, 第 ${paper.issue} 卷`}
+                                        {`page ${paper.page_start} - ${paper.page_end}, volume ${paper.volume}, issue ${paper.issue}`}
                                     </div>
                                 </div>,
                             content:
