@@ -199,7 +199,7 @@ export default () => {
                     <Icon
                         type="schedule"
                         style={{
-                            padding: '0.32rem 0.5rem 0 0.5rem',
+                            padding: '0.32rem 0.5rem 0 0',
                             float: 'left'
                         }}
                     />

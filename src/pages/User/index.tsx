@@ -20,7 +20,7 @@ export default () => {
             message.info('请先登录');
             history.push('/login');
         }
-    }, []);
+    }, [token]);
 
     return (
         <div

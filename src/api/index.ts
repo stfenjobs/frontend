@@ -71,7 +71,7 @@ class UserAPI extends BaseAPI {
         });
 
     public certify = (token: string, id: string, data: IRequestCertify) =>
-        Axios.post(this.entry + id + '/authentication', data, {
+        Axios.post(this.entry + id + '/certification', data, {
             headers: {'token': token}
         });
 
@@ -80,6 +80,11 @@ class UserAPI extends BaseAPI {
     public register = (data: IRequestRegister) =>
         Axios.post(this.entry + 'register/', data);
 
+
+    public getFavorite = (token: string, id: string) =>
+        Axios.get(this.entry + id + '/favourite', {
+            headers: {'token': token}
+        });
     public addFavorite = (token: string, id: string, data: IRequestAddFavorite) =>
         Axios.post(this.entry + id + '/favourite', data, {
             headers: { 'token': token }

@@ -1,18 +1,22 @@
 import React from 'react';
-import { createModel } from 'hox';
+import {createModel} from 'hox';
+import err from "../../../utils/error";
 
 export default createModel(() => {
     const [records, setRecords] = React.useState(new Array<any>(10).fill(1));
-
     const [editable, setEditable] = React.useState(false);
 
     const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState(err.none);
 
     const getRecords = (/* page: string */) => {
-        setLoading(true);
+        setLoading(true)
 
         // api
-        setTimeout(() => { setRecords(new Array<any>()); setLoading(false); }, 1500);
+        setTimeout(() => {
+            setRecords(new Array<any>());
+            setLoading(false);
+        }, 1500);
     };
 
     const onEdit = () => {
@@ -23,10 +27,13 @@ export default createModel(() => {
         setEditable(false);
     }
 
-    const certify =() => {
+    const certify = () => {
 
     }
 
-    return { records, editable, onEdit, onUnEdit, loading,
-        getRecords, certify };
-});
+    return {
+        records, editable, onEdit, onUnEdit, loading, error,
+        getRecords, certify,
+    };
+})
+;

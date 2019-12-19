@@ -26,16 +26,17 @@ export default () => {
     // const param: QueryParam = qs.parse(location.search.slice(1));
     const [tab, setTab] = useState('2');
 
-    const {experts, loading, getExperts, expertsTotal} = useService();
+    const {getExperts, getPapers} = useService();
 
     function setSearch(e:string){
+        const param: QueryParam = qs.parse(location.search.slice(1));
         setTab(e);
         //TODO
         if(e == '2'){
-            history.push('/search?q=aifhohaw&type=paper');
+            history.push('/search?q='+param.q+'&type=paper');
         }
         else if(e == '1'){
-            history.push('/search?q=aifhohaw&type=expert');
+            history.push('/search?q='+param.q+'&type=expert');
         } 
     }
 
@@ -46,6 +47,15 @@ export default () => {
         }
 
         if(param.type === 'paper'){
+            getPapers({
+                page: 1,
+                size: 10,
+                domain: "title",
+                key: param.q,
+                sort: 'n_citation',
+                direction: true,
+                free: true,
+            })
             setTab('2');
         } else {
 
@@ -54,7 +64,7 @@ export default () => {
                 size: 10,
                 domain: "name",
                 key: param.q,
-                sort: '1',
+                sort: 'name',
                 direction: true,
                 free: true,
             });

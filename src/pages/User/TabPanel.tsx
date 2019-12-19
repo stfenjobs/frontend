@@ -3,15 +3,17 @@ import React from 'react';
 import { Tabs, Icon } from 'antd';
 import PurchaseList from './components/PurchaseList';
 import PwChanger from './components/PwChanger';
-import Certification from './components/Certification';
-
+// import Certification from './components/Certification';
+import StarList from "./starList";
+import useUserModel from "../../models/userModel";
 const { TabPane } = Tabs;
 
-
 export default () => {
+    const {token, id, getFavorite} = useUserModel();
     const onTabChange = (key: string) => {
-        console.log(key);
-    }
+        if (key == "starList")
+            getFavorite(token, id);
+    };
 
     return (
         <Tabs
@@ -49,7 +51,7 @@ export default () => {
             >
                 <PwChanger />
             </TabPane>
-            <TabPane
+            {/* <TabPane
                 tab={
                     <span>
                         <Icon type="schedule" />
@@ -59,6 +61,17 @@ export default () => {
                 key='expert'
             >
                 <Certification />
+            </TabPane> */}
+            <TabPane
+                tab={
+                    <span>
+                        <Icon type="schedule"/>
+                        收藏列表
+                    </span>
+                }
+                key='starList'
+            >
+                <StarList/>
             </TabPane>
         </Tabs>
     );
