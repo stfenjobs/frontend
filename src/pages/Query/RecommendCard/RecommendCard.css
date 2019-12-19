@@ -1,8 +1,9 @@
 .content{
     width: 100%;
-    word-wrap: break-word;
+    word-break:break-all;
     margin: auto;
     margin-top: 5%;
+    hyphens: auto;
 }
 
 .ant-card-head{

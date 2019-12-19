@@ -16,11 +16,14 @@ enum errType {
 export default (props: { id: string, style: any }) => {
     const { paper, serviceLoading } = useService();
     const {
-        token, id, favorite, addFavorite, removeFavorite, loading, error, clearError, logout,
+        token, id, favorite, addFavorite, removeFavorite, loading, error, clearError, logout, getFavorite
     } = useUserModel();
 
     React.useEffect(() => {
-        console.log('maybe_error')
+        getFavorite(token, id);
+    }, []);
+
+    React.useEffect(() => {
         switch (error) {
             case errType.SERVICE_UNAVAILABLE: {
                 message.error('服务不可用');
@@ -48,10 +51,10 @@ export default (props: { id: string, style: any }) => {
     return (
         <Affix offsetTop={10} style={{...props.style, width: '27%'}}>
             <div>
-                <Card title='论文' loading={serviceLoading}>
+                <Card title='论文' loading={serviceLoading || loading}>
                     <div style={{ paddingLeft: '0.5rem' }}>
                         {
-                            favorite.map((item: IFavorite) => item.id).includes(props.id) ?
+                            favorite !== undefined && favorite.map((item: IFavorite) => item.id).includes(props.id) ?
                             <Button
                                 style={{width: '6rem'}}
                                 onClick={() => removeFavorite(token, id, props.id)}

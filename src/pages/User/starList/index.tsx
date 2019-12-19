@@ -1,39 +1,18 @@
-import React, {useState} from 'react';
-import {Card, Divider, Popconfirm, Select, Table} from 'antd';
+import React from 'react';
+import { Popconfirm, Table} from 'antd';
 import useUserModel from "../../../models/userModel";
 import useRouter from "use-react-router";
-import useService from '../services';
-
-const range = (end = 0, step = 1) => {
-    let arr = [];
-    for (let i = 0; i < end; i += step) {
-        arr[i] = {
-            key: i,
-            id: "53e99784b7602d9701f3e142" + i,
-            title: "Effect of a charged scanned probe microscope tip on a subsurface electron gas" + "AHCUASHUFISAHFUSIHUIDS".slice(i),
-            addTime: 1576486228825 + i * 123777723// 注意这里的时间是时间戳
-        };
-    }
-    return arr
-};
 
 
 export default () => {
     // TODO import data form service
-    const {loading, favorite, getFavorite} = useService();
     const {history} = useRouter();
-    const {removeFavorite, token, id} = useUserModel();
-
+    const {removeFavorite, token, id, favorite, getFavorite, loading} = useUserModel();
 
     // local
-    // data = records = starList
-    const [data, setData] = useState(range(6));
-    const [dataIndex, setDataIndex] = useState('');
-
     const handleDelete = (key: string) => {
         removeFavorite(token, id, key);
-        if (!favorite) setData(data.filter(item => item.id !== key));
-        else getFavorite(token, id);
+        setTimeout(() => getFavorite(token, id), 100);
     };
 
     const columns = [
@@ -58,23 +37,22 @@ export default () => {
             dataIndex: 'delete',
             key: 'delete',
             render: (text: any, record: any) =>
-                data.length >= 1 ? (
-                    <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
-                        <a>Delete</a>
-                    </Popconfirm>
-                ) : null,
+                <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
+                    <a>Delete</a>
+                </Popconfirm>
         }
     ];
 
     const onRowClick = (record: any, index: any, event: any) => {
-        if (event.target.tagName == 'TD') history.push("/paper/" + index.id)
+        if (event.target.tagName == 'TD') history.push("/papers/" + favorite[index].id)
     }
+
     return (
         <div style={{margin: "0", verticalAlign: "middle", padding: 0, backgroundColor: "white"}}>
             {/*<Divider orientation="right">收  藏  列  表</Divider>*/}
             <Table style={{marginTop: "1%"}}
                    columns={columns}
-                   dataSource={favorite ? favorite : data}
+                   dataSource={favorite}
                    loading={loading}
                    pagination={{pageSize: 15}}
                    size="small"

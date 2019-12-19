@@ -13,39 +13,40 @@ export interface IRequestList {
 
 export interface IRequestUploadPaper {
     // TODO
-}
+};
 
 export interface IRequestPatchExpertInfo {
     // TODO
-}
+};
 
 export interface IRequestPatchUserInfo {
     email?: string,
     userName?: string,
     photo?: string,
-}
+};
 
 export interface IRequestPatchPw {
     oldPassword: string,
     newPassword: string,
-}
+};
 
 export interface IRequestCertify {
-    org: string,
-    name: string,
-    tags: Array<IField>,
-}
+    eid: string,
+    org?: string,
+    name?: string,
+    tags?: Array<IField>,
+};
 
 export interface IRequestLogin {
     email: string,
     cipher: string,
-}
+};
 
 export interface IRequestRegister {
     email: string,
     password: string,
     userName: string,
-}
+};
 
 export type IRequestAddFavorite = Array<{ title: string, id: string }>;
 

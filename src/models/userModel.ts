@@ -23,6 +23,7 @@ import {
     IContentCertify,
     IContentAddFavorite,
     IContentRemoveFavorite,
+    IContentFavoriteList,
 } from '../types/response';
 import err from '../utils/error';
 import { IField, IFavorite } from '../types';
@@ -71,7 +72,7 @@ const useUser = () => {
 
         setLoading(true);
         api.user.login(param).then((response) => {
-            console.log(response);
+            console.log('login', response);
             if (response.status !== 200) {
                 setError(err.err404);
                 return;
@@ -195,9 +196,7 @@ const useUser = () => {
         };
 
         setLoading(true);
-        console.log(data.oldPassword);
         api.user.changePw(token, id, data).then((response) => {
-            console.log(response);
             if (response.status !== 200) {
                 setError(err.err404);
                 return;
@@ -206,27 +205,29 @@ const useUser = () => {
             const { responseErr } = getContent<IContentUpdatePw>(response.data);
             if (responseErr !== err.none) {
                 setError(responseErr + 100);
+            } else {
+                console.log('success: in api')
+                setError(666);
             }
 
             setLoading(false);
         }).catch(() => { setError(err.err404); setLoading(false); });
     };
 
-    const certify = (token: string, id: string, name: string, org: string, fields: Array<IField>) => {
+    const certify = (token: string, id: string, eid: string) => {
         if (token === '' || eid === '-1') {
             setError(err.errInvalidOps);
             return;
         }
 
         const data: IRequestCertify = {
-            name, org, tags: fields
+            eid
         };
 
-        console.log(data);
-
         setLoading(true);
+
         api.user.certify(token, id, data).then((response) => {
-            console.log(response);
+            console.log(response.data);
             if (response.status !== 200) {
                 setError(err.err404);
                 return;
@@ -234,7 +235,9 @@ const useUser = () => {
 
             const { responseErr } = getContent<IContentCertify>(response.data);
             if (responseErr === err.none) {
-                setEid('-1');
+                setEid(eid);
+                Storage.put('user', { ...Storage.get('user'), eid: eid })
+                setError(1145)
             } else {
                 setError(responseErr + 200);
             }
@@ -279,25 +282,42 @@ const useUser = () => {
 
         setLoading(true);
         api.user.removeFavorite(token, id, data).then((response) => {
-
             if (response.status !== 200) {
                 setError(err.err404);
                 return;
             }
-            console.log("removeFavorite:", response.data);
-            const {success} = response.data;
 
-            if (success) {
+            const { responseErr } = getContent<IContentRemoveFavorite>(response.data);
 
+            if (responseErr === err.none) {
                 setFavorite(favorite.filter((value: IFavorite) => value.id !== pId));
-                clearError();
             } else {
                 setError(err.errInvalidOps);
             }
 
             setLoading(false);
         }).catch(() => {
-            console.log("a error in removeFavorite");
+            setError(err.err404);
+            setLoading(false);
+        });
+    };
+
+    const getFavorite = (token: string, id: string,) => {
+        setLoading(true);
+        api.user.getFavorite(token, id).then((response) => {
+            if (response.status !== 200) {
+                setError(err.err404);
+                return;
+            }
+
+            const { responseErr, content } = getContent<IContentFavoriteList>(response.data);
+            if (responseErr === err.none) {
+                setFavorite(content);
+            } else {
+                setError(responseErr);
+            }
+            setLoading(false);
+        }).catch(() => {
             setError(err.err404);
             setLoading(false);
         });
@@ -308,7 +328,8 @@ const useUser = () => {
     return {
         id, token, username, email, points, avatar, eid, favorite,
         login, register, logout, updateProfile, changePw, certify,
-        addFavorite, removeFavorite, loading, error, clearError, setFavorite
+        addFavorite, removeFavorite, getFavorite,
+        loading, error, clearError, setFavorite
     };
 };
 
