@@ -1,16 +1,28 @@
 body {
-    background-color: white;
+    background: var(--color-white);
 }
 
-.ant-layout-content {
-    background-color: white;
+:root {
+    --color-white: #f3f4f4;
+    --color-blue: #96b9c3;
+    --color-red: #e8534a;
+    --color-orange: #f1c369;
+    --color-brown: #423a3c;
 }
+
+/*.ant-layout-content {*/
+/*    background-color: white;*/
+/*}*/
 
 .ant-layout-header {
-    background: white;
-    border-bottom: 0.1rem solid #001529;
+    background: var(--color-white);
+    /*border-bottom: 0.1rem solid #001529;*/
 }
 
-.ant-layout-footer {
-    background: white;
+/*.ant-layout-footer {*/
+/*    background: white;*/
+/*}*/
+
+.ant-layout {
+    background: var(--color-white);
 }

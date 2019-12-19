@@ -14,7 +14,7 @@ export default () => {
     const {getFavorite} = useService();
     const onTabChange = (key: string) => {
         console.log(key);
-        if (key == "starList")
+        if (key === "starList")
             getFavorite(token, id);
     };
 

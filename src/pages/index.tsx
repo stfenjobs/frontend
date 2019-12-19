@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { Layout } from 'antd';
+import {Divider, Layout} from 'antd';
 import Navigator from '../components/Navigator';
 import Router from './Router';
 
@@ -15,6 +15,7 @@ export default () => {
                 <Layout.Header>
                     <Navigator />
                 </Layout.Header>
+                <Divider style={{width: '100%', margin: 0}}/>
                 <Layout.Content>
                     <Router />
                 </Layout.Content>
