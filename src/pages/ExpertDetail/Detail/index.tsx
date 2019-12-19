@@ -166,6 +166,7 @@ export default (props: DetailProps) => {
                 bodyStyle={{
                     padding: "1%",
                 }}
+                loading={loading}
             >
                 <div style={{ margin: "1% 0 1% 1%" }}>
                     <List
