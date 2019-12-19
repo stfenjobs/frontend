@@ -179,8 +179,8 @@ export default (props: DetailProps) => {
                                     {
                                         page: page,
                                         size: 10,
-                                        domain: "author",
-                                        key: expert.name,
+                                        domain: "eid",
+                                        key: expert.id,
                                         sort: "n_citation",
                                         direction: true,
                                         free: true,

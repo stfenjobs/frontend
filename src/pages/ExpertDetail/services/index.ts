@@ -56,8 +56,8 @@ export default createModel(() => {
                 getExpertsPublication(token, {
                     page: 1,
                     size: 10,
-                    domain: "author",
-                    key: content.name,
+                    domain: "eid",
+                    key: content.id,
                     sort: "n_citation",
                     direction: true,
                     free: true,
