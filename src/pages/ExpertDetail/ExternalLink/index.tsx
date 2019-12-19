@@ -1,38 +1,63 @@
 import React from 'react'
-import { BackTop, Affix, Card } from 'antd'
+import {BackTop, Affix, Card, Icon, Avatar} from 'antd'
+import Meta from "antd/es/card/Meta";
+import {DetailProps} from "../Detail";
+import useService from "../services";
 
-const content_relativity = "ここに関連する推奨マップがあるはずです";
+function ExternalLink() {
+    const {publications, loading, expert} = useService();
+    const aboutE = (experts: any) => (
+        <Meta
+            key={experts.name}
+            avatar={<Avatar style={{
+                fontSize: "large",
+                fontWeight: "bolder",
+                color: '#f1c369',
+                backgroundColor: '#fdf5cf'
+            }}>{experts === undefined ? '' : experts.name.charAt(0)} </Avatar>}
+            title={experts === undefined ? '' : experts.name}
+            description={<br/>}
+        />
+    );
 
-const content_post_num = "時間ベースの紙の出版統計があるはずです";
 
-function ExternalLink(){
-    const renderCard = (title: string, content: string, loading: boolean) => (
+    const aboutCard = () => (
         <Card
             loading={loading}
-            title={title}
+            title="相关专家"
         >
-            <div>
-                {content}
-            </div>
+            {publications[0].authors.splice(0, 5).map((value) => aboutE(value))}
+
         </Card>
+
     );
 
     return (
         <div>
-        <Affix offsetTop={10}>
-            <div>
+            <Affix offsetTop={10}>
                 <div>
-                    {renderCard('相关度', content_relativity, false)}
+                    <div>
+                        {aboutCard()}
+                    </div>
+                    <div style={{
+                        marginTop: "1rem",
+                    }}>
+                        <Card
+                            loading={loading}
+                            title="数据分析"
+                            style={{fontSize: "x-large"}}
+                        >
+                            <span><Icon type="branches"/>    Citations ： {expert.n_citation}</span>
+                            <br/>
+                            <span><Icon type="read"/>    Papers： {expert.n_pubs}</span>
+                            <br/>
+                            <span><Icon type="dot-chart"/>    H-index： {expert.h_index}</span>
+                        </Card>
+                    </div>
                 </div>
-                <div style={{
-                    marginTop: "1rem",
-                }}>
-                    {renderCard('发文量', content_post_num, false)}
-                </div>
-            </div>
-            
-        </Affix>
-        <BackTop />
+
+            </Affix>
+            <BackTop/>
         </div>
     )
 }

@@ -1,57 +1,76 @@
 :root {
     --transize: 1.5;
+    --tanscolor: #7da2bc
 }
 
 #search {
     display: inline-flex;
+    border: 0;
+    border-radius: 0;
 }
 
 #content {
-    text-align: justify;
+    text-align: center;
     left: 0;
     right: 0;
     overflow: hidden;
     height: 30%;
     background-size: cover;
     padding: 0 0 0 0;
+    background-color: var(--color-blue);
 }
 
 .bg {
     text-align: center;
-    width: 100%;
     height: inherit;
     align-items: center;
     position: center;
     backdrop-filter: blur(2px);
     z-index: -2;
     vertical-align: center;
-}
-
-.group {
-    margin-top: 20%;
-    margin-bottom: 20%;
-    display: inline-flex;
-    width: 52%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    display: inline-block;
+    width: 43%;
     max-width: 50rem;
     min-height: 3rem;
-    align-content: center;
-}
-
-.group span {
     zoom: var(--transize);
 }
 
-.sel {
-    zoom: var(--transize);
-    width: 12rem;
-
+.bt.ant-tag-checkable-checked {
+    background-color: white;
+    color: var(--tanscolor);
 }
 
-.sel div {
-    min-height: 3rem;
-    font-size-adjust: inherit;
+
+.bt {
+    text-align: center;
+    width: 3rem;
+    height: auto;
+    margin-right: 0;
+    vertical-align: middle;
+    background-color: var(--color-blue);
+    font-size: medium;
+    padding-top: 6px;
+    padding-bottom: 6px;
 }
 
-.drop {
-    zoom: var(--transize);
+
+.searchGroup {
+    width: 100%;
+    height: inherit;
+    text-align: left;
+}
+
+.foot {
+    background-color: var(--color-white);
+}
+
+.boldTitle {
+    text-align: center;
+    font-size: 3rem;
+    position: absolute;
+    margin-top: 39%;
+    margin-bottom: 2%;
+    vertical-align: middle;
 }

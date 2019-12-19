@@ -6,6 +6,8 @@ import err from '../../../utils/error';
 
 import { IPaper } from '../../../types/';
 import { IContentPaperDetail } from '../../../types/response';
+import {rs} from "qiniu";
+
 
 export default createModel(() => {
     const [paper, setPaper] = React.useState(new IPaper());

@@ -19,7 +19,14 @@ export default () => {
 
     return (
         <div style={{ padding: "0 12%" }}>
-            <div style={{float: 'left', paddingTop: '3%', width: '70%' }}>
+            <div style={{
+                float: 'left',
+                marginTop: '3%',
+                width: '70%',
+                backgroundColor: "white",
+                padding: "3%",
+                paddingBottom: "5%"
+            }}>
                 <Detail id={location.pathname.split('/').pop() as string}/>
             </div>
             <Cards

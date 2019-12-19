@@ -3,7 +3,7 @@ import useRouter from 'use-react-router';
 import qs from 'qs';
 import { trim } from '../../utils';
 
-import { Input, Select, Button, message } from 'antd';
+import {Input, Select, Button, message, Divider} from 'antd';
 import UserMenu from './UserMenu';
 
 import { QueryParam } from '../../types';
@@ -41,7 +41,7 @@ export default () => {
 
     const onInput = (value: string) => {
         setQValue(value);
-    }
+    };
 
     const onSearch = (key: string) => {
         if (trim(key) === '') {
@@ -74,7 +74,9 @@ export default () => {
                     onChange={(value: string) => onSelect(value)}
                     style={{
                         width: 90,
+                        borderColor: "var(--color-white)"
                     }}
+                    className={"selector-no-border"}
                 >
                     <Option value='paper'>论文</Option>
                     <Option value='expert'>专家</Option>
@@ -87,14 +89,18 @@ export default () => {
                     style={{
                         width: '18rem',
                         textAlign: 'left',
-                        borderColor: 'black black black red'
+                        borderColor: "var(--color-white)"
                     }}
                 />
                 <Button
-                    type='primary'
                     icon='search'
                     onClick={() => onSearch(qValue)}
-                    style={{ width: 40, color: "red", background: "black", border: "solid black" }}
+                    style={{
+                        width: 40,
+                        color: "var(--color-blue)",
+                        borderColor: "var(--color-white)",
+                        backgroundColor: "white"
+                    }}
                 />
             </Group>
         </div>
@@ -102,8 +108,10 @@ export default () => {
 
     return (
         <div className='app-navigator'>
-            <div style={{ float: 'left', width: '20%' }}>
-                <span style={{ color: '#cccccc' }}>LOGO</span>
+            <div className={"toExplore"} onClick={() => history.push("/")}>
+                <span style={{fontSize: "medium"}}><img style={{width: "2rem", marginRight: "1rem"}}
+                                                                        src={require("../../img/logosmall.png")}
+                                                                        alt={"smallLogo"}/>Π ρ ο μ η θ ε ύ ς</span>
             </div>
             {qBar && searchBar}
             <div style={{ float: 'right', paddingRight: '1%' }}>

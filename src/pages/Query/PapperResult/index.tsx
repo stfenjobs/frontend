@@ -26,6 +26,8 @@ function ExpertResult(){
                 itemLayout="vertical"
                 size="large"
                 pagination={{
+                    style: {marginLeft: 0},
+                    className: "pagLeft",
                     onChange: page => {
                         console.log(page);
                         getPapers({

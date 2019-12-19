@@ -4,12 +4,12 @@ import { IField } from './index';
 export interface IRequestList {
     page: number,
     size: number,
-    domain: string,
+    domain?: string,
     key: string,
-    sort: string,
-    direction: boolean,
+    sort?: string,
+    direction?: boolean,
     free?: boolean,
-};
+}
 
 export interface IRequestUploadPaper {
     // TODO

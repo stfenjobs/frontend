@@ -2,7 +2,7 @@ import React from 'react';
 import useRouter from 'use-react-router';
 import useUserModel from '../../../models/userModel';
 import api from "../../../api"
-import {Upload, Icon, message} from 'antd';
+import {Upload, Icon, message, Card} from 'antd';
 import {UploadChangeParam} from 'antd/lib/upload';
 
 import EditableLabel from './EditableLabel';
@@ -108,104 +108,106 @@ export default () => {
     };
 
     return (
+
         <div
             style={{
                 position: 'fixed',
-                top: '6rem',
+                top: "5rem",
                 right: '14rem',
             }}
         >
-            <div
-                onMouseEnter={() => !hover && setHover(true) }
-                onMouseLeave={() => hover && setHover(false) }
-            >
-                <Upload className={"uploader"}
-                        listType='picture-card'
-                        data={() => api.uploader.getToken()}
-                        beforeUpload={beforeUpload}
-                        showUploadList={false}
-                        onChange={handleUploadChange}
-                        disabled={uploadLoading}
-                        action="https://up-z1.qiniup.com"
+            <Card style={{padding: "1rem"}}>
+                <div
+                    onMouseEnter={() => !hover && setHover(true)}
+                    onMouseLeave={() => hover && setHover(false)}
                 >
-                    <img
-                        src={img}
-                        alt="avatar"
-                        style={{width: '100%'}}
-                    />
-                    {hover ? <Icon type="upload" className={"icon"}/> : null}
-                </Upload>
-            </div>
-            <EditableLabel
-                isEditable={nameEditable}
-                value={tmpName}
-                fontSize={"2rem"}
-                size='large'
-                loading={loading}
-                onEdit={() => setNameEditable(true)}
-                onValueChange={(e) => setTmpName(e.target.value)}
-                onConfirm={
-                    () => tmpName !== username ?
-                        updateProfile(token, id, {username: tmpName}) :
-                        setNameEditable(false)
-                }
-                onCancel={() => {
-                    setTmpName(username);
-                    setNameEditable(false);
-                }}
-            />
-            <div style={{paddingTop: '1.5rem'}}>
-                <Icon
-                    type='mail'
-                    style={{
-                        paddingRight: '0.5rem',
-                        float: 'left',
-                        paddingTop: emailEditable ? '0.6rem' : '0.4rem'
-                    }}
-                />
+                    <Upload className={"uploader"}
+                            listType='picture-card'
+                            data={() => api.uploader.getToken()}
+                            beforeUpload={beforeUpload}
+                            showUploadList={false}
+                            onChange={handleUploadChange}
+                            disabled={uploadLoading}
+                            action="https://up-z1.qiniup.com"
+                    >
+                        <img
+                            src={img}
+                            alt="avatar"
+                            style={{width: '100%'}}
+                        />
+                        {hover ? <Icon type="upload" className={"icon"} style={{marginLeft: "2.5rem"}}/> : null}
+                    </Upload>
+                </div>
                 <EditableLabel
-                    isEditable={emailEditable}
-                    value={tmpEmail}
-                    fontSize={"1rem"}
+                    isEditable={nameEditable}
+                    value={tmpName}
+                    fontSize={"2rem"}
                     loading={loading}
-                    onEdit={() => setEmailEditable(true)}
-                    onValueChange={(e) => setTmpEmail(e.target.value)}
+                    onEdit={() => setNameEditable(true)}
+                    onValueChange={(e) => setTmpName(e.target.value)}
                     onConfirm={
-                        () => tmpEmail !== email ?
-                            updateProfile(token, id, {email: tmpEmail}) :
-                            setEmailEditable(false)
+                        () => tmpName !== username ?
+                            updateProfile(token, id, {username: tmpName}) :
+                            setNameEditable(false)
                     }
                     onCancel={() => {
-                        setTmpEmail(email);
-                        setEmailEditable(false);
+                        setTmpName(username);
+                        setNameEditable(false);
                     }}
                 />
-            </div>
-            <div style={{paddingTop: '0.4rem'}}>
-                <Icon
-                    type='pay-circle'
-                    style={{
-                        padding: '0.28rem 0.5rem 0 0',
-                        float: 'left',
-                    }}
-                />
-                <span style={{fontSize: '1rem'}}>
-                    可用 <span style={{color: 'rgba(200, 0, 0, 0.6)'}}>{points}</span> 积分
-                </span>
-            </div>
-            {
-                eid !== '' &&
-                <div style={{paddingTop: '0.4rem'}}>
+                <div style={{paddingTop: '1.5rem'}}>
                     <Icon
-                        type="schedule"
+                        type='mail'
                         style={{
-                            padding: '0.32rem 0.5rem 0 0',
-                            float: 'left'
+                            paddingRight: '0.5rem',
+                            float: 'left',
+                            paddingTop: emailEditable ? '0.6rem' : '0.4rem'
                         }}
                     />
-                    <span style={{fontSize: '1rem'}}>已通过<b>专家认证</b></span>
+                    <EditableLabel
+                        isEditable={emailEditable}
+                        value={tmpEmail}
+                        fontSize={"1rem"}
+                        loading={loading}
+                        onEdit={() => setEmailEditable(true)}
+                        onValueChange={(e) => setTmpEmail(e.target.value)}
+                        onConfirm={
+                            () => tmpEmail !== email ?
+                                updateProfile(token, id, {email: tmpEmail}) :
+                                setEmailEditable(false)
+                        }
+                        onCancel={() => {
+                            setTmpEmail(email);
+                            setEmailEditable(false);
+                        }}
+                    />
                 </div>
-            }
+                <div style={{paddingTop: '0.4rem'}}>
+                    <Icon
+                        type='pay-circle'
+                        style={{
+                            padding: '0.28rem 0.5rem 0 0',
+                            float: 'left',
+                        }}
+                    />
+                    <span style={{fontSize: '1rem'}}>
+                    可用 <span style={{color: 'rgba(200, 0, 0, 0.6)'}}>{points}</span> 积分
+                </span>
+                </div>
+                {
+                    eid !== '' &&
+                    <div style={{paddingTop: '0.4rem'}}>
+                        <Icon
+                            type="schedule"
+                            style={{
+                                padding: '0.32rem 0.5rem 0 0',
+                                float: 'left'
+                            }}
+                        />
+                        <span style={{fontSize: '1rem'}}>已通过<b>专家认证</b></span>
+                    </div>
+                }
+            </Card>
         </div>
     )
 }

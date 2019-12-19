@@ -39,7 +39,7 @@ export interface DetailProps {
 };
 
 export default (props: DetailProps) => {
-    const { expert, getExpert, loading, error, clearErr, publications, pubsTotal, getExpertsPublication } = useService();
+    const {expert, getExpert, loading, error, clearErr, publications, pubsTotal, getExpertsPublication,} = useService();
     const { history } = useRouter();
     const { token, eid, certify, id, logout } = useUserModel();
 
@@ -100,16 +100,23 @@ export default (props: DetailProps) => {
             <Skeleton loading={loading}>
                 <div
                     style={{
-                        marginLeft: '1%',
-                        marginTop: '1%',
+                        marginTop: '3%',
                         padding: '2%',
+                        paddingLeft: "4%",
+                        paddingBottom: "4%",
                         backgroundColor: 'white'
                     }}
                     className="personalAttribute"
                 >
                     <Row gutter={20}>
                         <Col span={5} style={{ minWidth: "200px" }}>
-                            <Avatar size={avatarSize} src={avatar} style={{ marginTop: "1.1rem" }} />
+                            <Avatar size={avatarSize} style={{
+                                fontSize: "xx-large",
+                                fontWeight: "bolder",
+                                color: '#f56a00',
+                                backgroundColor: '#fde3cf',
+                                marginTop: "1.1rem"
+                            }}> {expert.name.charAt(0)}</Avatar>
                         </Col>
                         <Col >
                             <div
@@ -144,9 +151,10 @@ export default (props: DetailProps) => {
                 </div>
             </Skeleton>
             <Card
+                style={{marginTop: "4%"}}
                 title={
                     <div>
-                        <span style={{ fontSize: "1.5rem" }}>
+                        <span style={{fontSize: "1.5rem",}}>
                             论文
                         </span>
                         <span style={{
@@ -154,7 +162,7 @@ export default (props: DetailProps) => {
                             fontSize: "0.8rem",
                             color: "grey"
                         }}>
-                            合計<span> {pubsTotal} </span>件の論文
+                            总论文量：<span> {pubsTotal} </span>篇
                         </span>
                     </div>
                 }
@@ -166,6 +174,7 @@ export default (props: DetailProps) => {
                 bodyStyle={{
                     padding: "1%",
                 }}
+                loading={loading}
             >
                 <div style={{ margin: "1% 0 1% 1%" }}>
                     <List
@@ -179,8 +188,8 @@ export default (props: DetailProps) => {
                                     {
                                         page: page,
                                         size: 10,
-                                        domain: "author",
-                                        key: expert.name,
+                                        domain: "eid",
+                                        key: expert.id,
                                         sort: "n_citation",
                                         direction: true,
                                         free: true,
@@ -195,18 +204,18 @@ export default (props: DetailProps) => {
                             href: '/papers/'+paper.id,
                             title: paper.title,
                             description:
-                                <div style={{ width: "30%", overflow: "hidden" }}>
+                                <div style={{ width: "60%", overflow: "hidden" }}>
                                     <div>
                                         <span style={{ width: "30%", overflow: "hidden" }}>
-                                            发表年份
+                                            Published in
                                         </span>
 
                                         <span style={{ color: "#3c80bc", fontWeight: 500 }}>
-                                            {paper.year}
+                                            &ensp;{paper.year}&ensp;
                                         </span>
                                     </div>
                                     <div>
-                                        {`P ${paper.page_start} - ${paper.page_end}, 第 ${paper.volume} 卷, 第 ${paper.issue} 卷`}
+                                        {`page ${paper.page_start} - ${paper.page_end}, volume ${paper.volume}, issue ${paper.issue}`}
                                     </div>
                                 </div>,
                             content:

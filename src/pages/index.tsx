@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { Layout } from 'antd';
+import {Divider, Layout} from 'antd';
 import Navigator from '../components/Navigator';
 import Router from './Router';
 
@@ -15,18 +15,27 @@ export default () => {
                 <Layout.Header>
                     <Navigator />
                 </Layout.Header>
+                <Divider
+                    style={{width: '100%', margin: 0, height: "1px", backgroundColor: "var(--color-brown)", top: 0}}/>
                 <Layout.Content>
                     <Router />
                 </Layout.Content>
-                {/* <Layout.Footer style={{
+                <Layout.Footer style={{
                     textAlign: 'center',
                     fontSize: '1rem',
-                    color: '#aaaaaa'
+                    color: '#aaaaaa',
+                    marginTop: "auto",
+                    zIndex: -3,
+                    bottom: "0",
+                    background: "fixed",
+                    left: 0,
+                    position: "fixed",
+                    right: 0
                 }}>
-                    <span>
+                    <span style={{textAlign: "center"}}>
                         Copyright (c) 2019 wwthh😁. All rights reserved.
                     </span>
-                </Layout.Footer> */}
+                </Layout.Footer>
             </Layout>
         </BrowserRouter>
     );

@@ -64,7 +64,7 @@ export default () => {
                 size: 10,
                 domain: "name",
                 key: param.q,
-                sort: 'name',
+                sort: 'n_citation',
                 direction: true,
                 free: true,
             });

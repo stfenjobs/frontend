@@ -28,6 +28,8 @@ function ExpertResult(){
                 itemLayout="vertical"
                 size="large"
                 pagination={{
+                    style: {marginLeft: 0},
+                    className: "pagLeft",
                     onChange: page => {
                         console.log(page);
                         getExperts({
@@ -35,7 +37,7 @@ function ExpertResult(){
                             size: 10,
                             domain: "name",
                             key: key,
-                            sort: 'name',
+                            sort: 'n_citation',
                             direction: true,
                             free: true,
                         });
@@ -47,7 +49,6 @@ function ExpertResult(){
                     experts.map((item: IExpert) => ({
                     href: 'experts/'+item.id,
                     title: item.name,
-                    avatar: 'https://avatarcdn.aminer.cn/upload/avatar/265/1157/1241/53f4d81cdabfaef64977b5bf.jpg!160',
                     description:
                         <div className='decription'>
                             <span className='paper-num'>论文数：</span>
@@ -55,7 +56,7 @@ function ExpertResult(){
                             <span className='split'></span>
                             <span className='use-num'>被引数：</span>
                             <span className='num'>{item.n_citation}</span>
-                            <div><Icon type="bank" />{item.org === null ? "Independent":item.org}</div>
+                            <div><Icon type="bank"/>{item.orgs === null ? "Independent" : item.orgs[0]}</div>
                         </div>,
                     content:
                         item.tags !== null &&
@@ -70,7 +71,12 @@ function ExpertResult(){
                         >
                             <Skeleton loading={loading}>
                             <List.Item.Meta
-                                avatar={<Avatar size={100} src={item.avatar} />}
+                                avatar={<Avatar style={{
+                                    fontSize: "xx-large",
+                                    fontWeight: "bolder",
+                                    color: '#f56a00',
+                                    backgroundColor: '#fde3cf'
+                                }} size={100}>{item.title.charAt(0)}</Avatar>}
                                 title={<a href={item.href}>{item.title}</a>}
                                 description={item.description}
                             />

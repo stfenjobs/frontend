@@ -32,9 +32,14 @@ function RecommendCard(){
                     title="最佳匹配"
                 >
                     <Meta
-                    avatar={<Avatar src="https://avatarcdn.aminer.cn/upload/avatar/265/1157/1241/53f4d81cdabfaef64977b5bf.jpg!160" />}
-                    title={experts[0] === undefined ? '':experts[0].name}
-                    description={experts[0] === undefined ? '':experts[0].org === null ? "idependent":experts[0].org}
+                        avatar={<Avatar style={{
+                            fontSize: "large",
+                            fontWeight: "bolder",
+                            color: '#f1c369',
+                            backgroundColor: '#fdf5cf'
+                        }}>{experts[0] === undefined ? '' : experts[0].name.charAt(0)} </Avatar>}
+                        title={experts[0] === undefined ? '':experts[0].name}
+                        description={experts[0] === undefined ? '' : experts[0].orgs === null ? "idependent" : experts[0].orgs[0]}
                     />
                 </Card>
             
@@ -54,9 +59,14 @@ function RecommendCard(){
                     title="最佳匹配"
                 >
                     <Meta
-                    avatar={<Avatar src="https://avatarcdn.aminer.cn/upload/avatar/265/1157/1241/53f4d81cdabfaef64977b5bf.jpg!160" />}
-                    title={papers[0] === undefined ? "" : papers[0].title}
-                    description={papers[0] === undefined ? "" : papers[0].authors[0] === undefined ? "暂无":papers[0].authors[0].name}
+                        avatar={<Avatar style={{
+                            fontSize: "large",
+                            fontWeight: "bolder",
+                            color: '#f1c369',
+                            backgroundColor: '#fdf5cf'
+                        }}>{papers[0] === undefined ? "" : papers[0].authors[0] === undefined ? "暂无" : papers[0].authors[0].name.charAt(0)} </Avatar>}
+                        title={papers[0] === undefined ? "" : papers[0].title}
+                        description={papers[0] === undefined ? "" : papers[0].authors[0] === undefined ? "暂无":papers[0].authors[0].name}
                     />
                     <div className='content'>
                         {papers[0] === undefined ? "" : papers[0].abstract.slice(0,papers[0].abstract.length < 500 ? papers[0].abstract.length : 500)+'...'}

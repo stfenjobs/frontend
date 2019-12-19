@@ -3,7 +3,7 @@ import {createModel} from 'hox';
 import err from "../../../utils/error";
 
 export default createModel(() => {
-    const [records, setRecords] = React.useState(new Array<any>(10).fill(1));
+    const [records, setRecords] = React.useState([]);
     const [editable, setEditable] = React.useState(false);
 
     const [loading, setLoading] = React.useState(false);
@@ -14,7 +14,7 @@ export default createModel(() => {
 
         // api
         setTimeout(() => {
-            setRecords(new Array<any>());
+            setRecords([]);
             setLoading(false);
         }, 1500);
     };
