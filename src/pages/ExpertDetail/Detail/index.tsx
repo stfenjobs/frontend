@@ -9,8 +9,7 @@ import { Card, Row, Col, Avatar, Tag, Icon, List, message, Skeleton, Divider, Bu
 
 const certificationColor = 'green';
 const nonCertificationColor = 'red';
-const avatar = 'https://scontent-hkg3-2.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/67195095_481191759124959_5957380830821418586_n.jpg?_nc_ht=scontent-hkg3-2.cdninstagram.com&_nc_cat=103&oh=505d6393c21b0f33e616e12065c71f1a&oe=5E74CC67';
-const avatarSize = 135;
+const avatarSize = 110;
 
 function checkTag(author: { name: string, org: string, id: string }) {
     return true;
@@ -39,7 +38,7 @@ export interface DetailProps {
 };
 
 export default (props: DetailProps) => {
-    const {expert, getExpert, loading, error, clearErr, publications, pubsTotal, getExpertsPublication,} = useService();
+    const { expert, getExpert, loading, error, clearErr, publications, pubsTotal, getExpertsPublication, } = useService();
     const { history } = useRouter();
     const { token, eid, certify, id, logout } = useUserModel();
 
@@ -109,7 +108,7 @@ export default (props: DetailProps) => {
                     className="personalAttribute"
                 >
                     <Row gutter={20}>
-                        <Col span={5} style={{ minWidth: "200px" }}>
+                        <Col span={2} style={{ minWidth: "10rem" }}>
                             <Avatar size={avatarSize} style={{
                                 fontSize: "xx-large",
                                 fontWeight: "bolder",
@@ -129,32 +128,33 @@ export default (props: DetailProps) => {
                                     <span style={{ fontSize: '2em' }} >
                                         {expert.name} &ensp;
                                     </span>
-                                    <span style={{float: 'right'}}>
+                                    <span style={{ float: 'right' }}>
                                         <Tag color={(props.id === eid || expert.isCertification) ? certificationColor : nonCertificationColor}>
                                             {eid === props.id ? '已认证' : (expert.isCertification ? '已认证' : '未认证')}
                                         </Tag>
                                     </span>
                                     {
                                         eid === '' && !expert.isCertification &&
-                                        <span style={{float:'right', paddingRight: '1rem'}}>
+                                        <span style={{ float: 'right', paddingRight: '1rem' }}>
                                             <Button onClick={() => certify(token, id, props.id)}>我要认证</Button>
                                         </span>
                                     }
                                 </div>
                                 <div> <Icon type='bank' style={{ marginRight: "0.5rem" }} /> {expert.orgs} </div>
-                                <div> <Icon type='tag' style={{ marginRight: "0.5rem" }} />
-                                    { simplifiyTag(expert.tags) }
-                                </div>
+
                             </div>
                         </Col>
                     </Row>
+                    <div> <Icon type='tag' style={{ marginRight: "0.5rem", marginTop: "1rem" }} />
+                        {simplifiyTag(expert.tags)}
+                    </div>
                 </div>
             </Skeleton>
             <Card
-                style={{marginTop: "4%"}}
+                style={{ marginTop: "4%" }}
                 title={
                     <div>
-                        <span style={{fontSize: "1.5rem",}}>
+                        <span style={{ fontSize: "1.5rem", }}>
                             论文
                         </span>
                         <span style={{
@@ -200,8 +200,8 @@ export default (props: DetailProps) => {
                             pageSize: 10,
                             total: pubsTotal,
                         }}
-                        dataSource={ publications.map((paper: IPaperListItem) => ({
-                            href: '/papers/'+paper.id,
+                        dataSource={publications.map((paper: IPaperListItem) => ({
+                            href: '/papers/' + paper.id,
                             title: paper.title,
                             description:
                                 <div style={{ width: "60%", overflow: "hidden" }}>
@@ -219,14 +219,13 @@ export default (props: DetailProps) => {
                                     </div>
                                 </div>,
                             content:
-                            //.filter(checkTag).slice(0, paper.authors.length >= 5 ? 5 : paper.authors.length)
                                 paper.authors.filter(checkTag).slice(0, paper.authors.length >= 10 ? 10 : paper.authors.length).map((author: { name: string, org: string, id: string }, index: number) => (
                                     <span>
-                                        {author.id ? <a href={'/experts/'+author.id}>{author.name}</a> : <span>{author.name}</span>}
-                                        {index !== (paper.authors.length >= 10 ? 10 : paper.authors.length) - 1 && <Divider type='vertical'/>}
+                                        {author.id ? <a href={'/experts/' + author.id}>{author.name}</a> : <span>{author.name}</span>}
+                                        {index !== (paper.authors.length >= 10 ? 10 : paper.authors.length) - 1 && <Divider type='vertical' />}
                                     </span>
                                 ))
-                            }))
+                        }))
                         }
                         renderItem={(item: any) => (
                             <div style={{ borderBottom: "1px solid rgb(213, 213, 213)", }}>

@@ -1,7 +1,6 @@
 import React from 'react'
 import {BackTop, Affix, Card, Icon, Avatar} from 'antd'
 import Meta from "antd/es/card/Meta";
-import {DetailProps} from "../Detail";
 import useService from "../services";
 
 function ExternalLink() {
@@ -45,7 +44,7 @@ function ExternalLink() {
                         <Card
                             loading={loading}
                             title="数据分析"
-                            style={{fontSize: "x-large"}}
+                            style={{fontSize: "0.9rem"}}
                         >
                             <span><Icon type="branches"/>    Citations ： {expert.n_citation}</span>
                             <br/>
