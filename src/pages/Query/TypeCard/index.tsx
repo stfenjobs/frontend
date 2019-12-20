@@ -14,7 +14,7 @@ const { TabPane } = Tabs;
 const { CheckableTag } = Tag;
 
 function MyTag(props:{field:string, type:string}){
-    const { getExperts, getPapers } = useService();
+    const { getExperts, getPapers,setCurrentPage } = useService();
 
 
 
@@ -32,6 +32,7 @@ function MyTag(props:{field:string, type:string}){
                 direction: true,
                 free: true,
             });
+            setCurrentPage(1)
         }else if(props.type === "paper"){
             getPapers({
                 page: 1,
@@ -42,6 +43,7 @@ function MyTag(props:{field:string, type:string}){
                 direction: true,
                 free: true,
             });
+            setCurrentPage(1)
         }
     };
 
@@ -56,7 +58,7 @@ function MyTag(props:{field:string, type:string}){
 
 function HTag(){
     const [checked, setChecked] = useState(0)
-    const { getExperts, getPapers } = useService();
+    const { getExperts, getPapers, setCurrentPage } = useService();
     const { location } = useRouter();
     const param: QueryParam = qs.parse(location.search.slice(1));
 
@@ -70,6 +72,7 @@ function HTag(){
         direction: true,
         free: true,
     });
+    setCurrentPage(1)
   };
 
   const handlePChange = (checked: any) => {
@@ -82,12 +85,13 @@ function HTag(){
         direction: true,
         free: true,
     });
+    setCurrentPage(1)
   };
 
   return (
       <div>
-          <CheckableTag  checked={checked === 1} onChange={handleHChange}>被引数</CheckableTag>
-          <CheckableTag  checked={checked === 2} onChange={handlePChange}>论文数</CheckableTag>
+          <CheckableTag  checked={checked === 1} onChange={handleHChange}>姓名</CheckableTag>
+          <CheckableTag  checked={checked === 2} onChange={handlePChange}>被引数</CheckableTag>
       </div>
   )
 }

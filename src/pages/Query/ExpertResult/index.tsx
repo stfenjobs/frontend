@@ -15,7 +15,7 @@ function checkTag(tag: { t: string, w: number }){
 function ExpertResult(){
     const [key, setKey] = useState('');
     const { location } = useRouter();
-    const { experts, loading, getExperts, expertsTotal } = useService();
+    const { experts, loading, getExperts, expertsTotal, currentPage, setCurrentPage } = useService();
 
     useEffect(() => {
         const param: QueryParam = qs.parse(location.search.slice(1));
@@ -32,6 +32,7 @@ function ExpertResult(){
                     className: "pagLeft",
                     onChange: page => {
                         console.log(page);
+                        setCurrentPage(page);
                         getExperts({
                             page: page,
                             size: 10,
@@ -44,6 +45,7 @@ function ExpertResult(){
                     },
                     pageSize: 10,
                     total: expertsTotal > 5000 ? 5000:expertsTotal,
+                    current: currentPage,
                 }}
                 dataSource={experts[0] === undefined ? []:
                     experts.map((item: IExpert) => ({

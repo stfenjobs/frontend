@@ -11,7 +11,7 @@ import useRouter from 'use-react-router'
 
 function ExpertResult(){
 
-    const { papers, loading, getPapers, papersTotal  } = useService();
+    const { papers, loading, getPapers, papersTotal,currentPage, setCurrentPage  } = useService();
     const [key, setKey] = useState('');
     const { location } = useRouter();
 
@@ -30,6 +30,7 @@ function ExpertResult(){
                     className: "pagLeft",
                     onChange: page => {
                         console.log(page);
+                        setCurrentPage(page);
                         getPapers({
                             page: page,
                             size: 10,
@@ -42,6 +43,7 @@ function ExpertResult(){
                     },
                     pageSize: 10,
                     total: papersTotal > 5000 ? 5000:papersTotal,
+                    current: currentPage,
                 }}
                 dataSource={
                     papers === undefined? []:papers.map((item: IPaperListItem) => ({

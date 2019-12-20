@@ -25,7 +25,7 @@ export default () => {
     // const param: QueryParam = qs.parse(location.search.slice(1));
     const [tab, setTab] = useState('2');
 
-    const {getExperts, getPapers} = useService();
+    const {getExperts, getPapers, setCurrentPage} = useService();
 
     function setSearch(e:string){
         const param: QueryParam = qs.parse(location.search.slice(1));
@@ -55,6 +55,7 @@ export default () => {
                 direction: true,
                 free: true,
             })
+            setCurrentPage(1);
             setTab('2');
         } else {
 
@@ -67,6 +68,7 @@ export default () => {
                 direction: true,
                 free: true,
             });
+            setCurrentPage(1);
             setTab('1');
         }
     }, [location, history]);

@@ -17,6 +17,7 @@ export default createModel(() => {
     const [papersTotal, setPapersTotal] = React.useState(0);
     const [error, setError] = React.useState(err.none);
     const { token } = useUserModel();
+    const [currentPage, setCurrentPage] = React.useState(1);
 
     const getExperts = (params: IRequestList) => {
         setLoading(true);
@@ -37,6 +38,7 @@ export default createModel(() => {
                 console.log("error")
                 setError(responseErr);
                 setExperts([]);
+                setExpertsTotal(0);
             }
             setLoading(false);
         }).catch(() => { setError(err.err404); setLoading(false); });
@@ -60,10 +62,11 @@ export default createModel(() => {
             } else {
                 setError(responseErr);
                 setPapers([])
+                setPapersTotal(0);
             }
             setLoading(false);
         }).catch(() => { setError(err.err404); setLoading(false); });
     };
 
-    return { papers, papersTotal, experts, expertsTotal, loading, getExperts, getPapers };
+    return { papers, papersTotal, experts, expertsTotal, loading, getExperts, getPapers, currentPage, setCurrentPage };
 });
