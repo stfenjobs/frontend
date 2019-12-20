@@ -3,7 +3,8 @@ import useRouter from 'use-react-router';
 import qs from 'qs';
 import { trim } from '../../utils';
 
-import {Input, Select, Button, message, Divider} from 'antd';
+import {Input, Select, Button, message} from 'antd';
+import { Link } from 'react-router-dom'
 import UserMenu from './UserMenu';
 
 import { QueryParam } from '../../types';
@@ -109,9 +110,16 @@ export default () => {
     return (
         <div className='app-navigator'>
             <div className={"toExplore"} onClick={() => history.push("/")}>
-                <span style={{fontSize: "medium"}}><img style={{width: "2rem", marginRight: "1rem"}}
-                                                                        src={require("../../img/logosmall.png")}
-                                                                        alt={"smallLogo"}/>Π ρ ο μ η θ ε ύ ς</span>
+                <span style={{fontSize: "medium"}}>
+                    <img
+                        style={{width: "2rem", marginRight: "1rem"}}
+                        src={require("../../img/logosmall.png")}
+                        alt={"smallLogo"}
+                    />
+                    <Link to='/' style={{color:'grey'}}>
+                        Π ρ ο μ η θ ε ύ ς
+                    </Link>
+                </span>
             </div>
             {qBar && searchBar}
             <div style={{ float: 'right', paddingRight: '1%' }}>

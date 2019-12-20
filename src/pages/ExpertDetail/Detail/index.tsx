@@ -45,7 +45,6 @@ export default (props: DetailProps) => {
 
     React.useEffect(() => {
         getExpert(token, props.id);
-        console.log('eid', eid);
     }, []);
 
     React.useEffect(() => {
@@ -97,64 +96,67 @@ export default (props: DetailProps) => {
 
     return (
         <div>
-            <Skeleton loading={loading}>
-                <div
-                    style={{
-                        marginTop: '3%',
-                        padding: '2%',
-                        paddingLeft: "4%",
-                        paddingBottom: "4%",
-                        backgroundColor: 'white'
-                    }}
-                    className="personalAttribute"
-                >
-                    <Row gutter={20}>
-                        <Col span={5} style={{ minWidth: "200px" }}>
-                            <Avatar size={avatarSize} style={{
-                                fontSize: "xx-large",
-                                fontWeight: "bolder",
-                                color: '#f56a00',
-                                backgroundColor: '#fde3cf',
-                                marginTop: "1.1rem"
-                            }}> {expert.name.charAt(0)}</Avatar>
-                        </Col>
-                        <Col >
-                            <div
-                                style={{
-                                    marginTop: '1rem',
-                                    lineHeight: '30px',
-                                }}
-                            >
-                                <div style={{ marginBottom: '1rem' }} >
-                                    <span style={{ fontSize: '2em' }} >
-                                        {expert.name} &ensp;
-                                    </span>
-                                    <span style={{float: 'right'}}>
-                                        <Tag color={(props.id === eid || expert.isCertification) ? certificationColor : nonCertificationColor}>
-                                            {eid === props.id ? '已认证' : (expert.isCertification ? '已认证' : '未认证')}
-                                        </Tag>
-                                    </span>
-                                    {
-                                        eid === '' && !expert.isCertification &&
-                                        <span style={{float:'right', paddingRight: '1rem'}}>
-                                            <Button onClick={() => certify(token, id, props.id)}>我要认证</Button>
+            <div
+                style={{
+                    backgroundColor: 'white',
+                    marginTop: '3%',
+                    padding: '2%',
+                    paddingLeft: "4%",
+                    paddingBottom: "4%",
+                }}
+            >
+                <Skeleton loading={loading} >
+                    <div
+                        className="personalAttribute"
+                    >
+                        <Row gutter={20}>
+                            <Col span={5} style={{ minWidth: "200px" }}>
+                                <Avatar size={avatarSize} style={{
+                                    fontSize: "xx-large",
+                                    fontWeight: "bolder",
+                                    color: '#f56a00',
+                                    backgroundColor: '#fde3cf',
+                                    marginTop: "1.1rem"
+                                }}> {expert.name.charAt(0)}</Avatar>
+                            </Col>
+                            <Col >
+                                <div
+                                    style={{
+                                        marginTop: '1rem',
+                                        lineHeight: '30px',
+                                    }}
+                                >
+                                    <div style={{ marginBottom: '1rem' }} >
+                                        <span style={{ fontSize: '2em' }} >
+                                            {expert.name} &ensp;
                                         </span>
-                                    }
+                                        <span style={{float: 'right'}}>
+                                            <Tag color={(props.id === eid || expert.isCertification) ? certificationColor : nonCertificationColor}>
+                                                {eid === props.id ? '已认证' : (expert.isCertification ? '已认证' : '未认证')}
+                                            </Tag>
+                                        </span>
+                                        {
+                                            eid === '' && !expert.isCertification &&
+                                            <span style={{float:'right', paddingRight: '1rem'}}>
+                                                <Button onClick={() => certify(token, id, props.id)}>我要认证</Button>
+                                            </span>
+                                        }
+                                    </div>
+                                    <div> <Icon type='bank' style={{ marginRight: "0.5rem" }} /> {expert.orgs === null ? 'independent' : expert.orgs } </div>
+                                    <div> <Icon type='tag' style={{ marginRight: "0.5rem" }} />
+                                        { simplifiyTag(expert.tags) }
+                                    </div>
                                 </div>
-                                <div> <Icon type='bank' style={{ marginRight: "0.5rem" }} /> {expert.orgs} </div>
-                                <div> <Icon type='tag' style={{ marginRight: "0.5rem" }} />
-                                    { simplifiyTag(expert.tags) }
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-            </Skeleton>
+                            </Col>
+                        </Row>
+                    </div>
+                </Skeleton>
+            </div>
             <Card
                 style={{marginTop: "4%"}}
                 title={
                     <div>
-                        <span style={{fontSize: "1.5rem",}}>
+                        <span style={{fontSize: "1.5rem", paddingLeft: '2%'}}>
                             论文
                         </span>
                         <span style={{
@@ -174,7 +176,6 @@ export default (props: DetailProps) => {
                 bodyStyle={{
                     padding: "1%",
                 }}
-                loading={loading}
             >
                 <div style={{ margin: "1% 0 1% 1%" }}>
                     <List
@@ -182,7 +183,6 @@ export default (props: DetailProps) => {
                         size="large"
                         pagination={{
                             onChange: page => {
-                                console.log("Page: " + page);
                                 getExpertsPublication(
                                     token,
                                     {
@@ -195,7 +195,6 @@ export default (props: DetailProps) => {
                                         free: true,
                                     }
                                 );
-                                console.log("publication:", publications);
                             },
                             pageSize: 10,
                             total: pubsTotal,
@@ -209,7 +208,6 @@ export default (props: DetailProps) => {
                                         <span style={{ width: "30%", overflow: "hidden" }}>
                                             Published in
                                         </span>
-
                                         <span style={{ color: "#3c80bc", fontWeight: 500 }}>
                                             &ensp;{paper.year}&ensp;
                                         </span>
@@ -219,7 +217,6 @@ export default (props: DetailProps) => {
                                     </div>
                                 </div>,
                             content:
-                            //.filter(checkTag).slice(0, paper.authors.length >= 5 ? 5 : paper.authors.length)
                                 paper.authors.filter(checkTag).slice(0, paper.authors.length >= 10 ? 10 : paper.authors.length).map((author: { name: string, org: string, id: string }, index: number) => (
                                     <span>
                                         {author.id ? <a href={'/experts/'+author.id}>{author.name}</a> : <span>{author.name}</span>}
@@ -230,7 +227,7 @@ export default (props: DetailProps) => {
                         }
                         renderItem={(item: any) => (
                             <div style={{ borderBottom: "1px solid rgb(213, 213, 213)", }}>
-                                <List.Item key={item.title} >
+                                <List.Item key={item.title} style={{ paddingLeft: '1%'}} >
                                     <Skeleton loading={loading}>
                                         <List.Item.Meta
                                             title={<a href={item.href}>{item.title}</a>}

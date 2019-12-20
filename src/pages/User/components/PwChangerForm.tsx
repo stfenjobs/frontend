@@ -60,7 +60,7 @@ const PwChanger = (props: PwChangerProps) => {
             onSubmit={handleSubmit}
             style={{
                 maxWidth: '100%',
-                padding: '4rem 15rem 6rem 15rem',
+                padding: '2rem 15rem 3.8rem 15rem',
                 margin: '7% 10%'
             }}
         >

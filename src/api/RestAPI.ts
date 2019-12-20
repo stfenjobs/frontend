@@ -25,10 +25,12 @@ export default class RestAPI extends BaseAPI {
     protected catList = (param?: IRequestList) =>
         this.entry + (param ? BaseAPI.parseParam(param) : '');
 
-    public list = (token: string, param?: IRequestList) =>
-        Axios.get(this.catList(param), {
+    public list = (token: string, param?: IRequestList) => {
+        return Axios.get(this.catList(param), {
             headers: { 'token': token }
         });
+    }
+
     public retreive = (token: string, id: string) =>
         Axios.get(this.catDetail(id), {
             headers: { 'token': token }

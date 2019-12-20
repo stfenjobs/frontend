@@ -1,6 +1,5 @@
 import React from 'react';
 import useUserModel from '../../../models/userModel';
-import useRouter from 'use-react-router';
 
 import { message } from 'antd';
 import Form from './PwChangerForm';
@@ -16,8 +15,6 @@ enum errType {
 
 export default () => {
     const { error, clearError, logout, token } = useUserModel();
-    const { history } = useRouter();
-
 
     React.useEffect(() => {
         switch (error) {

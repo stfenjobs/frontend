@@ -1,9 +1,11 @@
 import React from 'react';
 import useService from '../../services';
 import useUserModel from '../../../../models/userModel';
+// import useRouter from 'use-react-router';
 
-import { Affix, Card, Button, Rate, Divider, message } from 'antd';
+import { Affix, Card, Button, Rate, Divider, message, List, Skeleton } from 'antd';
 import { IFavorite } from '../../../../types';
+import {IPaperListItem} from '../../../../types/response';
 
 
 enum errType {
@@ -14,7 +16,7 @@ enum errType {
 }
 
 export default (props: { id: string, style: any }) => {
-    const { paper, serviceLoading } = useService();
+    const { paper, commend, serviceLoading } = useService();
     const {
         token, id, favorite, addFavorite, removeFavorite, loading, error, clearError, logout, getFavorite
     } = useUserModel();
@@ -87,10 +89,22 @@ export default (props: { id: string, style: any }) => {
                     </span>
                 </Card>
                 <div style={{paddingTop: '1rem'}}>
-                    <Card title='第一作者' loading={serviceLoading} >
-                        {paper.authors.map((value: { name: string, org: string, id: string | null }) => (
-                            <span>{value.name}</span>
-                        ))}
+                    <Card title='相关论文' loading={serviceLoading}>
+                        <List
+                            itemLayout="horizontal"
+                            dataSource={commend}
+                            renderItem={
+                                (item: IPaperListItem) => (
+                                    <List.Item>
+                                        <Skeleton loading={serviceLoading}>
+                                            <List.Item.Meta
+                                                title={<a href={`/papers/${item.id}`}>{item.title}</a>}
+                                            />
+                                        </Skeleton>
+                                    </List.Item>
+                                )
+                            }
+                        />
                     </Card>
                 </div>
             </div>

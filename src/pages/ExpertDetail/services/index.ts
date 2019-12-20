@@ -3,7 +3,7 @@ import { createModel } from 'hox';
 import api from '../../../api';
 import { getContent } from '../../../utils';
 import err from '../../../utils/error';
-import { IExpert, IPaper } from '../../../types/';
+import { IExpert } from '../../../types/';
 import { IContentExpertDetail, IContentPaperList, IPaperListItem } from '../../../types/response';
 import { IRequestList } from '../../../types/request';
 
@@ -16,22 +16,21 @@ export default createModel(() => {
 
     const getExpertsPublication = (token:string, params: IRequestList) => {
         setLoading(true);
-        // api
         api.paper.list(token,params).then((response) =>{
-            console.log(response.data);
+            console.log("api, pub", response.data)
             if (response.status !== 200) {
                 setError(err.err404);
                 return;
             }
             const { content,responseErr } = getContent<IContentPaperList>(response.data);
             if (responseErr === err.none) {
-                console.log("pubs content: ", content);
                 setPublications(content.papers);
                 setPubsTotal(content.total);
-                setLoading(false);
             } else {
                 setError(responseErr);
             }
+
+            setLoading(false);
         }).catch(() => { setError(err.err404); setLoading(false); });
     };
 
@@ -42,6 +41,7 @@ export default createModel(() => {
         }
         setLoading(true);
         api.expert.retreive(token, id).then((response) => {
+            console.log('expert', response.data);
             if (response.status !== 200) {
                 setError(err.err404);
                 return;
@@ -49,10 +49,7 @@ export default createModel(() => {
 
             const { content, responseErr } = getContent<IContentExpertDetail>(response.data);
             if (responseErr === err.none) {
-                console.log("content:" , content);
-
                 setExpert(content);
-
                 getExpertsPublication(token, {
                     page: 1,
                     size: 10,
@@ -61,13 +58,12 @@ export default createModel(() => {
                     sort: "n_citation",
                     direction: true,
                     free: true,
-                })
-                
+                });
             } else {
                 setError(responseErr);
+                setLoading(false);
             }
 
-            setLoading(false);
         }).catch(() => { setError(err.err404); setLoading(false);});
     };
 

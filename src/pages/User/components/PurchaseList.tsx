@@ -26,7 +26,7 @@ export default () => {
                         </span>
                     }
                     style={{
-                        padding: '16.25rem 0'
+                        padding: '13.25rem 0'
                     }}
                 >
                     <Button type='primary' onClick={() => history.push('/')}>

@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from 'react';
 import './PapperResult.css'
 
-import { Tag, List, Avatar, Icon } from 'antd';
+import { Tag, List, Skeleton } from 'antd';
 
-import {IPaperListItem, IContentPaperList} from '../../../types/response'
+import {IPaperListItem } from '../../../types/response'
 import useService from '../services'
 import qs from 'qs';
 import { QueryParam } from '../../../types';
@@ -59,7 +59,7 @@ function ExpertResult(){
                         item.keywords !== null &&
                             item.keywords.slice(0,item.keywords.length >= 5 ? 5:item.keywords.length).map((keyword) => (
                                 <Tag><a href={'/search?q='+keyword+'&type=paper'}>{keyword}</a></Tag>
-                            )) 
+                            ))
                     }))
                 }
                 renderItem={(item:any) => (
@@ -67,11 +67,13 @@ function ExpertResult(){
                         <List.Item
                             key={item.title}
                         >
-                            <List.Item.Meta
-                                title={<a href={item.href}>{item.title}</a>}
-                                description={item.description}
-                            />
-                            {item.content}
+                            <Skeleton loading={loading}>
+                                <List.Item.Meta
+                                    title={<a href={item.href}>{item.title}</a>}
+                                    description={item.description}
+                                />
+                                {item.content}
+                            </Skeleton>
                         </List.Item>
                     </div>
                 )}

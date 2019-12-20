@@ -31,7 +31,7 @@ export default () => {
             </div>
             <Cards
                 id={location.pathname.split('/').pop() as string}
-                style={{ float: 'right', paddingTop: '3rem' }}
+                style={{ float: 'right', paddingTop: '3%' }}
             />
         </div>
     )

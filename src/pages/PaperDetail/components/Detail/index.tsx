@@ -4,7 +4,7 @@ import useUserModel from '../../../../models/userModel';
 import useRouter from 'use-react-router';
 
 import { Link } from 'react-router-dom';
-import { Button, Tag, Tabs, Skeleton, message } from 'antd';
+import { Button, Tag, Tabs, Skeleton, message, Typography } from 'antd';
 
 
 enum errType {
@@ -18,12 +18,12 @@ export interface DetailProps {
 
 export default (props: DetailProps) => {
     const { paper, serviceLoading, getPaper, error, clearErr } = useService();
-    const { history } = useRouter();
+    const { history, location } = useRouter();
     const { token } = useUserModel();
 
     React.useEffect(() => {
         getPaper(token, props.id);
-    }, []);
+    }, [location]);
 
     React.useEffect(() => {
         switch (error) {
@@ -41,6 +41,8 @@ export default (props: DetailProps) => {
             }
         }
     }, [error])
+
+    const {Paragraph} = Typography;
 
     return (
         <div>
@@ -72,18 +74,31 @@ export default (props: DetailProps) => {
                 </div>
                 <div style={{paddingTop: '0.5rem', marginBottom: "0.5rem", fontSize: "large", fontWeight: "bold"}}>
                     Authors：
-                    {paper.authors.map((value: { name: string, org: string, id: string | null }, index: number) => (
-                        <span>
-                            {value.id ? <Link to='/experts/1'>{value.name}</Link>: <span>{value.name}</span>}
-                            {index !== paper.authors.length - 1 && <span>{', '}</span>}
-                        </span>
-                    ))}
+                    <div>
+                        <Paragraph ellipsis={{rows:1, expandable: true}}>
+                            {
+                                paper.authors
+                                .slice(0, paper.authors.length > 15 ? 15 : paper.authors.length)
+                                .map((value: { name: string, org: string, id: string | null }, index: number) => (
+                                    <span>
+                                        {value.id ? <Link to={`/experts/${value.id}`}>{value.name}</Link>: <span>{value.name}</span>}
+                                        {index !== (paper.authors.length > 15 ? 14 : paper.authors.length - 1) && <span>{', '}</span>}
+                                    </span>
+                                ))
+                            }
+                        </Paragraph>
+                    </div>
                 </div>
-
-                <div style={{paddingTop: '1rem'}}>
-                    {paper.keywords.map((value: string) => (
-                        <span><Tag style={{marginTop: '0.6rem'}} color='blue'>{value}</Tag></span>
-                    ))}
+                <div>
+                    <Paragraph ellipsis={{rows:1, expandable: true}}>
+                        {
+                            paper.keywords
+                            .slice(0, paper.keywords.length > 15 ? 15 : paper.keywords.length)
+                            .map((value: string) => (
+                                <span><Tag style={{marginTop: '0.6rem'}} color='blue'>{value}</Tag></span>
+                            ))
+                        }
+                    </Paragraph>
                 </div>
             </Skeleton>
             <Tabs style={{ paddingTop: '1rem' }}>

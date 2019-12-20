@@ -108,7 +108,6 @@ export default () => {
     };
 
     return (
-
         <div
             style={{
                 position: 'fixed',
@@ -122,13 +121,13 @@ export default () => {
                     onMouseLeave={() => hover && setHover(false)}
                 >
                     <Upload className={"uploader"}
-                            listType='picture-card'
-                            data={() => api.uploader.getToken()}
-                            beforeUpload={beforeUpload}
-                            showUploadList={false}
-                            onChange={handleUploadChange}
-                            disabled={uploadLoading}
-                            action="https://up-z1.qiniup.com"
+                        listType='picture-card'
+                        data={() => api.uploader.getToken()}
+                        beforeUpload={beforeUpload}
+                        showUploadList={false}
+                        onChange={handleUploadChange}
+                        disabled={uploadLoading}
+                        action="https://up-z1.qiniup.com"
                     >
                         <img
                             src={img}

@@ -17,7 +17,7 @@ export default () => {
     };
 
     return (
-        <Card style={{width: "72%", marginTop: "0.8rem", paddingLeft: "3rem", paddingRight: '3rem'}}>
+        <Card style={{width: "70%", marginTop: "1.2rem", paddingLeft: "3rem", paddingRight: '3rem'}}>
             <Tabs
                 defaultActiveKey='purchase-record'
                 animated={{
@@ -25,7 +25,6 @@ export default () => {
                     tabPane: false,
                 }}
                 onChange={onTabChange}
-                type='card'
                 style={{
                     paddingTop: '1.5%',
                 }}
