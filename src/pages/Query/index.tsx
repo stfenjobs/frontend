@@ -10,7 +10,6 @@ import RecommendCard from './RecommendCard'
 import ExpertResult from './ExpertResult'
 import PapperResult from './PapperResult'
 
-import ReactEcharts from 'echarts-for-react';
 
 import './Query.css'
 
@@ -71,34 +70,6 @@ export default () => {
             setTab('1');
         }
     }, [location, history]);
-
-    const option = {
-        radar: {
-            // shape: 'circle',
-            name: {
-                textStyle: {
-                    color: '#fff',
-                    backgroundColor: '#999',
-                    borderRadius: 3,
-                    padding: [3, 3, 5]
-               }
-            },
-            indicator: [
-               { name: '论文数', max: 500},
-               { name: '被引数', max: 300},
-               { name: 'H因子', max: 300},
-            ]
-        },
-        series: [{
-            type: 'radar',
-            // areaStyle: {normal: {}},
-            data : [
-                 {
-                    value : [300,200,100],
-                }
-            ]
-        }]
-    }
 
 
     return (

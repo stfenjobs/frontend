@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs, Tag, List, Typography, Skeleton } from 'antd';
-import ExpertResult from '../ExpertResult'
-import PapperResult from '../PapperResult'
 import './TypeCard.css'
 import useService from '../services'
 import qs from 'qs';
@@ -9,6 +7,7 @@ import { QueryParam } from '../../../types';
 import {IExpert} from '../../../types';
 import useRouter from 'use-react-router'
 import { IPaperListItem } from '../../../types/response';
+
 
 const { TabPane } = Tabs;
 
@@ -29,12 +28,12 @@ function MyTag(props:{field:string, type:string}){
                 size: 10,
                 domain: "tags",
                 key: props.field,
-                sort: 'name',
+                sort: 'n_citation',
                 direction: true,
                 free: true,
             });
         }else if(props.type === "paper"){
-            getExperts({
+            getPapers({
                 page: 1,
                 size: 10,
                 domain: "keywords",
@@ -55,28 +54,42 @@ function MyTag(props:{field:string, type:string}){
     );
 }
 
-class HTag extends React.Component{
-    state = { checked: 0 };
+function HTag(){
+    const [checked, setChecked] = useState(0)
+    const { getExperts, getPapers } = useService();
+    const { location } = useRouter();
+    const param: QueryParam = qs.parse(location.search.slice(1));
 
-  handleHChange = (checked: any) => {
-    if(this.state.checked!==1) this.setState({ checked: 1 });
-    else this.setState({checked: 0})
+  const handleHChange = (checked: any) => {
+    getExperts({
+        page: 1,
+        size: 10,
+        domain: "name",
+        key: param.q,
+        sort: 'name',
+        direction: true,
+        free: true,
+    });
   };
 
-  handlePChange = (checked: any) => {
-    if(this.state.checked!==2) this.setState({ checked: 2 });
-    else this.setState({checked: 0})
+  const handlePChange = (checked: any) => {
+    getExperts({
+        page: 1,
+        size: 10,
+        domain: "name",
+        key: param.q,
+        sort: 'n_citation',
+        direction: true,
+        free: true,
+    });
   };
 
-  render() {
-    return (
+  return (
       <div>
-          <CheckableTag  {...this.props} checked={this.state.checked === 1} onChange={this.handleHChange}>H因子</CheckableTag>
-          <CheckableTag  {...this.props} checked={this.state.checked === 2} onChange={this.handlePChange}>论文数</CheckableTag>
+          <CheckableTag  checked={checked === 1} onChange={handleHChange}>被引数</CheckableTag>
+          <CheckableTag  checked={checked === 2} onChange={handlePChange}>论文数</CheckableTag>
       </div>
-      
-        );
-  }
+  )
 }
 function checkTag(tag: { t: string, w: number }){
     return tag.t.length <= 25
@@ -92,11 +105,13 @@ function TypeCard(props: TypeCardProps){
 
     const {experts, loading, papers, getExperts, expertsTotal} = useService();
     const { location } = useRouter();
+    const { Paragraph } = Typography;
 
     const expertData = [
         <div className='condition'>
             <div className='condition-left'>领域:</div>
             <div className='condition-right'>
+            <Paragraph ellipsis={{ rows: 1, expandable: true }}>
             { experts[0] === undefined ? []:
             experts.map((item: IExpert) => (
                 item.tags !== null &&
@@ -104,6 +119,7 @@ function TypeCard(props: TypeCardProps){
                                 <MyTag field={tag.t} type='expert'/>
                             )) 
             ))}
+            </Paragraph>
             </div>
         </div>,
         <div className='condition'>
@@ -118,12 +134,14 @@ function TypeCard(props: TypeCardProps){
         <div className='condition'>
             <div className='condition-left'>领域:</div>
             <div className='condition-right'>
+            <Paragraph ellipsis={{ rows: 1, expandable: true }}>
             {papers.map((item: IPaperListItem) => (
                 item.keywords !== null &&
                 item.keywords.slice(0,item.keywords.length >= 5 ? 5:item.keywords.length).map((keyword) => (
                     <MyTag field={keyword} type='paper'/>
                 )) 
             ))}
+            </Paragraph>
             </div>
         </div>
     ]

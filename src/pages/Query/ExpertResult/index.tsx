@@ -56,7 +56,7 @@ function ExpertResult(){
                             <span className='split'></span>
                             <span className='use-num'>被引数：</span>
                             <span className='num'>{item.n_citation}</span>
-                            <div><Icon type="bank"/>{item.orgs === null ? "Independent" : item.orgs[0]}</div>
+                            <div><Icon type="bank"/>{item.orgs === null || item.orgs[0] === "" ? "Independent" : item.orgs[0]}</div>
                         </div>,
                     content:
                         item.tags !== null &&
